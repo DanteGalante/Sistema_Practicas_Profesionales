@@ -1,1 +1,1 @@
-# Sistema_Practicas_Profesionales
+# Sistema de prácticas profesionales
