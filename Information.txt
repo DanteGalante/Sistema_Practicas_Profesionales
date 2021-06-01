@@ -1,0 +1,7 @@
+com.mysql.jdbc.Driver
+sistemapp
+localhost
+3306
+root
+JLDI02092102
+jdbc:mysql://
