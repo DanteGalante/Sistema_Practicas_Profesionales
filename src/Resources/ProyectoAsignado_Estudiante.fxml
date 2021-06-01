@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ProjectDetailsController">
+   <children>
+      <SplitPane dividerPositions="0.21743486973947895" prefHeight="600.0" prefWidth="1000.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2b2e4a" height="607.0" layoutX="-8.0" layoutY="-7.0" stroke="BLACK" strokeType="INSIDE" width="225.0" />
+                  <Text fill="#e84545" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombres:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="nameText" fill="#e84545" layoutX="31.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="162.193359375" />
+                  <Text fill="#e84545" layoutX="12.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellidos: ">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#e84545" layoutX="13.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Martrícula:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="lastNameText" fill="#e84545" layoutX="31.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="162.193359375" />
+                  <Text fx:id="matriculaText" fill="#e84545" layoutX="31.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="162.193359375" />
+                  <Text fill="#e84545" layoutX="14.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proyecto Asignado:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="projectText" fill="#e84545" layoutX="31.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="162.193359375" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2b2e4a" height="376.0" layoutY="223.0" stroke="BLACK" strokeType="INSIDE" width="214.0" />
+                  <Button fx:id="returnButton" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#Return" prefHeight="40.0" prefWidth="214.0" text="Regresar" />
+                  <Text fx:id="errorText" fill="#e84545" layoutX="11.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="192.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2b2e4a" height="600.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="778.0" />
+                  <Text fill="#e84545" layoutX="258.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles de Proyecto Asignado">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="errorText" fill="#e84545" layoutX="232.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="311.14306640625">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#e84545" layoutX="37.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre: ">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#e84545" layoutX="37.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cupo Total:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#e84545" layoutX="36.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DetallesProyecto:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#e84545" layoutX="37.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EstudiantesAsignados:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#e84545" layoutX="37.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Organización Vinculada:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#e84545" layoutX="37.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#e84545" layoutX="37.0" layoutY="477.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Responsable:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#e84545" layoutX="37.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Información de Contacto:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="projectDetailText" fill="#e84545" layoutX="37.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="705.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="studentName1" fill="#e84545" layoutX="37.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="432.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="studentName2" fill="#e84545" layoutX="36.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="432.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="studentName3" fill="#e84545" layoutX="37.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="432.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="studentName4" fill="#e84545" layoutX="36.0" layoutY="363.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="432.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="projectNameText" fill="#e84545" layoutX="100.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="390.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="cupoText" fill="#e84545" layoutX="125.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="110.13671875">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="organizacionText" fill="#e84545" layoutX="203.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="340.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="direccionText" fill="#e84545" layoutX="111.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="396.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="responsableText" fill="#e84545" layoutX="135.0" layoutY="476.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="396.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="correoText" fill="#e84545" layoutX="203.0" layoutY="516.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="408.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="telefonoText" fill="#e84545" layoutX="203.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="408.0000000000001">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

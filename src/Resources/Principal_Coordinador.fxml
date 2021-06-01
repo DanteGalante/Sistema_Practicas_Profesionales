@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #2b2e4a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Principal_Coordinador">
+    <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="122.0">
+            <children>
+                <SplitPane dividerPositions="0.5" layoutX="2.0" orientation="VERTICAL" prefHeight="598.0" prefWidth="294.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="195.0" prefWidth="288.0" style="-fx-background-color: #2b2e4a;">
+                            <children>
+                                <Label layoutX="14.0" layoutY="14.0" style="-fx-font-weight: #2b2e4a;" text="Nombres:" textFill="#e84545" />
+                                <Label fx:id="lbNombres" layoutX="14.0" layoutY="31.0" text="Label" textFill="#e84545" />
+                                <Label layoutX="14.0" layoutY="57.0" text="Apellidos:" textFill="#e84545" />
+                                <Label fx:id="lbApellidos" layoutX="14.0" layoutY="74.0" text="Label" textFill="#e84545" />
+                                <Label layoutX="14.0" layoutY="98.0" text="No.Trabajador:" textFill="#e84545" />
+                                <Label fx:id="lbNoTrabajador" layoutX="14.0" layoutY="115.0" text="Label" textFill="#e84545" />
+                            </children></AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="195.0" prefWidth="154.0" style="-fx-background-color: #2b2e4a;">
+                            <children>
+                                <VBox alignment="BOTTOM_CENTER" fillWidth="false" layoutY="118.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="292.0" style="-fx-background-color: #2b2e4a;">
+                                    <children>
+                                        <Button fx:id="btnAsignarProyecto" mnemonicParsing="false" prefHeight="25.0" prefWidth="313.0" text="Asignar Proyecto" textFill="#e84545" />
+                                        <Button fx:id="btnGenerarOficioAsignacion" mnemonicParsing="false" prefHeight="25.0" prefWidth="343.0" text="Generar Ofició De Asignación" textFill="#e84545" />
+                                        <Button fx:id="btnConsultarExpediente" mnemonicParsing="false" prefHeight="25.0" prefWidth="305.0" text="Consultar Expediente" textFill="#e84545" />
+                                        <Button fx:id="btnValidarInscripcion" mnemonicParsing="false" prefHeight="25.0" prefWidth="333.0" text="Validar Inscripción" textFill="#e84545" />
+                                        <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onMouseClicked="#CerrarSesion" prefHeight="25.0" prefWidth="301.0" text="Cerrar Sesión" textFill="#e84545" />
+                                    </children>
+                                </VBox>
+                                <Text fx:id="errorText" fill="#e84545" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                            </children></AnchorPane>
+                    </items>
+                </SplitPane>
+            </children></AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+            <children>
+                <Label id="bold" layoutX="296.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Menú Coordinador" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font></Label>
+                <ComboBox fx:id="cbEstudianteDocente" layoutX="384.0" layoutY="46.0" prefHeight="25.0" prefWidth="294.0" promptText="Estudiante" />
+                <TextField fx:id="tfBuscar" layoutX="384.0" layoutY="78.0" prefHeight="25.0" prefWidth="242.0" />
+                <Button fx:id="btnBuscar" layoutX="627.0" layoutY="78.0" mnemonicParsing="false" text="Buscar" textFill="#e84545" />
+                <ScrollPane layoutX="384.0" layoutY="130.0" prefHeight="273.0" prefWidth="300.0">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="293.0">
+                            <children>
+                                <TableView fx:id="tbEstudianteDocente" layoutX="-2.0" prefHeight="272.0" prefWidth="295.0">
+                                    <columns>
+                                        <TableColumn fx:id="clnMatriculaNoTrabajador" prefWidth="294.0" text="Estudiante" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
+                <ScrollPane layoutX="45.0" layoutY="130.0" prefHeight="273.0" prefWidth="300.0">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="273.0" prefWidth="299.0">
+                            <children>
+                                <TableView fx:id="tbGrupo" layoutX="-2.0" prefHeight="273.0" prefWidth="300.0">
+                                    <columns>
+                                        <TableColumn fx:id="clnNrc" prefWidth="299.0" text="Grupo" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
+                <VBox layoutX="45.0" layoutY="422.0" prefHeight="121.0" prefWidth="300.0">
+                    <children>
+                        <Button fx:id="btnGenerarReporte" mnemonicParsing="false" onMouseClicked="#MostrarPantallaGenerarReporte" prefHeight="25.0" prefWidth="310.0" text="Generar Reporte" textFill="#e84545" />
+                        <Button fx:id="btnVisualizarReportes" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="352.0" text="Visualizar Reportes" textFill="#e84545" />
+                        <Button fx:id="btnConsultarOrganizacion" layoutX="10.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#MostrarPantallaGestionarOrganizacion" prefHeight="25.0" prefWidth="300.0" text="Gestionar Organización" textFill="#e84545" />
+                  <Button mnemonicParsing="false" onMouseClicked="#MostrarPantallaGestionarEstudiante" prefHeight="25.0" prefWidth="312.0" text="Gestionar Estudiante" textFill="#e84545" />
+                    </children>
+                </VBox>
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets></AnchorPane>
+    </items>
+</SplitPane>
