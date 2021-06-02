@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GestionarProyecto_Coordinador">
+    <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+            <children>
+                <SplitPane dividerPositions="0.5" layoutX="-2.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="300.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #2b2e4a;">
+                            <children>
+                                <Label layoutX="14.0" layoutY="14.0" text="Nombres:" textFill="#e84545" />
+                                <Label fx:id="lbNombres" layoutX="14.0" layoutY="31.0" text="Label" textFill="#e84545" />
+                                <Label layoutX="14.0" layoutY="56.0" text="Apellidos:" textFill="#e84545" />
+                                <Label fx:id="lbApellidos" layoutX="14.0" layoutY="73.0" text="Label" textFill="#e84545" />
+                                <Label layoutX="14.0" layoutY="99.0" text="No.Trabajador:" textFill="#e84545" />
+                                <Label fx:id="lbNoTrabajador" layoutX="14.0" layoutY="116.0" text="Label" textFill="#e84545" />
+                            </children></AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #2b2e4a;">
+                            <children>
+                                <VBox alignment="BOTTOM_CENTER" layoutY="244.0" prefHeight="52.0" prefWidth="298.0" style="-fx-background-color: #2b2e4a;">
+                                    <children>
+                                        <Button fx:id="btnGestionarOrganizacion" mnemonicParsing="false" onMouseClicked="#ClicGestionarOrganizacion" prefHeight="25.0" prefWidth="313.0" text="Gestionar Organización" textFill="#e84545" />
+                                        <Button fx:id="btnRegresar" mnemonicParsing="false" onMouseClicked="#ClicRegresar" prefHeight="25.0" prefWidth="386.0" text="Regresar" textFill="#e84545" />
+                                    </children>
+                                </VBox>
+                                <Text fx:id="errorText" fill="#e84545" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                            </children></AnchorPane>
+                    </items>
+                </SplitPane>
+            </children></AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #2b2e4a;">
+            <children>
+                <Label layoutX="228.0" layoutY="14.0" text="Gestionar Proyecto Coordiandor" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font></Label>
+                <TextField fx:id="tfBuscar" layoutX="249.0" layoutY="78.0" />
+                <Button fx:id="btnBuscar" layoutX="398.0" layoutY="78.0" mnemonicParsing="false" text="Buscar" textFill="#e84545" />
+                <ScrollPane layoutX="231.0" layoutY="132.0" prefHeight="216.0" prefWidth="237.0">
+                    <content>
+                        <TableView fx:id="tbProyectos" prefHeight="215.0" prefWidth="235.0">
+                            <columns>
+                                <TableColumn fx:id="clnProyectos" prefWidth="234.0" text="Proyectos" />
+                            </columns>
+                        </TableView>
+                    </content>
+                </ScrollPane>
+                <VBox layoutX="249.0" layoutY="379.0" prefHeight="97.0" prefWidth="200.0">
+                    <children>
+                        <Button fx:id="btnConsultarProyecto" mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" text="Consultar Proyecto" textFill="#e84545" />
+                        <Button fx:id="btnRegistrarProyecto" mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" text="Registrar Proyecto" textFill="#e84545" />
+                        <Button fx:id="btnEliminarProyecto" mnemonicParsing="false" prefHeight="25.0" prefWidth="258.0" text="Eliminar Proyecto" textFill="#e84545" />
+                        <Button fx:id="btnModificarProyecto" mnemonicParsing="false" onMouseClicked="#ClicModificarProyecto" prefHeight="25.0" prefWidth="235.0" text="Modificar Proyecto" textFill="#e84545" />
+                    </children>
+                </VBox>
+            </children></AnchorPane>
+    </items>
+</SplitPane>
