@@ -53,6 +53,8 @@ public interface EstudianteDAOInterface {
      */
     List< Estudiante > ReadByState( int estado );
 
+    Estudiante ReadPorID( int idUsuario );
+
     /**
      * Actualiza un Estudiante en la base de datos con los datos del
      * Estudiante introducido.

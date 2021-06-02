@@ -36,6 +36,8 @@ public interface ExpedienteDAOInterface {
      */
     Expediente Read( int claveExpediente );
 
+    Expediente ReadPorMatricula( String matricula );
+
     /**
      * Actualiza la información de un Expediente en la base de datos
      * @param expediente el expediente con su información actualizada
