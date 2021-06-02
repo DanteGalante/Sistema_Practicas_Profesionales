@@ -34,7 +34,6 @@ public class ConsultarExpedienteController implements Initializable {
     private ExpedienteDAO expediente = new ExpedienteDAO();
     private Expediente expedienteInstancia = new Expediente();
     private EstudianteDAO estudiante = new EstudianteDAO();
-    private UsuarioUV usuarioUVElegido = SelectionContainer.GetInstance().getUsuarioUV();
     private Estudiante estudianteElegido= SelectionContainer.GetInstance().getEstudianteElegido();
 
 
@@ -107,8 +106,7 @@ public class ConsultarExpedienteController implements Initializable {
      * nombres, apellidos y No.Trabajador
      */
     public void DatosExpediente() {
-        int idEstudiante = usuarioUVElegido.GetID();
-        estudianteElegido = estudiante.ReadPorID(idEstudiante);
+        int idEstudiante = estudianteElegido.GetID();
         String matricula = estudianteElegido.getMatricula();
         TxNombreEstudiante.setText(estudianteElegido.getNombreCompleto());
         TxMatriculaEstudiante.setText(estudianteElegido.getMatricula());
