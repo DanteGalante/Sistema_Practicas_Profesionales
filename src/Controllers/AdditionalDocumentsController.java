@@ -10,6 +10,7 @@ package Controllers;
 
 import Database.DocumentoDAO;
 import Database.ExpedienteDAO;
+import Database.ProyectoDAO;
 import Database.ReporteDAO;
 import Entities.Documento;
 import Entities.Expediente;
@@ -43,6 +44,7 @@ public class AdditionalDocumentsController implements Initializable {
     private DirectoryChooser directoryChooser = new DirectoryChooser();
     private DocumentoDAO documentos = new DocumentoDAO();
     private ReporteDAO reportes = new ReporteDAO();
+    private ProyectoDAO proyectos = new ProyectoDAO();
     private ExpedienteDAO expedientes = new ExpedienteDAO();
     private List< Documento > documentosEstudiante = new ArrayList<>();
     private OutputMessages outputMessages = new OutputMessages();
@@ -104,6 +106,7 @@ public class AdditionalDocumentsController implements Initializable {
         nameText.setText( LoginSession.GetInstance().GetEstudiante().getNombres() );
         lastNameText.setText( LoginSession.GetInstance().GetEstudiante().GetApellidos() );
         matriculaText.setText( LoginSession.GetInstance().GetEstudiante().getMatricula() );
+        SetProjectName();
     }
 
     /**
@@ -219,7 +222,7 @@ public class AdditionalDocumentsController implements Initializable {
     @FXML
     public void UploadDocument( MouseEvent mouseEvent ) {
         File document = GetFile( mouseEvent );
-        if( documento != null && DocumentNameDoesNotExist( GetDocument( document ) ) ) {
+        if( document != null && DocumentNameDoesNotExist( GetDocument( document ) ) ) {
             documentos.Create( GetDocument( document ) );
             ShowDocuments();
         }
@@ -269,7 +272,7 @@ public class AdditionalDocumentsController implements Initializable {
     private Documento GetDocument( File documentFile ) {
         LocalDate currentDate = LocalDate.now();
         documento = new Documento( 0 , documentFile.getName(), documentFile, currentDate.toString(),
-                GetUserExpediente().GetClave() );
+                GetUserExpediente().GetClave(), "", 0.0f );
         return documento;
     }
 
@@ -334,5 +337,13 @@ public class AdditionalDocumentsController implements Initializable {
         if( !targetFile.exists() ) {
             targetFile.createNewFile();
         }
+    }
+
+    /**
+     * Recupera el proyecto asignado del usuario y coloca su nombre en el
+     * campo de texto projectText
+     */
+    private void SetProjectName() {
+        projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
     }
 }

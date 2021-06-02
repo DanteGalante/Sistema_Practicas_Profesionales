@@ -23,13 +23,11 @@
                             <children>
                                 <VBox alignment="BOTTOM_CENTER" layoutY="244.0" prefHeight="52.0" prefWidth="298.0" style="-fx-background-color: #2b2e4a;">
                                     <children>
-                              <Button mnemonicParsing="false" text="Button" />
                                         <Button fx:id="btnGestionarProyectos" mnemonicParsing="false" onMouseClicked="#ClicGestionarProyecto" prefHeight="25.0" prefWidth="313.0" text="Gestionar Proyecto" textFill="#e84545" />
                                         <Button fx:id="btnRegresar" mnemonicParsing="false" onMouseClicked="#ClicRegresar" prefHeight="25.0" prefWidth="386.0" text="Regresar" textFill="#e84545" />
                                     </children>
                                 </VBox>
                                 <Text fx:id="errorText" fill="#e84545" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                                <Text fx:id="successText" fill="#e84545" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                             </children></AnchorPane>
                     </items>
                 </SplitPane>
@@ -55,7 +53,7 @@
                     <children>
                         <Button fx:id="btnConsultarOrganizacion" mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" text="Consultar Organización" textFill="#e84545" />
                         <Button fx:id="btnRegistrarOrganizacion" mnemonicParsing="false" onMouseClicked="#ClicRegistrar" prefHeight="25.0" prefWidth="228.0" text="Registrar Organización" textFill="#e84545" />
-                        <Button fx:id="btnEliminarOrganizacion" mnemonicParsing="false" onMouseClicked="#ClicEliminarRegistro" prefHeight="25.0" prefWidth="258.0" text="Eliminar Organización" textFill="#e84545" />
+                        <Button fx:id="btnEliminarOrganizacion" mnemonicParsing="false" prefHeight="25.0" prefWidth="258.0" text="Eliminar Organización" textFill="#e84545" />
                         <Button fx:id="btnModificarOrganizacion" mnemonicParsing="false" prefHeight="25.0" prefWidth="235.0" text="Modificar Organización" textFill="#e84545" />
                     </children>
                 </VBox>

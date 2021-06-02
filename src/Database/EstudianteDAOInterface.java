@@ -44,11 +44,11 @@ public interface EstudianteDAOInterface {
      * @param NRC numero del grupo con el que se desea buscar en la base de datos
      * @return una lista con los estudiantes de un grupo
      */
-    List< Estudiante > ReadStudentsByGroup(String NRC );
+    List< Estudiante > ReadStudentsByGroup( String NRC );
 
     /**
      * Reresa una lista de estudiantes con un mismo estado especificado
-     * @param estado estado del estudiante con el que se desea buscar en la base de datos
+     * @param estado estado del estudiante
      * @return una lista ocn los estudiantes de un mismo estado;
      */
     List< Estudiante > ReadByState( int estado );

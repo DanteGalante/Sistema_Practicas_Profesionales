@@ -42,12 +42,6 @@ public class Principal_Coordinador implements Initializable {
     private Button btnConsultarExpediente;
 
     @FXML
-    private Button btnModificarEstudiante;
-
-    @FXML
-    private Button btnEliminarEstudiante;
-
-    @FXML
     private Button btnValidarInscripcion;
 
     @FXML
@@ -160,10 +154,17 @@ public class Principal_Coordinador implements Initializable {
     }
 
     /**
-     * Permite cambiar la pantalla a la pantalla deseada por el usuario que seleccione un boton
+     * Permite cambiar la pantalla a la pantalla GestionarOrganización
      */
     public void MostrarPantallaGestionarOrganizacion( MouseEvent mouseEvent ) {
         screenChanger.MostrarPantallaGestionarOrganizacion( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarEstudiante
+     */
+    public void MostrarPantallaGestionarEstudiante( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarEstudianesCoordinador( mouseEvent, errorText );
     }
 
     /**
@@ -173,13 +174,5 @@ public class Principal_Coordinador implements Initializable {
     public void CerrarSesion( MouseEvent mouseEvent ) {
         LoginSession.GetInstance().Logout();
         screenChanger.ShowLoginScreen( mouseEvent, errorText );
-    }
-
-    /**
-     * Cambia a la pantalla ValidarInscripcion
-     * @param mouseEvent el evento del mouse que inicio el cambio
-     */
-    public void ClicValidarInscripcion(MouseEvent mouseEvent) {
-        screenChanger.ShowScreenValidarInscripcion( mouseEvent, errorText );
     }
 }
