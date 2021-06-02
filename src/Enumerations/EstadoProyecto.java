@@ -15,5 +15,6 @@ package Enumerations;
 public enum EstadoProyecto {
     Disponible,
     NoDisponible,
-    Asignado
+    Asignado,
+    Eliminado
 }

@@ -100,6 +100,7 @@ public class ReportsScreenController implements Initializable {
         nameText.setText( LoginSession.GetInstance().GetEstudiante().getNombres() );
         lastNameText.setText( LoginSession.GetInstance().GetEstudiante().GetApellidos() );
         matriculaText.setText( LoginSession.GetInstance().GetEstudiante().getMatricula() );
+        SetProjectName();
     }
 
     /**
@@ -111,11 +112,12 @@ public class ReportsScreenController implements Initializable {
     }
 
     /**
-     * Configura lo que se muestra en el explorador de archivos
-     * creado por fileChooser
+     * Configura lo que se muestra y el tipo de archivo que se puede seleccionar
+     * en el explorador de archivos creado por fileChooser
      */
     private void ConfigureFileChooser() {
         fileChooser.setTitle( "Buscar Reporte..." );
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "PDF Files", "*.pdf" ) );
     }
 
     /**
@@ -209,7 +211,15 @@ public class ReportsScreenController implements Initializable {
     private Reporte GetReport( File reportFile ) {
         LocalDate currentDate = LocalDate.now();
         reporte = new Reporte( 0 , 0, reportFile.getName(), reportFile, currentDate.toString(),
-                GetUserExpediente().GetClave(), 0, TipoReporte.cienHoras );
+                GetUserExpediente().GetClave(), 0, TipoReporte.cienHoras, "", 0.0f );
         return reporte;
+    }
+
+    /**
+     * Recupera el proyecto asignado del usuario y coloca su nombre en el
+     * campo de texto projectText
+     */
+    private void SetProjectName() {
+        projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
     }
 }

@@ -24,6 +24,7 @@ public class OrganizacionVinculada {
     private String correoElectronico;
     private int idOrganizacion;
     private List< Integer > idResponsables;
+    private boolean activa;
 
     /**
      * Constructor sin parámetros de la clase OrganizaciónVinculada.
@@ -37,6 +38,7 @@ public class OrganizacionVinculada {
         correoElectronico = "";
         idOrganizacion = 0;
         idResponsables = null;
+        activa = false;
     }
 
     /**
@@ -46,7 +48,7 @@ public class OrganizacionVinculada {
      */
     public OrganizacionVinculada( OrganizacionVinculada original ) {
         this( original.nombre, original.direccion, original.sector, original.telefono, original.correoElectronico,
-                original.idOrganizacion, original.idResponsables );
+                original.idOrganizacion, original.idResponsables, original.activa );
     }
 
     /**
@@ -59,7 +61,7 @@ public class OrganizacionVinculada {
      * @param correoIn el correo electronico de la organización
      */
     public OrganizacionVinculada( String nombreIn, String direccionIn, TipoSector sectorIn, String telefonoIn,
-                                  String correoIn, int idOrganizacionIn, List< Integer > idResponsablesIn ) {
+                                  String correoIn, int idOrganizacionIn, List< Integer > idResponsablesIn, boolean isActiveIn ) {
         nombre = nombreIn;
         direccion = direccionIn;
         sector = sectorIn;
@@ -67,6 +69,7 @@ public class OrganizacionVinculada {
         correoElectronico = correoIn;
         idOrganizacion = idOrganizacionIn;
         idResponsables = idResponsablesIn;
+        activa = isActiveIn;
     }
 
     public int getIdOrganizacion() { return idOrganizacion; }
@@ -119,6 +122,12 @@ public class OrganizacionVinculada {
     public List< Integer > getResponsables() { return idResponsables; }
 
     /**
+     * Regresa un booleano indicando si la organizacion vinculada esta activa o no.
+     * @return booleano, true si la organizacion esta activa, false si no
+     */
+    public boolean getActiveStatus() { return activa; }
+
+    /**
      * Cambia el nombre de la organización al valor introducido
      * @param nombreIn el nuevo nombre
      */
@@ -158,6 +167,12 @@ public class OrganizacionVinculada {
     public void SetCorreo( String correoIn ) {
         correoElectronico = correoIn;
     }
+
+    /**
+     * Configura el estado de la organizacion vinculada a activa o no.
+     * @param isActiveIn booleano indicando el nuevo estado de la organizacion.
+     */
+    public void SetActiveStatus( boolean isActiveIn ) { activa = isActiveIn; }
 
     /**
      * Agrega una ID de responsable proyecto a la lista de responsables
