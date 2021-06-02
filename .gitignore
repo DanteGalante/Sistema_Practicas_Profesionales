@@ -91,4 +91,10 @@ modules.xml
 # Sonarlint plugin
 .idea/sonarlint
 
+# Ignore lib
+lib/
+
+# Ignore information.txt
+information.txt
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all
