@@ -91,7 +91,7 @@ modules.xml
 # Sonarlint plugin
 .idea/sonarlint
 
-# Ignore lib
+# Ignore carpeta lib
 lib/
 
 # Ignore information.txt
