@@ -193,7 +193,7 @@ public class Principal_Coordinador implements Initializable {
      * Permite cambiar la pantalla a la pantalla GenerarReporte
      */
     public void MostrarPantallaGenerarReporte( MouseEvent mouseEvent ) {
-        screenChanger.MostrarPantallaGenerarReporteCoordinador( mouseEvent, errorText );
+        GenerarReporte();
     }
 
     public void GenerarReporte() {
@@ -205,37 +205,30 @@ public class Principal_Coordinador implements Initializable {
             var bold = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
             var paragraph = new Paragraph("Reporte Inscripciones");
             var table = new PdfPTable(3);
-            Stream.of("Estudiante", "Matricula", "Proyecto").forEach(table::addCell);
+            Stream.of("Estudiante","Matricula","Proyecto").forEach(table::addCell);
 
-            Arrays.stream(RecuperarNombreEstudiante()).forEach(val -> {
-                table.addCell(val);
-                table.addCell(val);
-                table.addCell(val);
+            Arrays.stream(RecuperarNombreEstudiante().stream().toArray()).forEach(val ->{
+                table.addCell(val.toString());
+                table.addCell(val.toString());
+                table.addCell(val.toString());
             });
             paragraph.add(table);
 
             doc.add(paragraph);
             doc.close();
 
-            //tfReporteGenerado = (PdfReader.getNormalizedRectangle(null));
-        } catch (Exception e) {
-            System.out.println(e);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
-    public String[] RecuperarNombreEstudiante(){
-        List<Estudiante> listaNombreEstudiante = new ArrayList<>();
-        List<Estudiante> listaAuxiliar = new ArrayList<>();
+    public List RecuperarNombreEstudiante(){
+        List<String> listaAuxiliar = new ArrayList<>();
         listaEstudiantes = estudiantes.ReadAll();
         for( Estudiante estudiante : listaEstudiantes ) {
-            estudiante.getNombres();
-            listaAuxiliar.add( estudiante );
+            listaAuxiliar.add( estudiante.getNombres());
         }
-        String[] arregloNombres = (String[]) listaAuxiliar.stream().toArray();
+        List<String> arregloNombres = listaAuxiliar;
         return arregloNombres;
     }
-
-    /*public Estudiante RecuperarEstudiante(int index){
-        estudiante.Read();
-    }*/
 }
