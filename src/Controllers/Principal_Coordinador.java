@@ -227,11 +227,11 @@ public class Principal_Coordinador implements Initializable {
         List<Estudiante> listaNombreEstudiante = new ArrayList<>();
         List<Estudiante> listaAuxiliar = new ArrayList<>();
         listaEstudiantes = estudiantes.ReadAll();
-        for( Estudiante estudiante : listaNombreEstudiante ) {
+        for( Estudiante estudiante : listaEstudiantes ) {
             estudiante.getNombres();
             listaAuxiliar.add( estudiante );
         }
-        String[] arregloNombres = (String[]) listaAuxiliar.toArray();
+        String[] arregloNombres = (String[]) listaAuxiliar.stream().toArray();
         return arregloNombres;
     }
 

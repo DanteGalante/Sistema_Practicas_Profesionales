@@ -20,13 +20,19 @@ import java.io.Console;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 public class GenerarReporte_Coordinador implements Initializable {
-    ScreenChanger screenChanger= new ScreenChanger();
+    private List< Estudiante > listaGrupos = new ArrayList< Estudiante>();
+    private EstudianteDAO estudiantes = new EstudianteDAO();
+    private List< Estudiante > listaEstudiantes = new ArrayList< Estudiante>();
+    private ScreenChanger screenChanger = new ScreenChanger();
+    EstudianteDAO estudiante = new EstudianteDAO();
+    List listaEstudiante = estudiante.ReadAll();
 
     @FXML
     private Label lbNombres;
@@ -58,8 +64,6 @@ public class GenerarReporte_Coordinador implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         GenerarReporte();
     }
-    EstudianteDAO estudiante = new EstudianteDAO();
-    List listaEstudiante = estudiante.ReadAll();
 
      public void GenerarReporte() {
         try {
@@ -72,7 +76,7 @@ public class GenerarReporte_Coordinador implements Initializable {
             var table = new PdfPTable(3);
             Stream.of("Estudiante","Matricula","Proyecto").forEach(table::addCell);
 
-            Arrays.stream(listaEstudiante.stream().toArray()).forEach(val ->{
+            Arrays.stream(RecuperarNombreEstudiante().stream().toArray()).forEach(val ->{
                table.addCell(val.toString());
                table.addCell(val.toString());
                table.addCell(val.toString());
@@ -84,11 +88,19 @@ public class GenerarReporte_Coordinador implements Initializable {
 
             tfReporteGenerado = (PdfReader.getNormalizedRectangle(null));
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
      }
 
-
+    public List RecuperarNombreEstudiante(){
+        List<String> listaAuxiliar = new ArrayList<>();
+        listaEstudiantes = estudiantes.ReadAll();
+        for( Estudiante estudiante : listaEstudiantes ) {
+            listaAuxiliar.add( estudiante.getNombres());
+        }
+        List<String> arregloNombres = listaAuxiliar;
+        return arregloNombres;
+    }
 
 
     /**
