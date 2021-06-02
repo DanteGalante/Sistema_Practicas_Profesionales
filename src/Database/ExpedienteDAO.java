@@ -117,6 +117,40 @@ public class ExpedienteDAO implements ExpedienteDAOInterface{
     }
 
     /**
+     * Regresa una instancia de Expediente de la base de datos
+     * @param matricula del estudiante del expediente deseado
+     * @return una instancia del Expediente
+     */
+    @Override
+    public Expediente ReadPorMatricula( String matricula ) {
+        Expediente expediente = null;
+        MySqlConnection connection = new MySqlConnection();
+        connection.StartConnection();
+
+        try {
+            String query = "SELECT * FROM Expediente WHERE Matricula = ?;";
+            PreparedStatement statement = connection.GetConnection().prepareStatement( query );
+            statement.setString( 1, matricula );
+            statement.executeQuery();
+            ResultSet result = statement.getResultSet();
+
+            if( result.next() ) {
+                expediente = new Expediente( result.getInt( 1 ), result.getInt( 2 ),
+                        result.getString( 3 ), result.getString( 4 ), result.getInt( 5 ),
+                        result.getInt( 6 ) );
+            }
+
+            result.close();
+            statement.close();
+        } catch( Exception exception ) {
+            exception.printStackTrace();
+        }
+
+        connection.StopConnection();
+        return expediente;
+    }
+
+    /**
      * Actualiza la información de un Expediente en la base de datos
      * @param expediente el expediente con su información actualizada
      * @return booleano indicando éxito o fracaso

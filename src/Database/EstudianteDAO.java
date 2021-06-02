@@ -188,6 +188,41 @@ public class EstudianteDAO implements EstudianteDAOInterface{
     }
 
     /**
+     * Regresa un estudiante de la base de datos. Utiliza la matrícula
+     * del estudiante para ubicarlo en la base de datos.
+     * @param matricula la matrícula del Estudiante deseado
+     * @return estudiante con la información de base de datos.
+     */
+    @Override
+    public Estudiante ReadPorID( int idUsuario ) {
+        Estudiante estudiante = null;
+        MySqlConnection connection = new MySqlConnection();
+        connection.StartConnection();
+
+        try {
+            String query = "SELECT * FROM Estudiante WHERE IDUsuario = ?;";
+            PreparedStatement statement = connection.GetConnection().prepareStatement( query );
+            statement.setInt( 1,  idUsuario );
+            statement.executeQuery();
+            ResultSet result = statement.getResultSet();
+
+            if( result.next() ) {
+                String matricula = result.getString( 1 );
+                String nrc = result.getString( 3 );
+                EstadoEstudiante estado = EstadoEstudiante.values()[ result.getInt( 4 ) ];
+
+                UsuarioUV usuario = usuarios.Read( idUsuario );
+                estudiante = new Estudiante( usuario, matricula, nrc, estado );
+            }
+        } catch( Exception exception ) {
+            exception.printStackTrace();
+        }
+
+        connection.StopConnection();
+        return estudiante;
+    }
+
+    /**
      * Actualiza la información de un estudiante en la base de datos.
      * @param estudiante la versión actualizada del Estudiante
      * @return booleano indicando éxito o fracaso
