@@ -17,5 +17,6 @@ public enum EstadoEstudiante {
     RegistroAprobado,
     AsignacionPendiente,
     RegistroPendiente,
-    ProyectoAsignado
+    ProyectoAsignado,
+    Eliminado
 }

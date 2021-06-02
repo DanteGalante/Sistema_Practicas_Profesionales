@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ValidarInscripcion">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ValidarInscripcion">
     <children>
         <SplitPane dividerPositions="0.18481375358166188" layoutX="81.0" layoutY="103.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
@@ -59,10 +52,7 @@
                                             <children>
                                                 <VBox prefHeight="330.0" prefWidth="179.0">
                                                     <children>
-                                                        <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="174.13671875">
-                                             <VBox.margin>
-                                                <Insets left="5.0" right="5.0" />
-                                             </VBox.margin></Text>
+                                                        <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="174.13671875" />
                                                     </children></VBox>
                                                 <Button contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#ClicRegresar" prefHeight="25.0" prefWidth="185.0" text="Regresar" />
                                             </children>
@@ -91,14 +81,14 @@
                                  <children>
                                     <HBox prefHeight="24.0" prefWidth="338.0" spacing="5.0">
                                        <children>
-                                          <Label prefHeight="17.0" prefWidth="52.0" />
-                                          <Label fx:id="lbPeriodo" />
+                                          <Label prefHeight="17.0" prefWidth="52.0" text="Periodo: " />
+                                          <Label fx:id="lbPeriodo" text="..." />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="24.0" prefWidth="437.0">
                                        <children>
                                           <Label text="Fecha:  " />
-                                          <Label fx:id="lbFecha" text="..." />
+                                          <Label fx:id="lbFecha" text="Label" />
                                        </children>
                                     </HBox>
                                  </children>
@@ -111,11 +101,10 @@
                                     <TableColumn fx:id="tcDepurar" prefWidth="110.0" text="Depurar" />
                                 </columns>
                               </TableView>
-                              <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                              <HBox alignment="TOP_RIGHT" spacing="10.0">
                                  <children>
-                                    <Text fx:id="confirmationText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="653.0" />
-                                    <Button mnemonicParsing="false" onMouseClicked="#ClicCancelar" text="Cancelar" />
-                                    <Button mnemonicParsing="false" onMouseClicked="#ClicAceptar" text="Aceptar" />
+                                    <Button mnemonicParsing="false" text="Cancelar" />
+                                    <Button mnemonicParsing="false" text="Aceptar" />
                                  </children>
                               </HBox>
                                     </children>

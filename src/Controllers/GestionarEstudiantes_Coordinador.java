@@ -11,6 +11,7 @@ package Controllers;
 import Database.EstudianteDAO;
 import Entities.Estudiante;
 import Utilities.OutputMessages;
+import Utilities.ScreenChanger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -28,6 +29,7 @@ import java.util.ResourceBundle;
 public class GestionarEstudiantes_Coordinador implements Initializable {
     private EstudianteDAO estudiantes = new EstudianteDAO();
     private OutputMessages outputMessages = new OutputMessages();
+    private ScreenChanger screenChanger = new ScreenChanger();
 
     @FXML
     private Text nameText;
@@ -127,7 +129,7 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
 
     @FXML
     void Return( MouseEvent event ) {
-
+        screenChanger.MostrarPantallaPrincipalCoordinador( event, errorText );
     }
 
     @FXML

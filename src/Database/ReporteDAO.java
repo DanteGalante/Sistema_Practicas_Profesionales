@@ -39,7 +39,8 @@ public class ReporteDAO implements ReporteDAOInterface{
 
         try {
             documentos.Create( new Documento( reporte.getIdDocumento(), reporte.getTitulo(), reporte.GetDescripcion(),
-                    reporte.getFechaEntrega(), reporte.GetClaveExpediente() ) );
+                               reporte.getFechaEntrega(), reporte.GetClaveExpediente(), reporte.getComentarios(),
+                               reporte.getCalificacion() ) );
             Documento documento = documentos.Read( reporte.getTitulo(), reporte.GetClaveExpediente() );
             String query = "INSERT INTO Reporte( HorasReportadas, Tipo, ClaveExpediente, IDDocumento ) VALUES( ?, ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
@@ -141,7 +142,8 @@ public class ReporteDAO implements ReporteDAOInterface{
             statement.executeUpdate();
 
             documentos.Update( new Documento( reporte.getIdDocumento(), reporte.getTitulo(), reporte.GetDescripcion(),
-                    reporte.getFechaEntrega(), reporte.GetClaveExpediente() ) );
+                               reporte.getFechaEntrega(), reporte.GetClaveExpediente(), reporte.getComentarios(),
+                               reporte.getCalificacion() ) );
 
             updated = true;
         } catch( Exception exception ) {

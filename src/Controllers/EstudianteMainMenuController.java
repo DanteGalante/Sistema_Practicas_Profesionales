@@ -4,11 +4,15 @@
  * Fecha Creación: 4 - abr - 2021
  * Descripción:
  * Clase encargada de manejar los eventos de la pantalla
- * Student Main Menu Screen.
+ * MenuPrincipal_Estudiante.
  */
 package Controllers;
 
+import Database.ExpedienteDAO;
+import Database.ProyectoDAO;
+import Entities.Expediente;
 import Enumerations.EstadoEstudiante;
+import Enumerations.EstadoProyecto;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import javafx.fxml.FXML;
@@ -18,11 +22,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import Utilities.LoginSession;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Clase encargada de manejar los eventos de la pantalla
+ * MenuPrincipal_Estudiante.
+ */
 public class EstudianteMainMenuController implements Initializable {
     private ScreenChanger screenChanger = new ScreenChanger();
     private OutputMessages outputMessages = new OutputMessages();
+    private ProyectoDAO proyectos = new ProyectoDAO();
+    private ExpedienteDAO expedientes = new ExpedienteDAO();
 
     @FXML
     private Text nameText;
@@ -67,6 +78,7 @@ public class EstudianteMainMenuController implements Initializable {
         nameText.setText( LoginSession.GetInstance().GetEstudiante().getNombres() );
         lastNameText.setText( LoginSession.GetInstance().GetEstudiante().GetApellidos() );
         matriculaText.setText( LoginSession.GetInstance().GetEstudiante().getMatricula() );
+        SetProjectName();
     }
 
     /**
@@ -155,5 +167,31 @@ public class EstudianteMainMenuController implements Initializable {
     private boolean DoesStudentHaveProjectAssigned() {
         return LoginSession.GetInstance().GetEstudiante().GetEstado() == EstadoEstudiante.ProyectoAsignado ||
                 LoginSession.GetInstance().GetEstudiante().GetEstado() == EstadoEstudiante.Evaluado;
+    }
+
+    /**
+     * Recupera el proyecto asignado del usuario y coloca su nombre en el
+     * campo de texto projectText
+     */
+    private void SetProjectName() {
+        if( DoesStudentHaveProjectAssigned() ) {
+            projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
+        }
+    }
+
+    /**
+     * Recupera el expediente del usuario actual
+     * @return una instancia del expediente
+     */
+    private Expediente GetUserExpediente() {
+        List< Expediente > expedienteList = expedientes.ReadAll();
+        Expediente userExpediente = null;
+        for( Expediente expediente : expedienteList ) {
+            if( expediente.GetMatricula().equals( LoginSession.GetInstance().GetEstudiante().getMatricula() ) &&
+                    proyectos.Read( expediente.GetIDProyecto() ).GetEstado() == EstadoProyecto.Asignado ) {
+                userExpediente = expediente;
+            }
+        }
+        return userExpediente;
     }
 }

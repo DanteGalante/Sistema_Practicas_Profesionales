@@ -204,7 +204,7 @@ public class Principal_Docente implements Initializable {
 
         for( ArchivoConsulta ejemplar : archivoConsultas ) {
             if( ejemplar.GetNumeroPersonal().equals( archivo.GetNumeroPersonal() ) &&
-                ejemplar.getTitulo().equals( archivo.getTitulo() ) ) {
+                    ejemplar.getTitulo().equals( archivo.getTitulo() ) ) {
                 nombreNoExiste = false;
                 errorText.setText( outputMessages.DocumentNameAlreadyExists() );
             }

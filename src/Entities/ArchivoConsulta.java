@@ -74,25 +74,6 @@ public class ArchivoConsulta {
     public String GetNumeroPersonal() { return numeroPersonal; }
 
     /**
-     * Regresa la extension del archivo
-     * @return el tipo de archivo
-     */
-    public String getTipo(){
-        int separador = descripcion.getName().lastIndexOf('.');
-        String tipo = (separador == -1) ? "" : descripcion.getName().substring(separador + 1);
-        return tipo;
-    }
-
-    /**
-     * Regresa el tamaño en megabytes (MB) del archivo
-     * @return el tamaño en MB del archivo
-     */
-    public String getTamanio(){
-        double tamanio = (descripcion.length() /1024);
-        return tamanio + " KB";
-    }
-
-    /**
      * Cambia el título del arhivo al valor introducido
      * @param tituloIn el nuevo título
      */

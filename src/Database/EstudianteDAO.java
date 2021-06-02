@@ -124,7 +124,7 @@ public class EstudianteDAO implements EstudianteDAOInterface{
     }
 
     @Override
-    public List< Estudiante > ReadStudentsByGroup(String NRC ) {
+    public List< Estudiante > ReadStudentsByGroup( String NRC ) {
         List< Estudiante > estudiantes = new ArrayList<>();
         MySqlConnection connection = new MySqlConnection();
         connection.StartConnection();

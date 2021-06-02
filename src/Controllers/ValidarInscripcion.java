@@ -89,9 +89,9 @@ public class ValidarInscripcion implements Initializable {
      * van a ser mostrados por cada columna.
      */
     public void ConfigurarColumnas() {
-        tcNombre.setCellValueFactory( new PropertyValueFactory<>( "nombreCompleto" ) );
+        tcNombre.setCellValueFactory( new PropertyValueFactory<>( "nombre" ) );
         tcMatricula.setCellValueFactory( new PropertyValueFactory<>( "matricula" ) );
-        tcValidar.setCellValueFactory( new PropertyValueFactory<>( "validado" ) );
+        tcValidar.setCellValueFactory( new PropertyValueFactory<>( "validado") );
         tcDepurar.setCellValueFactory( new PropertyValueFactory<>( "depurado" ) );
     }
 
@@ -136,9 +136,6 @@ public class ValidarInscripcion implements Initializable {
                 }
             }
             confirmationText.setText( "Se ha realizado la operación con éxito" );
-
-            RecuperarEstudiantes();
-            LlenarTablaEstudiantes();
         }
     }
 

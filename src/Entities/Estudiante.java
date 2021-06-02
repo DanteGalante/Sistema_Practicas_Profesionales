@@ -126,8 +126,7 @@ public class Estudiante extends UsuarioUV {
      * Regresa el nombre completo del estudiante
      * @return nombre completo del estudiante
      */
-    @Override
-    public String getNombreCompleto(){
+    public String getNombre(){
         return super.getNombreCompleto();
     }
 
@@ -168,11 +167,5 @@ public class Estudiante extends UsuarioUV {
      */
     public void setDepurado(boolean depurado) {
         this.depurado.setSelected(depurado);
-    }
-
-    @Override
-    public String toString() {
-        return matricula + " " +
-                nombres + " " + apellidos;
     }
 }

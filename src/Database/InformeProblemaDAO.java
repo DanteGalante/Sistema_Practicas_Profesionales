@@ -35,7 +35,7 @@ public class InformeProblemaDAO implements InformeProblemaDAOInterface {
         connection.StartConnection();
 
         try {
-            String query = "INSERT INTO InformeProblema( FechaEnviada, NumeroPersonal, nombreEstudiante, Asunto, Contenido ) " +
+            String query = "INSERT INTO InformeProblema( FechaEnviada, NumeroPersonal, Estudiante, Asunto, Contenido ) " +
                     "VALUES ( ?, ?, ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1, informe.GetFechaEnviada() );
