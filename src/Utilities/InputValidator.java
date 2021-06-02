@@ -9,6 +9,7 @@
 package Utilities;
 
 import Entities.Estudiante;
+import Entities.InformeProblema;
 import Entities.OrganizacionVinculada;
 import Entities.ResponsableProyecto;
 
@@ -30,6 +31,8 @@ public class InputValidator {
     private final int nrcSize = 5;
     private final int minDireccion = 10;
     private final int maxDireccion = 200;
+    private final int minTituloInforme = 1;
+    private final int maxTituloInforme = 50;
 
     /**
      * Verifica que la información de una instancia de Estudiante sea valida y que las
@@ -318,5 +321,14 @@ public class InputValidator {
             }
         }
         return hasOnlyNumbers;
+    }
+
+    public boolean IsInformeProblemaInformationValid(InformeProblema informeProblema) {
+        return IsStringValidSize( informeProblema.GetAsunto(), minTituloInforme, maxTituloInforme ) &&
+                !HasInvalidCharacter( informeProblema.GetAsunto() ) &&
+                !HasInvalidCharacter( informeProblema.GetContenido() ) &&
+                !HasInvalidCharacter( informeProblema.GetEstudiante() ) &&
+                !HasInvalidCharacter( informeProblema.GetFechaEnviada() ) &&
+                !HasInvalidCharacter( informeProblema.GetNumeroPersonal() );
     }
 }
