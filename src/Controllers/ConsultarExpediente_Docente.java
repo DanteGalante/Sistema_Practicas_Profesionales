@@ -34,7 +34,7 @@ public class ConsultarExpediente_Docente implements Initializable {
     DocumentoDAO documentoDAO = new DocumentoDAO();
     ProyectoDAO proyectoDAO = new ProyectoDAO();
     List< Documento > documentosSubidos = new ArrayList< Documento >();
-    Expediente expedienteEstudiante = expedienteDAO.ReadByStudent( estudianteSeleccionado.getMatricula() );
+    Expediente expedienteEstudiante = expedienteDAO.ReadPorMatricula( estudianteSeleccionado.getMatricula() );
 
     @FXML
     private Label lbNombre;

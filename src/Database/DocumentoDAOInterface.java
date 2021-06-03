@@ -16,6 +16,7 @@ public interface DocumentoDAOInterface {
     List< Documento > ReadAll();
     Documento Read( int idDocumento );
     Documento Read( String titulo, int claveExpediente );
+    List< Documento > ReadByExpediente(int claveExpediente);
     boolean Update( Documento documento );
     boolean Delete( int idDocumento );
 }
