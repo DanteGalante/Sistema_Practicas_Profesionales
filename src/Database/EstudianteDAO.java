@@ -75,7 +75,45 @@ public class EstudianteDAO implements EstudianteDAOInterface{
             {
                 UsuarioUV usuarioTemp = usuarios.Read( result.getInt( 2 ) );
                 estudiantes.add( new Estudiante( usuarioTemp, result.getString( 1 ), result.getString( 3 ),
-                                                 EstadoEstudiante.values()[ result.getInt( 4 ) ] ) );
+                        EstadoEstudiante.values()[ result.getInt( 4 ) ], "" ) );
+            }
+
+            result.close();
+            statement.close();
+        } catch( Exception exception ) {
+            exception.printStackTrace();
+        }
+
+        connection.StopConnection();
+        return estudiantes;
+    }
+
+    /**
+     * Regresa una lista con todos los estudiantes en la base de datos.
+     * @return lista de estudiantes
+     */
+    @Override
+    public List< Estudiante > ReadAllWithProjects() {
+        List< Estudiante > estudiantes = new ArrayList<>();
+        MySqlConnection connection = new MySqlConnection();
+        connection.StartConnection();
+
+        try {
+            Statement statement = connection.GetConnection().createStatement();
+            ResultSet result = statement.executeQuery(
+                    "SELECT e.Matricula, e.IDUsuario, e.NRC, e.Estado, p.Nombre\n" +
+                            "FROM estudiante e\n" +
+                            "LEFT JOIN expediente ex ON ex.Matricula = e.Matricula\n" +
+                            "LEFT JOIN proyecto p ON ex.IDProyecto = p.IDProyecto");
+
+            while( result.next() )
+            {
+                UsuarioUV usuarioTemp = usuarios.Read( result.getInt( 2 ) );
+                estudiantes.add( new Estudiante( usuarioTemp,
+                        result.getString( 1 ),
+                        result.getString( 3 ),
+                        EstadoEstudiante.values()[ result.getInt( 4 ) ],
+                        result.getString(5) ) );
             }
 
             result.close();
@@ -113,7 +151,7 @@ public class EstudianteDAO implements EstudianteDAOInterface{
                 EstadoEstudiante estado = EstadoEstudiante.values()[ result.getInt( 4 ) ];
 
                 UsuarioUV usuario = usuarios.Read( idUsuario );
-                estudiante = new Estudiante( usuario, matricula, nrc, estado );
+                estudiante = new Estudiante( usuario, matricula, nrc, estado, "" );
             }
         } catch( Exception exception ) {
             exception.printStackTrace();
@@ -140,7 +178,7 @@ public class EstudianteDAO implements EstudianteDAOInterface{
             {
                 UsuarioUV usuarioTemp = usuarios.Read( result.getInt( 2 ) );
                 estudiantes.add( new Estudiante( usuarioTemp, result.getString( 1 ), result.getString( 3 ),
-                        EstadoEstudiante.values()[ result.getInt( 4 ) ] ) );
+                        EstadoEstudiante.values()[ result.getInt( 4 ) ], "" ) );
             }
 
             result.close();
@@ -174,7 +212,7 @@ public class EstudianteDAO implements EstudianteDAOInterface{
             {
                 UsuarioUV usuarioTemp = usuarios.Read( result.getInt( 2 ) );
                 estudiantes.add( new Estudiante( usuarioTemp, result.getString( 1 ), result.getString( 3 ),
-                        EstadoEstudiante.values()[ result.getInt( 4 ) ] ) );
+                        EstadoEstudiante.values()[ result.getInt( 4 ) ], "") );
             }
 
             result.close();
@@ -212,7 +250,7 @@ public class EstudianteDAO implements EstudianteDAOInterface{
                 EstadoEstudiante estado = EstadoEstudiante.values()[ result.getInt( 4 ) ];
 
                 UsuarioUV usuario = usuarios.Read( idUsuario );
-                estudiante = new Estudiante( usuario, matricula, nrc, estado );
+                estudiante = new Estudiante( usuario, matricula, nrc, estado, "");
             }
         } catch( Exception exception ) {
             exception.printStackTrace();
