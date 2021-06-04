@@ -222,6 +222,7 @@ public class SelectProjectsController implements Initializable {
         if( selectedProjectsTable.getItems().size() < maxSelectedProjects ){
             hasSpace = true;
         } else {
+            successText.setText( "" );
             errorText.setText( outputMessages.AlreadySelectedMaxAmountProjects() );
         }
         return hasSpace;
@@ -236,6 +237,7 @@ public class SelectProjectsController implements Initializable {
         if( selectedProjectsTable.getItems().size() == maxSelectedProjects ) {
             selected3Projects = true;
         } else {
+            successText.setText( "" );
             errorText.setText( outputMessages.NotEnoughProjectsSelected() );
         }
         return selected3Projects;

@@ -231,6 +231,13 @@ public class OutputMessages {
     public String DeleteDocumentConfirmation() { return "¿Estas seguro/a que deseas eliminar el archivo?"; }
 
     /**
+     * Mensaje mostrado cuando se intenta Generar un reporte en
+     * la pantalla Principal_Coordinador
+     * @return una cadena con el mensaje de confirmacion
+     */
+    public String GenerarReporteConfirmation() { return "¿Estas seguro/a que deseas Generar el reporte?"; }
+
+    /**
      * Mensaje mostrado cuando se intenta eliminar un estudiante en
      * la pantalla GestionarEstudiantes_Coordinador
      * @return una cadena con el mensaje de confirmacion

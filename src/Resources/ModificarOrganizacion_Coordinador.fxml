@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ModificarOrganizacion_Coordinador">
+    <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="122.0">
+            <children>
+                <SplitPane dividerPositions="0.5" layoutX="2.0" orientation="VERTICAL" prefHeight="598.0" prefWidth="294.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #2b2e4a;">
+                            <children>
+                                <Label layoutX="14.0" layoutY="14.0" text="Nombres:" textFill="#e84545" />
+                                <Label fx:id="lbNombres" layoutX="14.0" layoutY="31.0" text="Label" textFill="#e84545" />
+                                <Label layoutX="14.0" layoutY="57.0" text="Apellidos:" textFill="#e84545" />
+                                <Label fx:id="lbApellidos" layoutX="14.0" layoutY="74.0" text="Label" textFill="#e84545" />
+                                <Label layoutX="14.0" layoutY="98.0" text="No.Trabajador:" textFill="#e84545" />
+                                <Label fx:id="lbNoTrabajador" layoutX="14.0" layoutY="115.0" text="Label" textFill="#e84545" />
+                            </children></AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="195.0" prefWidth="154.0" style="-fx-background-color: #2b2e4a;">
+                            <children>
+                                <VBox alignment="BOTTOM_CENTER" fillWidth="false" layoutX="-1.0" layoutY="270.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="292.0" style="-fx-background-color: #2b2e4a;">
+                                    <children>
+                                        <Button fx:id="btnRegresar" mnemonicParsing="false" onMouseClicked="#ClicRegresar" prefHeight="25.0" prefWidth="375.0" text="Regresar" textFill="#e84545" />
+                                    </children>
+                                </VBox>
+                                <Text fx:id="errorText" fill="#e84545" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                <Text fx:id="successText" fill="#e84545" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                            </children></AnchorPane>
+                    </items>
+                </SplitPane>
+            </children></AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #2b2e4a;">
+            <children>
+                <Label id="bold" layoutX="239.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Modificar Organización Coordinador" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font></Label>
+                <Label id="bold" layoutX="40.0" layoutY="142.0" prefHeight="17.0" prefWidth="52.0" style="-fx-font-weight: bold;" text="Nombre:" textFill="#e84545" />
+                <Label id="bold" layoutX="40.0" layoutY="180.0" prefHeight="17.0" prefWidth="79.0" style="-fx-font-weight: bold;" text="Dirección:" textFill="#e84545" />
+                <Label id="bold" layoutX="40.0" layoutY="218.0" prefHeight="17.0" prefWidth="135.0" style="-fx-font-weight: bold;" text="Correo Electrónico" textFill="#e84545" />
+                <TextField fx:id="tfNombre" layoutX="183.0" layoutY="138.0" />
+                <TextField fx:id="tfDireccion" layoutX="183.0" layoutY="176.0" />
+                <Button fx:id="btnCancelar" layoutX="473.0" layoutY="343.0" mnemonicParsing="false" onMouseClicked="#ClicCancelar" prefHeight="25.0" prefWidth="69.0" text="Cancelar" textFill="#e84545" />
+                <Button fx:id="btnModificar" layoutX="557.0" layoutY="343.0" mnemonicParsing="false" onMouseClicked="#ManejoModificarOrganizacion" prefHeight="25.0" prefWidth="79.0" text="Modificar" textFill="#e84545" />
+                <Label id="bold" layoutX="40.0" layoutY="251.0" prefHeight="17.0" prefWidth="135.0" style="-fx-font-weight: bold;" text="Teléfono:" textFill="#e84545" />
+                <TextField fx:id="tfCorreoElectronico" layoutX="183.0" layoutY="214.0" />
+                <TextField fx:id="tfTelefono" layoutX="183.0" layoutY="251.0" />
+                <Label layoutX="354.0" layoutY="142.0" text="Nombres:" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="354.0" layoutY="180.0" text="Apellidos:" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="354.0" layoutY="218.0" text="Correo Electrónico:" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="355.0" layoutY="251.0" text="Teléfono:" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="tfNombresRepresentante" layoutX="487.0" layoutY="138.0" />
+                <TextField fx:id="tfApellidosRepresentante" layoutX="487.0" layoutY="176.0" />
+                <TextField fx:id="tfCorreoRepresentante" layoutX="487.0" layoutY="214.0" />
+                <TextField fx:id="tfTelefonoRepresentante" layoutX="487.0" layoutY="251.0" />
+                <Label layoutX="128.0" layoutY="81.0" text="Datos Organización" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="428.0" layoutY="81.0" text="Datos Representante" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+            </children></AnchorPane>
+    </items>
+</SplitPane>
