@@ -220,6 +220,6 @@ public class RegistryScreenController {
     private Estudiante GetStudent() {
         return new Estudiante( 0, nameField.getText(), lastNameField.getText(), "", passwordField.getText(),
                 emailField.getText(), phoneField.getText(), matriculaField.getText(), nrcField.getText(),
-                EstadoEstudiante.RegistroPendiente );
+                EstadoEstudiante.RegistroPendiente, "" );
     }
 }

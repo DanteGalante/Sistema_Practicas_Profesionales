@@ -126,7 +126,6 @@ public class Principal_Docente implements Initializable {
             if(!nrc.equals(estudiante.getNrc())){
                 grupo.remove(estudiante);
             }
-            System.out.println(estudiante.getProyecto());
         }
     }
 

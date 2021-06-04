@@ -90,4 +90,23 @@ public class ArchivoConsulta {
      * @param numeroPersonalIn el nuevo número de personal
      */
     public void SetNumeroPersonal( String numeroPersonalIn ) { numeroPersonal = numeroPersonalIn; }
+
+    /**
+     * Regresa el tamaño en megabytes (MB) del archivo
+     * @return el tamaño en MB del archivo
+     */
+    public String getTamanio(){
+        double tamanio = (descripcion.length() /1024);
+        return tamanio + " KB";
+    }
+
+    /**
+     * Regresa la extension del archivo
+     * @return el tipo de archivo
+     */
+    public String getTipo(){
+        int separador = descripcion.getName().lastIndexOf('.');
+        String tipo = (separador == -1) ? "" : descripcion.getName().substring(separador + 1);
+        return tipo;
+    }
 }
