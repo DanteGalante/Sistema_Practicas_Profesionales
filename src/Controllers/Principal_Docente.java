@@ -107,7 +107,7 @@ public class Principal_Docente implements Initializable {
         //Tabla de grupo
         tcMatricula.setCellValueFactory( new PropertyValueFactory<>( "matricula" ) );
         tcNombre.setCellValueFactory( new PropertyValueFactory<>( "nombres" ) );
-        tcProyectoAsignado.setCellValueFactory( new PropertyValueFactory<>("proyecto") );
+        //tcProyectoAsignado.setCellValueFactory( new PropertyValueFactory<>("") );
 
         //Tabla de archivos subidos por el docente
         tcNombreArchivo.setCellValueFactory( new PropertyValueFactory<>( "titulo" ) );
@@ -120,7 +120,7 @@ public class Principal_Docente implements Initializable {
      * el docente que inicio sesion
      */
     public void RecuperarGrupo() {
-        String nrc = LoginSession.GetInstance().GetDocente().GetNrc();
+        String nrc = LoginSession.GetInstance().GetDocente().GetNrc();  
         grupo = estudianteDAO.ReadAllWithProjects();
         for(Estudiante estudiante : grupo){
             if(!nrc.equals(estudiante.getNrc())){
@@ -263,8 +263,8 @@ public class Principal_Docente implements Initializable {
     }
 
     /**
-     * Muestra la pantalla de consultar expediente de un estudiante especificado en esta pantalla.
-     * @param mouseEvent evento que invoco el método
+     *
+     * @param mouseEvent
      */
     public void ClicConsultarExpediente( MouseEvent mouseEvent){
         Estudiante estudianteElegido = (Estudiante) tbvGrupo.getSelectionModel().getSelectedItem();
@@ -277,18 +277,10 @@ public class Principal_Docente implements Initializable {
         }
     }
 
-    /**
-     * Muestra la pantalla de "ReportarProblema" y cierra la actual
-     * @param mouseEvent evento del mouse que inicia el método
-     */
     public void ClicReportarProblema( MouseEvent mouseEvent ){
         screenChanger.ShowScreenReportarProblema_Docente( mouseEvent, errorText );
     }
 
-    /**
-     * Elimina del sistema el archivo de consulta que se seleccione en esta pantalla.
-     * @param mouseEvent evento del mouse que inicia el método
-     */
     public void ClicEliminarArchivo(MouseEvent mouseEvent) {
         ArchivoConsulta archivoEliminar = (ArchivoConsulta) tbvArchivosSubidos.getSelectionModel().getSelectedItem();
         if( archivoEliminar != null ){
