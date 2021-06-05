@@ -120,8 +120,13 @@ public class Principal_Docente implements Initializable {
      * el docente que inicio sesion
      */
     public void RecuperarGrupo() {
-        String nrc = LoginSession.GetInstance().GetDocente().GetNrc();
-        grupo = estudianteDAO.ReadStudentsByGroup(nrc);
+        String nrc = LoginSession.GetInstance().GetDocente().GetNrc();  
+        grupo = estudianteDAO.ReadAllWithProjects();
+        for(Estudiante estudiante : grupo){
+            if(!nrc.equals(estudiante.getNrc())){
+                grupo.remove(estudiante);
+            }
+        }
     }
 
     /**
