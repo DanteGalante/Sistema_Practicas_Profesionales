@@ -190,7 +190,6 @@ public class Principal_Coordinador implements Initializable {
         screenChanger.ShowLoginScreen( mouseEvent, errorText );
     }
 
-    //Generar reportes
     public void ClicGenerarReporte( MouseEvent mouseEvent ) {
         Alert confirmAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.GenerarReporteConfirmation());
         confirmAlert.showAndWait().ifPresent( response -> {
