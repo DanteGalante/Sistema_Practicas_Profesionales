@@ -31,6 +31,12 @@ public interface EstudianteDAOInterface {
     List< Estudiante > ReadAll();
 
     /**
+     * Regresa una lista con todos los estudiantes de la base de datos, y el nombre de sus proyecto asignados
+     * @return lista con todos los Estudiantes de la base de datos, con nombres de proyecto asignado
+     */
+    List< Estudiante > ReadAllWithProjects();
+
+    /**
      * Regresa un estudiante de la base de datos. Utiliza una matrícula
      * para encontrar el Estudiante deseado. Regresa Null en caso de no
      * encontrar al Estudiante
@@ -52,7 +58,12 @@ public interface EstudianteDAOInterface {
      * @return una lista ocn los estudiantes de un mismo estado;
      */
     List< Estudiante > ReadByState( int estado );
-
+    /**
+     * Regresa un estudiante de la base de datos. Utiliza la matrícula
+     * del estudiante para ubicarlo en la base de datos.
+     * @param idUsuario el id del usuario
+     * @return estudiante con la información de base de datos.
+     */
     Estudiante ReadPorID( int idUsuario );
 
     /**
