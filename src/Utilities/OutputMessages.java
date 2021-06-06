@@ -150,6 +150,14 @@ public class OutputMessages {
             "GestionarProyecto_Coordinador."; }
 
     /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * VisualizarReporte_Coordinador
+     * @return una cadena con el mensaje de error
+     */
+    public String PantallaVisualizarReportePerdido() { return "No se encontró el archivo FXML de la pantalla " +
+            "VisualizarReporte_Coordinador."; }
+
+    /**
      * Mensaje mostrado cuando se registra una nueva Organización a la
      * base de datos de manera exitosa.
      * @return una cadena con el mensaje de éxito
