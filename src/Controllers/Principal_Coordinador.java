@@ -199,6 +199,13 @@ public class Principal_Coordinador implements Initializable {
         });
     }
 
+    /**
+     * Permite cambiar la pantalla a la pantalla VisualizarReporte_Coordinador
+     */
+    public void MostrarVisualizarReportes(MouseEvent mouseEvent){
+        screenChanger.MostrarPantallaVisualizarReportesCoordinador( mouseEvent, errorText );
+    }
+
     public void GenerarReporte() {
         try {
             var doc = new Document();
