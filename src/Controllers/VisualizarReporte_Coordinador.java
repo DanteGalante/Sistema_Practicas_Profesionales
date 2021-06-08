@@ -102,10 +102,8 @@ public class VisualizarReporte_Coordinador implements Initializable {
 
     @FXML
     public void ClicVisualizarReporte( MouseEvent mouseEvent ) {
-        /*
         SelectionContainer.GetInstance().setInformeElegido( RecuperarSeleccionReporte() );
         screenChanger.MostrarPantallaReporteSeleccionado( mouseEvent, errorText );
-         */
     }
 
     public InformeProblema RecuperarSeleccionReporte(){
