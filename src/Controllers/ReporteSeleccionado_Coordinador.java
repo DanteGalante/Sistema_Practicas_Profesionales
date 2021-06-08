@@ -73,10 +73,10 @@ public class ReporteSeleccionado_Coordinador implements Initializable {
      * nombres, apellidos y No.Trabajador
      */
     public void DatosInforme(){
-        asuntoText.setText( SelectionContainer.GetInstance().getInformeElegido().GetAsunto() );
-        docenteText.setText( SelectionContainer.GetInstance().getInformeElegido().GetNumeroPersonal() );
-        fechaEntregaText.setText( SelectionContainer.GetInstance().getInformeElegido().GetFechaEnviada() );
-        causanteText.setText( SelectionContainer.GetInstance().getInformeElegido().GetEstudiante() );
+        asuntoText.setText( SelectionContainer.GetInstance().getInformeElegido().getAsunto() );
+        docenteText.setText( SelectionContainer.GetInstance().getInformeElegido().getNumeroPersonal() );
+        fechaEntregaText.setText( SelectionContainer.GetInstance().getInformeElegido().getFechaEnviada() );
+        causanteText.setText( SelectionContainer.GetInstance().getInformeElegido().getEstudiante() );
         taContenido.setText( SelectionContainer.GetInstance().getInformeElegido().GetContenido() );
     }
 

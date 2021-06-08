@@ -324,11 +324,11 @@ public class InputValidator {
     }
 
     public boolean IsInformeProblemaInformationValid(InformeProblema informeProblema) {
-        return IsStringValidSize( informeProblema.GetAsunto(), minTituloInforme, maxTituloInforme ) &&
-                !HasInvalidCharacter( informeProblema.GetAsunto() ) &&
+        return IsStringValidSize( informeProblema.getAsunto(), minTituloInforme, maxTituloInforme ) &&
+                !HasInvalidCharacter( informeProblema.getAsunto() ) &&
                 !HasInvalidCharacter( informeProblema.GetContenido() ) &&
-                !HasInvalidCharacter( informeProblema.GetEstudiante() ) &&
-                !HasInvalidCharacter( informeProblema.GetFechaEnviada() ) &&
-                !HasInvalidCharacter( informeProblema.GetNumeroPersonal() );
+                !HasInvalidCharacter( informeProblema.getEstudiante() ) &&
+                !HasInvalidCharacter( informeProblema.getFechaEnviada() ) &&
+                !HasInvalidCharacter( informeProblema.getNumeroPersonal() );
     }
 }

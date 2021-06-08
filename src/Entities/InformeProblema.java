@@ -63,7 +63,7 @@ public class InformeProblema {
      * Regresa la fecha en la cual fue enviado el informe
      * @return la fecha de envio
      */
-    public String GetFechaEnviada() {
+    public String getFechaEnviada() {
         return fechaEnviada;
     }
 
@@ -71,7 +71,7 @@ public class InformeProblema {
      * Regresa el número de personal de la persona que envió el informe
      * @return el número de personal
      */
-    public String GetNumeroPersonal() {
+    public String getNumeroPersonal() {
         return numeroPersonal;
     }
 
@@ -79,7 +79,7 @@ public class InformeProblema {
      * Regresa la matrícula del estudiante del cual trata el informe
      * @return la matrícula del estudiante
      */
-    public String GetEstudiante() {
+    public String getEstudiante() {
         return estudiante;
     }
 
@@ -87,7 +87,7 @@ public class InformeProblema {
      * Regresa el asunto del informe
      * @return el asunto del informe
      */
-    public String GetAsunto() {
+    public String getAsunto() {
         return asunto;
     }
 
