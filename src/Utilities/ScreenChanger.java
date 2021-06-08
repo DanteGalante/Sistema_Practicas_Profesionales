@@ -44,6 +44,7 @@ public class ScreenChanger {
     private String consultarExpedienteDocenteScreen = "../Resources/ConsultarExpediente_Docente.fxml";
     private String reportarProblema_DocenteScreen = "../Resources/ReportarProblema_Docente.fxml";
     private String pantallaVisualizarReportes = "../Resources/VisualizarReporte_Coordinador.fxml";
+    private String pantallaReporteSeleccionado = "../Resources/ReporteSeleccionado_Coordinador.fxml";
 
     /**
      * Hace el cambio de pantalla a la pantalla de IniciarSesión.
@@ -232,6 +233,20 @@ public class ScreenChanger {
             SetScene(mouseEvent, pantallaVisualizarReportes);
         } catch (IOException exception) {
             errorText.setText(outputMessages.PantallaVisualizarReportePerdido());
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Hace el cambio de la pantalla Principal_Coordinador a la pantalla ReporteSeleccionado_Coordinador
+     * @param mouseEvent el evento de mouse que inicio el cambio
+     * @param errorText el campo de texto donde se coloca un mensaje en caso de error
+     */
+    public void MostrarPantallaReporteSeleccionado( MouseEvent mouseEvent, Text errorText ) {
+        try {
+            SetScene(mouseEvent, pantallaReporteSeleccionado);
+        } catch (IOException exception) {
+            errorText.setText(outputMessages.PantallaReporteSeleccionadoPerdido());
             exception.printStackTrace();
         }
     }
