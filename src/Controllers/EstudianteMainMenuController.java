@@ -87,7 +87,11 @@ public class EstudianteMainMenuController implements Initializable {
      */
     public void ShowReports( MouseEvent mouseEvent ){
         if( DoesStudentHaveProjectAssigned() ) {
-            screenChanger.ShowStudentReportsScreen(mouseEvent, errorText);
+            try {
+                screenChanger.ShowStudentReportsScreen(mouseEvent, errorText);
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         } else {
             errorText.setText( outputMessages.ProjectNotAssigned() );
         }
@@ -99,7 +103,11 @@ public class EstudianteMainMenuController implements Initializable {
      */
     public void ShowAdditionalDocuments( MouseEvent mouseEvent ) {
         if( DoesStudentHaveProjectAssigned() ) {
-            screenChanger.ShowStudentAdditionalDocumentsScreen( mouseEvent, errorText );
+            try {
+                screenChanger.ShowStudentAdditionalDocumentsScreen( mouseEvent, errorText );
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         } else {
             errorText.setText( outputMessages.ProjectNotAssigned() );
         }
@@ -111,7 +119,11 @@ public class EstudianteMainMenuController implements Initializable {
      */
     public void ShowFormats( MouseEvent mouseEvent ) {
         if( DoesStudentHaveProjectAssigned() ) {
-            screenChanger.ShowStudentFormatsScreen( mouseEvent, errorText );
+            try {
+                screenChanger.ShowStudentFormatsScreen( mouseEvent, errorText );
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         } else {
             errorText.setText( outputMessages.StudentFormatsMissing() );
         }
@@ -123,7 +135,11 @@ public class EstudianteMainMenuController implements Initializable {
      */
     public void ShowAssignedProject( MouseEvent mouseEvent) {
         if( DoesStudentHaveProjectAssigned() ) {
-            screenChanger.ShowProjectDetailsScreen( mouseEvent, errorText );
+            try {
+                screenChanger.ShowProjectDetailsScreen( mouseEvent, errorText );
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         } else {
             errorText.setText( outputMessages.ProjectNotAssigned() );
         }
@@ -135,7 +151,11 @@ public class EstudianteMainMenuController implements Initializable {
      */
     public void ShowChooseProjects( MouseEvent mouseEvent ) {
         if( !HasStudentChosenProjects() ) {
-            screenChanger.ShowChooseProjectsScreen( mouseEvent, errorText );
+            try {
+                screenChanger.ShowChooseProjectsScreen( mouseEvent, errorText );
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         } else {
             errorText.setText( outputMessages.AlreadyChoseProjects() );
         }
