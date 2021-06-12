@@ -111,7 +111,7 @@ public class ConsultarExpedienteController implements Initializable {
         TxNombreEstudiante.setText(estudianteElegido.getNombreCompleto());
         TxMatriculaEstudiante.setText(estudianteElegido.getMatricula());
         TxNRCEstudiante.setText(estudianteElegido.getNrc());
-        TxEstadoEstudiante.setText(String.valueOf(estudianteElegido.GetEstado()));
+        TxEstadoEstudiante.setText(String.valueOf(estudianteElegido.getEstado()));
         TxCorreoEstudiante.setText(estudianteElegido.GetCorreo());
         TxTelefonoEstudiante.setText(estudianteElegido.GetTelefono());
 

@@ -155,9 +155,9 @@ public class EstudianteMainMenuController implements Initializable {
      * @return true sí ya tiene 3 proyectos seleccionados, false si no
      */
     private boolean HasStudentChosenProjects() {
-        return LoginSession.GetInstance().GetEstudiante().GetEstado() == EstadoEstudiante.AsignacionPendiente ||
-                LoginSession.GetInstance().GetEstudiante().GetEstado() == EstadoEstudiante.ProyectoAsignado ||
-                LoginSession.GetInstance().GetEstudiante().GetEstado() == EstadoEstudiante.Evaluado;
+        return LoginSession.GetInstance().GetEstudiante().getEstado() == EstadoEstudiante.AsignacionPendiente ||
+                LoginSession.GetInstance().GetEstudiante().getEstado() == EstadoEstudiante.ProyectoAsignado ||
+                LoginSession.GetInstance().GetEstudiante().getEstado() == EstadoEstudiante.Evaluado;
     }
 
     /**
@@ -165,8 +165,8 @@ public class EstudianteMainMenuController implements Initializable {
      * @return true si sí tiene un proyecto asignado, false si no
      */
     private boolean DoesStudentHaveProjectAssigned() {
-        return LoginSession.GetInstance().GetEstudiante().GetEstado() == EstadoEstudiante.ProyectoAsignado ||
-                LoginSession.GetInstance().GetEstudiante().GetEstado() == EstadoEstudiante.Evaluado;
+        return LoginSession.GetInstance().GetEstudiante().getEstado() == EstadoEstudiante.ProyectoAsignado ||
+                LoginSession.GetInstance().GetEstudiante().getEstado() == EstadoEstudiante.Evaluado;
     }
 
     /**
