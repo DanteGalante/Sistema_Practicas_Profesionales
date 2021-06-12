@@ -13,6 +13,7 @@ import Entities.ArchivoConsulta;
 import Entities.Docente;
 import Entities.Expediente;
 import Enumerations.EstadoProyecto;
+import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,6 +46,7 @@ public class StudentFormatsController implements Initializable{
     private ExpedienteDAO expedientes = new ExpedienteDAO();
     private DocenteDAO docentes = new DocenteDAO();
     private DirectoryChooser directoryChooser = new DirectoryChooser();
+    private OutputMessages outputMessages = new OutputMessages();
 
     @FXML
     private Text nameText;
@@ -139,10 +141,15 @@ public class StudentFormatsController implements Initializable{
      */
     @FXML
     void DownloadFormat( MouseEvent mouseEvent ) {
+        ClearErrorText();
         if( IsFileSelected() ) {
             File directoryFile = GetDirectory( mouseEvent );
-            CopyFile( archivos.Read( formatosTable.getSelectionModel().getSelectedItem().GetId() ).GetDescripcion(),
-                    directoryFile );
+            try {
+                CopyFile( archivos.Read( formatosTable.getSelectionModel().getSelectedItem().GetId() ).GetDescripcion(),
+                        directoryFile );
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         }
     }
 
@@ -251,4 +258,6 @@ public class StudentFormatsController implements Initializable{
         }
         return userExpediente;
     }
+
+    private void ClearErrorText() { errorText.setText( "" ); }
 }

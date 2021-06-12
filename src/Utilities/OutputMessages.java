@@ -201,6 +201,12 @@ public class OutputMessages {
     public String DatabaseConnectionFailed() { return "No hay conexión a la base de datos. Intente más tarde."; }
 
     /**
+     * Mensaje mostrado cuando ocurre un error en la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String DatabaseConnectionFailed2() { return "No se pudo conectar a la base de datos. Por favor inténtelo más tarde."; }
+
+    /**
      * Mensaje mostrado cuando ya existe un Estudiante en base de datos
      * @return una cadena con el mensaje de error
      */
