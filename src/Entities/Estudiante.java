@@ -19,7 +19,6 @@ public class Estudiante extends UsuarioUV {
     private String matricula;
     private String nrc;
     private EstadoEstudiante estado;
-
     private String proyecto;
     private CheckBox validado;
     private CheckBox depurado;
@@ -107,7 +106,7 @@ public class Estudiante extends UsuarioUV {
      * Regresa el estado actual del Estudiante
      * @return enumeración del estado actual del estudiante
      */
-    public EstadoEstudiante GetEstado() {
+    public EstadoEstudiante getEstado() {
         return estado;
     }
 

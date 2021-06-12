@@ -10,6 +10,7 @@ package Controllers;
 
 import Database.EstudianteDAO;
 import Entities.Estudiante;
+import Enumerations.EstadoEstudiante;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import javafx.fxml.FXML;
@@ -107,7 +108,9 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     private void ShowStudents() {
         estudiantesTable.getItems().clear();
         for( Estudiante estudiante : estudiantes.ReadAll() ) {
-            estudiantesTable.getItems().add( estudiante );
+            if( estudiante.getEstado() != EstadoEstudiante.Eliminado && estudiante.getEstado() != EstadoEstudiante.RegistroPendiente ) {
+                estudiantesTable.getItems().add( estudiante );
+            }
         }
     }
 
