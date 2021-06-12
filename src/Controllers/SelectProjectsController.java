@@ -147,11 +147,15 @@ public class SelectProjectsController implements Initializable {
      */
     public void SendSelection() {
         if( Selected3Projects() ) {
-            proyectosSeleccionados.Create( LoginSession.GetInstance().GetEstudiante().getMatricula(), GetSelectedProjects() );
-            LoginSession.GetInstance().GetEstudiante().SetEstadoEstudiante( EstadoEstudiante.AsignacionPendiente );
-            estudiantes.Update( LoginSession.GetInstance().GetEstudiante() );
-            errorText.setText( "" );
-            successText.setText( outputMessages.ProjectSelectionSuccessful() );
+            try {
+                proyectosSeleccionados.Create( LoginSession.GetInstance().GetEstudiante().getMatricula(), GetSelectedProjects() );
+                LoginSession.GetInstance().GetEstudiante().SetEstadoEstudiante( EstadoEstudiante.AsignacionPendiente );
+                estudiantes.Update( LoginSession.GetInstance().GetEstudiante() );
+                errorText.setText( "" );
+                successText.setText( outputMessages.ProjectSelectionSuccessful() );
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         }
     }
 
