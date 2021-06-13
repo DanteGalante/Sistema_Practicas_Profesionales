@@ -275,4 +275,12 @@ public class Principal_Coordinador implements Initializable {
         }
         return listaAuxiliar;
     }
+
+    /**
+     * Cambia a la pantalla ValidarInscripcion
+     * @param mouseEvent el evento del mouse que inicio el cambio
+     */
+    public void ClicValidarInscripcion(MouseEvent mouseEvent) {
+        screenChanger.ShowScreenValidarInscripcion( mouseEvent, errorText );
+    }
 }
