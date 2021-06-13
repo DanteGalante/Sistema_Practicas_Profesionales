@@ -1,7 +1,9 @@
 package Controllers;
 
 import Database.OrganizacionVinculadaDAO;
+import Database.ProyectoDAO;
 import Database.ResponsableProyectoDAO;
+import Entities.Proyecto;
 import Entities.ResponsableProyecto;
 import Enumerations.TipoSector;
 import Entities.OrganizacionVinculada;
@@ -17,12 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ModificarOrganizacion_Coordinador implements Initializable{
+public class ModificarOrganizacion_Coordinador implements Initializable {
     private OrganizacionVinculadaDAO organizacionVinculada = new OrganizacionVinculadaDAO();
     private OutputMessages outputMessages = new OutputMessages();
     private ScreenChanger screenChanger = new ScreenChanger();
     private InputValidator inputValidator = new InputValidator();
     private List<ResponsableProyecto> listaResponsables = new ArrayList<>();
+    private List<Proyecto> listaProyectos = new ArrayList<>();
+    private ProyectoDAO proyecto = new ProyectoDAO();
     private ResponsableProyectoDAO responsableProyecto = new ResponsableProyectoDAO();
 
     @FXML
@@ -98,21 +102,13 @@ public class ModificarOrganizacion_Coordinador implements Initializable{
     }
 
     public void ManejoModificarOrganizacion(){
-        ManejoRegistroRepresentante();
+        ManejoModificarRepresentante();
         VerificarDatos();
-        if( inputValidator.IsOrganizationInformationValid( ObtenerOrganizacionVinculada() ) ) {
-            if ( !OrganizacionExistente() ) {
-                ModificarOrganizacion();
-            }
-        }
-    }
-
-    public List ObtenerListaResponsables(){
-        listaResponsables = responsableProyecto.ReadAll();
-        for( ResponsableProyecto responsableProyecto : listaResponsables) {
-            responsableProyecto.getIdResponsableProyecto();
-        }
-        return listaResponsables;
+        //if( inputValidator.IsOrganizationInformationValid( ObtenerOrganizacionVinculada() ) ) {
+        //if ( !OrganizacionExistente() ) {
+        ModificarOrganizacion();
+        //}
+        //}
     }
 
     /**
@@ -124,14 +120,18 @@ public class ModificarOrganizacion_Coordinador implements Initializable{
         return SelectionContainer.GetInstance().getOrganizacionElegida();
     }
 
+    private ResponsableProyecto ObtenerResponsableProyecto() {
+        return SelectionContainer.GetInstance().getResponsableElegido();
+    }
+
     /**
      * Intenta crear una Organización en la base de datos y coloca
      * el mensaje correspondiente en caso de éxito o fracaso.
      */
     private void ModificarOrganizacion() {
-        if( organizacionVinculada.Create ( ObtenerOrganizacionVinculada() ) ) {
+        if( organizacionVinculada.Update ( organizacionModificada() ) ) { //Cambiar el metodo a el nuevo
             errorText.setText( "" );
-            successText.setText( outputMessages.RegistroOrganizacionExitoso() );
+            successText.setText( outputMessages.ModificacionOrganizacionExitoso() );
         }
         else {
             errorText.setText( outputMessages.DatabaseConnectionFailed() );
@@ -144,15 +144,15 @@ public class ModificarOrganizacion_Coordinador implements Initializable{
      * la misma información que fue introducida.
      * @return true si se encuentra una instancia con la misma información, false sí no.
      */
-    private boolean OrganizacionExistente() {
+    /*private boolean OrganizacionExistente() {
         boolean organizacionExistente = false;
-        if( organizacionVinculada.Read( ObtenerOrganizacionVinculada().getIdOrganizacion() ) != null ) { //Cambiar el DAO el READ esta mal
+        if( organizacionVinculada.ReadNombre( ObtenerOrganizacionVinculada().getIdOrganizacion() ) != null ) { //Cambiar el DAO el READ esta mal
             errorText.setText( outputMessages.OrganizacionExistente() );
             successText.setText( "" );
             organizacionExistente = true;
         }
         return organizacionExistente;
-    }
+    }*/ //Volver a poner hasta que se revise ES EL -------------READNOMBRE----------------------
 
     /**
      * Verifica que la información introducida por el usuario
@@ -238,15 +238,7 @@ public class ModificarOrganizacion_Coordinador implements Initializable{
     }
 
 
-    /**
-     * Crea una instancia de Organizacion Vinculada utilizando la información
-     * introducida por el usuario en todos los campos de texto.
-     * @return una instancia de OrganizacionVinculada
-     */
-    private ResponsableProyecto ObtenerResponsableProyecto() {
-        return new ResponsableProyecto ( 0, tfNombresRepresentante.getText(), tfApellidosRepresentante.getText(),
-                tfCorreoRepresentante.getText(), tfTelefonoRepresentante.getText(), null );
-    }
+
 
     /**
      * Revisa si ya existe un Estudiante en la base de datos con
@@ -267,10 +259,10 @@ public class ModificarOrganizacion_Coordinador implements Initializable{
      * Intenta crear un ResponsableProyecto en la base de datos y coloca
      * el mensaje correspondiente en caso de éxito o fracaso.
      */
-    private void RegistrarResponsableProyecto() {
-        if( responsableProyecto.Create ( ObtenerResponsableProyecto() ) ) {
+    private void ModificarResponsableProyecto() {
+        if( responsableProyecto.Update ( responsableModificado() ) ) {
             errorText.setText( "" );
-            successText.setText( outputMessages.RegistroResponsableExitoso() );
+            successText.setText( outputMessages.ModificacionResponsableExitoso() );
         }
         else {
             errorText.setText( outputMessages.DatabaseConnectionFailed() );
@@ -278,13 +270,13 @@ public class ModificarOrganizacion_Coordinador implements Initializable{
         }
     }
 
-    public void ManejoRegistroRepresentante(){
+    public void ManejoModificarRepresentante(){
         VerificarDatosResponsable();
-        if( inputValidator.IsResponsableInformationValid( ObtenerResponsableProyecto() ) ) {
-            if ( !ResponsableExistente() ) {
-                RegistrarResponsableProyecto();
-            }
-        }
+        //if( inputValidator.IsResponsableInformationValid( ObtenerResponsableProyecto() ) ) {
+        //if ( !ResponsableExistente() ) {
+        ModificarResponsableProyecto();
+        //}
+        //}
     }
 
     private void VerificarDatosResponsable() {
@@ -332,5 +324,39 @@ public class ModificarOrganizacion_Coordinador implements Initializable{
             errorText.setText( outputMessages.InvalidTelephone() );
             successText.setText( "" );
         }
+    }
+
+    private OrganizacionVinculada organizacionModificada(){
+        return new OrganizacionVinculada ( tfNombre.getText(), tfDireccion.getText(), TipoSector.Publico,
+                tfTelefono.getText(),tfCorreoElectronico.getText(),RecuperarIdOrganizacion(),ObtenerListaResponsables(), true);
+    }
+
+    public List ObtenerListaResponsables(){
+        listaResponsables = responsableProyecto.ReadAll();
+        for( ResponsableProyecto responsableProyecto : listaResponsables) {
+            responsableProyecto.getIdResponsableProyecto();
+        }
+        return listaResponsables;
+    }
+
+    private ResponsableProyecto responsableModificado(){
+        return new ResponsableProyecto ( RecuperarIdResponsable(), tfNombresRepresentante.getText(), tfApellidosRepresentante.getText(),
+                tfCorreoRepresentante.getText(), tfTelefonoRepresentante.getText(), ObtenerListaProyectos() );
+    }
+
+    public int RecuperarIdResponsable(){
+        int idProyecto = SelectionContainer.GetInstance().getResponsableElegido().getIdResponsableProyecto();
+        return idProyecto;
+    }
+
+    public List ObtenerListaProyectos(){
+        listaProyectos = proyecto.ReadAll();
+        System.out.println("Proyectos:"+ listaProyectos);
+        return listaResponsables;
+    }
+
+    public int RecuperarIdOrganizacion(){
+        int idOrganizacion = SelectionContainer.GetInstance().getOrganizacionElegida().getIdOrganizacion();
+        return idOrganizacion;
     }
 }
