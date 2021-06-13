@@ -128,7 +128,7 @@ public class Principal_Docente implements Initializable {
         List<Estudiante> auxiliar = new ArrayList<>();
 
         for( Estudiante estudiante : grupo ){
-            if( !nrc.equals( estudiante.getNrc() ) ){
+            if( nrc.equals( estudiante.getNrc() ) ){
                 auxiliar.add( estudiante );
             }
         }

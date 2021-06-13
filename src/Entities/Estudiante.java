@@ -42,8 +42,9 @@ public class Estudiante extends UsuarioUV {
      * @param original instancia existente de Estudiante.
      */
     public Estudiante( Estudiante original ) {
-        this( original.idUsuario, original.nombres, original.apellidos, original.usuario, original.contrasena,
-                original.correoElectronico, original.telefono, original.matricula, original.nrc, original.estado, original.proyecto);
+        this( original.idUsuario, original.nombres, original.apellidos, original.key, original.contrasena,
+                original.correoElectronico, original.telefono, original.matricula, original.nrc, original.estado,
+                original.proyecto );
     }
 
     /**
@@ -55,9 +56,9 @@ public class Estudiante extends UsuarioUV {
      * @param estadoIn el estado actual del estudiante
      * @param proyecto proyecto que tiene asignado, puede no tener un proyecto asignado
      */
-    public Estudiante( UsuarioUV usuario, String matriculaIn, String nrcIn, EstadoEstudiante estadoIn, String proyecto) {
-        this( usuario.idUsuario, usuario.nombres, usuario.apellidos, usuario.usuario, usuario.contrasena, usuario.correoElectronico,
-                usuario.telefono, matriculaIn, nrcIn, estadoIn, proyecto);
+    public Estudiante( UsuarioUV usuario, String matriculaIn, String nrcIn, EstadoEstudiante estadoIn, String proyecto ) {
+        this( usuario.idUsuario, usuario.nombres, usuario.apellidos, usuario.key, usuario.contrasena, usuario.correoElectronico,
+                usuario.telefono, matriculaIn, nrcIn, estadoIn, proyecto );
     }
 
     /**
@@ -76,7 +77,7 @@ public class Estudiante extends UsuarioUV {
      * @param proyecto proyecto que tiene asignado, puede no tener un proyecto asignado.
      */
     public Estudiante( int idIn, String nombresIn, String apellidosIn, String usuarioIn, String contrasenaIn, String correoElectronicoIn,
-                       String telefonoIn, String matriculaIn, String nrcIn, EstadoEstudiante estadoIn, String proyecto) {
+                       String telefonoIn, String matriculaIn, String nrcIn, EstadoEstudiante estadoIn, String proyecto ) {
         super( idIn, nombresIn, apellidosIn, usuarioIn, contrasenaIn, correoElectronicoIn, telefonoIn );
         matricula = matriculaIn;
         nrc = nrcIn;

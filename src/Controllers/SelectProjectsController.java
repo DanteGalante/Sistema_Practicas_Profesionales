@@ -79,9 +79,6 @@ public class SelectProjectsController implements Initializable {
     private TableColumn< ConjuntoProyectoOrganizacion, String > availableProjectName;
 
     @FXML
-    private TableColumn< ConjuntoProyectoOrganizacion, String > availableProjectKey;
-
-    @FXML
     private TableColumn< ConjuntoProyectoOrganizacion, String > availableTotalSpace;
 
     @FXML
@@ -89,9 +86,6 @@ public class SelectProjectsController implements Initializable {
 
     @FXML
     private TableColumn< ConjuntoProyectoOrganizacion, String > chosenName;
-
-    @FXML
-    private TableColumn< ConjuntoProyectoOrganizacion, String > chosenKey;
 
     @FXML
     private TableColumn< Proyecto, String > chosenOrganization;
@@ -183,11 +177,10 @@ public class SelectProjectsController implements Initializable {
      */
     private void SetTableCellValueFactory() {
         availableProjectName.setCellValueFactory( new PropertyValueFactory<>( "nombreProyecto" ) );
-        availableProjectKey.setCellValueFactory( new PropertyValueFactory<>( "idProyecto" ) );
         availableTotalSpace.setCellValueFactory( new PropertyValueFactory<>( "numEstudiantesRequeridos" ) );
         availableOrganization.setCellValueFactory( new PropertyValueFactory<>( "nombreOrganizacion" ) );
         chosenName.setCellValueFactory( new PropertyValueFactory<>( "nombreProyecto" ) );
-        chosenKey.setCellValueFactory( new PropertyValueFactory<>( "idProyecto" ) );
+        chosenOrganization.setCellValueFactory( new PropertyValueFactory<>( "nombreOrganizacion" ) );
     }
 
     /**

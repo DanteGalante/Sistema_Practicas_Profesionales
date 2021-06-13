@@ -35,12 +35,12 @@ public class UsuarioUVDAO implements UsuarioUVDAOInterface{
         connection.StartConnection();
 
         try {
-            String query = "INSERT INTO UsuarioUV( Nombres, Apellidos, Usuario, Contrasena, CorreoElectronico, " +
+            String query = "INSERT INTO UsuarioUV( Nombres, Apellidos, KeyIdentifier, Contrasena, CorreoElectronico, " +
                            "Telefono ) VALUES ( ?, ?, ?, ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1, usuario.getNombres() );
             statement.setString( 2, usuario.GetApellidos() );
-            statement.setString( 3, usuario.GetUsuario() );
+            statement.setString( 3, usuario.GetKey() );
             statement.setString( 4, usuario.GetContrasena() );
             statement.setString( 5, usuario.GetCorreo() );
             statement.setString( 6, usuario.GetTelefono() );
@@ -124,18 +124,18 @@ public class UsuarioUVDAO implements UsuarioUVDAOInterface{
      * Regresa un UsuarioUV de la base de base de datos. Utiliza el nombre usuario del
      * para encontrar el usuario deseado. Regresa Null en caso de no
      * encontrar el UsuarioUV
-     * @param nombreUsuario el nombre usuario
+     * @param llaveUsuario el nombre usuario
      * @return una instancia del UsuarioUV
      */
-    public UsuarioUV Read( String nombreUsuario ) {
+    public UsuarioUV Read( String llaveUsuario ) {
         UsuarioUV usuario = null;
         MySqlConnection connection = new MySqlConnection();
         connection.StartConnection();
 
         try {
-            String query = "SELECT * FROM UsuarioUV WHERE Usuario = ?;";
+            String query = "SELECT * FROM UsuarioUV WHERE KeyIdentifier = ?;";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
-            statement.setString( 1, nombreUsuario );
+            statement.setString( 1, llaveUsuario );
             statement.executeQuery();
             ResultSet result = statement.getResultSet();
 
@@ -168,12 +168,12 @@ public class UsuarioUVDAO implements UsuarioUVDAOInterface{
         connection.StartConnection();
 
         try {
-            String query = "UPDATE UsuarioUV SET Nombres = ?, Apellidos = ?, Usuario = ?, Contrasena = ?," +
+            String query = "UPDATE UsuarioUV SET Nombres = ?, Apellidos = ?, KeyIdentifier = ?, Contrasena = ?," +
                            " CorreoElectronico = ?, Telefono = ? WHERE IDUsuario = ?;";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1, usuario.getNombres() );
             statement.setString( 2, usuario.GetApellidos() );
-            statement.setString( 3, usuario.GetUsuario() );
+            statement.setString( 3, usuario.GetKey() );
             statement.setString( 4, usuario.GetContrasena() );
             statement.setString( 5, usuario.GetCorreo() );
             statement.setString( 6, usuario.GetTelefono() );

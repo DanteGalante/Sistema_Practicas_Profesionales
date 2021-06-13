@@ -54,10 +54,9 @@
                   </Text>
                   <TableView fx:id="availableProjectsTable" layoutX="43.0" layoutY="32.0" onMouseClicked="#ShowProjectDetails" prefHeight="182.0" prefWidth="689.0">
                     <columns>
-                      <TableColumn fx:id="availableProjectName" editable="false" prefWidth="231.0" resizable="false" sortable="false" text="Nombre" />
-                      <TableColumn fx:id="availableProjectKey" editable="false" prefWidth="95.0" sortable="false" text="Clave" />
-                        <TableColumn fx:id="availableTotalSpace" editable="false" prefWidth="87.0" sortable="false" text="Cupo Total" />
-                        <TableColumn fx:id="availableOrganization" editable="false" prefWidth="275.0" sortable="false" text="Organización Vinculada" />
+                      <TableColumn fx:id="availableProjectName" editable="false" prefWidth="273.0" resizable="false" sortable="false" text="Nombre" />
+                        <TableColumn fx:id="availableTotalSpace" editable="false" prefWidth="125.0" sortable="false" text="Cupo Total" />
+                        <TableColumn fx:id="availableOrganization" editable="false" prefWidth="290.0" sortable="false" text="Organización Vinculada" />
                     </columns>
                   </TableView>
                   <Text fill="#e84545" layoutX="43.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles de Proyecto:">
@@ -68,9 +67,8 @@
                   <Text fx:id="projectDetails" fill="#e84545" layoutX="43.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="689.0" />
                   <TableView fx:id="selectedProjectsTable" layoutX="43.0" layoutY="403.0" prefHeight="124.0" prefWidth="517.0">
                     <columns>
-                      <TableColumn fx:id="chosenName" editable="false" prefWidth="208.0" sortable="false" text="Nombre" />
-                      <TableColumn fx:id="chosenKey" editable="false" prefWidth="75.0" sortable="false" text="Clave" />
-                        <TableColumn fx:id="chosenOrganization" editable="false" prefWidth="233.0" sortable="false" text="Organización Vinculada" />
+                      <TableColumn fx:id="chosenName" editable="false" prefWidth="265.0" sortable="false" text="Nombre" />
+                        <TableColumn fx:id="chosenOrganization" editable="false" prefWidth="251.0" sortable="false" text="Organización Vinculada" />
                     </columns>
                   </TableView>
                   <Text fill="#e84545" layoutX="224.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proyectos Elegidos:">
