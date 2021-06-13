@@ -1,11 +1,11 @@
 /*
-* Autor: Dan Javier Olvera Villeda
-* Versión: 1.0
-* Fecha Creación: 30 - abr - 2021
-* Descripción:
-* Clase encargada de manejar los eventos de la pantalla
-* ValidarInscripcion.
-*/
+ * Autor: Dan Javier Olvera Villeda
+ * Versión: 1.0
+ * Fecha Creación: 30 - abr - 2021
+ * Descripción:
+ * Clase encargada de manejar los eventos de la pantalla
+ * ValidarInscripcion.
+ */
 package Controllers;
 
 import Database.EstudianteDAO;
@@ -89,9 +89,9 @@ public class ValidarInscripcion implements Initializable {
      * van a ser mostrados por cada columna.
      */
     public void ConfigurarColumnas() {
-        tcNombre.setCellValueFactory( new PropertyValueFactory<>( "nombre" ) );
+        tcNombre.setCellValueFactory( new PropertyValueFactory<>( "nombreCompleto" ) );
         tcMatricula.setCellValueFactory( new PropertyValueFactory<>( "matricula" ) );
-        tcValidar.setCellValueFactory( new PropertyValueFactory<>( "validado") );
+        tcValidar.setCellValueFactory( new PropertyValueFactory<>( "validado" ) );
         tcDepurar.setCellValueFactory( new PropertyValueFactory<>( "depurado" ) );
     }
 
@@ -136,6 +136,9 @@ public class ValidarInscripcion implements Initializable {
                 }
             }
             confirmationText.setText( "Se ha realizado la operación con éxito" );
+
+            RecuperarEstudiantes();
+            LlenarTablaEstudiantes();
         }
     }
 
