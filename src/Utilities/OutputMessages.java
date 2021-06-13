@@ -173,11 +173,25 @@ public class OutputMessages {
     public String RegistroOrganizacionExitoso() { return "Registro de Organizacion Exitoso"; }
 
     /**
+     * Mensaje mostrado cuando se modifica una Organización de la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ModificacionOrganizacionExitoso() { return "Modificación de Organizacion Exitoso"; }
+
+    /**
      * Mensaje mostrado cuando se registra un nuevo Responsable a la
      * base de datos de manera exitosa.
      * @return una cadena con el mensaje de éxito
      */
     public String RegistroResponsableExitoso() { return "Registro de Responsable Exitoso"; }
+
+    /**
+     * Mensaje mostrado cuando se modifica un responsable de la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ModificacionResponsableExitoso() { return "Modificación de Organizacion Exitoso"; }
 
     /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
