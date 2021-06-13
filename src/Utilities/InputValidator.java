@@ -33,6 +33,10 @@ public class InputValidator {
     private final int maxDireccion = 200;
     private final int minTituloInforme = 1;
     private final int maxTituloInforme = 50;
+    private final int minDescripcion = 10;
+    private final int maxDescripcion = 200;
+    private final int cantidadMin = 1;
+    private final int cantidadMax = 3;
 
     /**
      * Verifica que la información de una instancia de Estudiante sea valida y que las
@@ -158,6 +162,24 @@ public class InputValidator {
     }
 
     /**
+     * Verifica que la direccion introducida por el usuario sea valida
+     * @param descripcion la cadena con los nombres
+     * @return true si la descripcion es valida, false si no
+     */
+    public boolean DescripcionValida( String descripcion ) {
+        return IsStringValidSize( descripcion, minDescripcion, maxDescripcion );
+    }
+
+    /**
+     * Verifica que los estudiantes requeridos colocados por el usuario sean validas
+     * @param estudiantesRequeridos la cadena con los nombres
+     * @return true si la descripcion es valida, false si no
+     */
+    public boolean EstudiantesRequeridosValidos( int estudiantesRequeridos ) {
+        return CantidadValida( estudiantesRequeridos, cantidadMin, cantidadMax );
+    }
+
+    /**
      * Verifica que el NRC introducido por el usuario es valido
      * @param nrc la cadena con el NRC
      * @return true si el NRC es valida, false si no
@@ -194,6 +216,17 @@ public class InputValidator {
      */
     private boolean IsStringValidSize( String input, int minSize, int maxSize ) {
         return ( input.length() >= minSize && input.length() <= maxSize );
+    }
+
+    /**
+     * Revisa que un entero que tenga un mínimo y máximo de cantidad
+     * @param input la cadena que se desea revisar
+     * @param cantidadMin el tamaño mínimo permitido del entero
+     * @param cantidadMax el tamaño máximo permitido del entero
+     * @return true si la cadena tiene una logitud dentro de los rangos introducidos, false si no
+     */
+    private boolean CantidadValida( int input, int cantidadMin, int cantidadMax ) {
+        return ( input >= cantidadMin && input <= cantidadMax );
     }
 
     /**

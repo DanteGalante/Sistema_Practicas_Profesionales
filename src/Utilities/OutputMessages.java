@@ -216,6 +216,12 @@ public class OutputMessages {
      */
     public String ModificacionEstudianteExitoso() { return "Modificación de Estudiante Exitoso"; }
 
+    /**
+     * Mensaje mostrado cuando se modifica un proyecto de la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ModificacionProyectoExitoso() { return "Modificación de Proyecto Exitoso"; }
 
     /**
      * Mensaje mostrado cuando se registra un nuevo Estudiante a la
@@ -403,6 +409,20 @@ public class OutputMessages {
      * @return una cadena con el mensaje de error
      */
     public String DireccionInvalida() { return "La dirección es inválida.."; }
+
+    /**
+     * Mensaje mostrado cuando la descripción introducida por el usuario
+     * es inválida
+     * @return una cadena con el mensaje de error
+     */
+    public String DescripcionInvalida() { return "La descripción es inválida.."; }
+
+    /**
+     * Mensaje mostrado cuando la descripción introducida por el usuario
+     * es inválida
+     * @return una cadena con el mensaje de error
+     */
+    public String  EstudiantesRequeridosInvalidos() { return "Estudiantes requeridos inválidos.."; }
 
     /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
