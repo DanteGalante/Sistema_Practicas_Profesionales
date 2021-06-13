@@ -12,7 +12,12 @@ package Controllers;
 import Database.EstudianteDAO;
 import Database.ProyectoDAO;
 import Database.ProyectosSeleccionadosDAO;
+import Database.ProyectosDeResponsablesDAO;
+import Database.ResponsablesOrganizacionDAO;
+import Database.OrganizacionVinculadaDAO;
 import Entities.Proyecto;
+import Entities.OrganizacionVinculada;
+import Entities.ConjuntoProyectoOrganizacion;
 import Enumerations.EstadoEstudiante;
 import Enumerations.EstadoProyecto;
 import Utilities.OutputMessages;
@@ -35,6 +40,9 @@ public class SelectProjectsController implements Initializable {
     private ScreenChanger screenChanger = new ScreenChanger();
     private OutputMessages outputMessages = new OutputMessages();
     private ProyectoDAO proyectos = new ProyectoDAO();
+    private ProyectosDeResponsablesDAO proyectosResponsables = new ProyectosDeResponsablesDAO();
+    private ResponsablesOrganizacionDAO responsablesOrganizacion = new ResponsablesOrganizacionDAO();
+    private OrganizacionVinculadaDAO organizaciones = new OrganizacionVinculadaDAO();
     private EstudianteDAO estudiantes = new EstudianteDAO();
     private ProyectosSeleccionadosDAO proyectosSeleccionados = new ProyectosSeleccionadosDAO();
     private List< Proyecto > listaProyectos = new ArrayList< Proyecto >();
@@ -62,28 +70,28 @@ public class SelectProjectsController implements Initializable {
     private Text successText;
 
     @FXML
-    private TableView< Proyecto > availableProjectsTable;
+    private TableView< ConjuntoProyectoOrganizacion > availableProjectsTable;
 
     @FXML
-    private TableView< Proyecto > selectedProjectsTable;
+    private TableView< ConjuntoProyectoOrganizacion > selectedProjectsTable;
 
     @FXML
-    private TableColumn< Proyecto, String > availableProjectName;
+    private TableColumn< ConjuntoProyectoOrganizacion, String > availableProjectName;
 
     @FXML
-    private TableColumn< Proyecto, String > availableProjectKey;
+    private TableColumn< ConjuntoProyectoOrganizacion, String > availableProjectKey;
 
     @FXML
-    private TableColumn< Proyecto, String > availableTotalSpace;
+    private TableColumn< ConjuntoProyectoOrganizacion, String > availableTotalSpace;
 
     @FXML
-    private TableColumn< Proyecto, String > availableOrganization;
+    private TableColumn< ConjuntoProyectoOrganizacion, String > availableOrganization;
 
     @FXML
-    private TableColumn< Proyecto, String > chosenName;
+    private TableColumn< ConjuntoProyectoOrganizacion, String > chosenName;
 
     @FXML
-    private TableColumn< Proyecto, String > chosenKey;
+    private TableColumn< ConjuntoProyectoOrganizacion, String > chosenKey;
 
     @FXML
     private TableColumn< Proyecto, String > chosenOrganization;
@@ -131,7 +139,9 @@ public class SelectProjectsController implements Initializable {
         for( Proyecto proyecto : listaProyectos ) {
             if( DoesSelectedProjectTableHaveSpace() && idProyecto == proyecto.getIdProyecto() &&
                     !IsProjectSelected( idProyecto ) ) {
-                selectedProjectsTable.getItems().add( proyecto );
+                ConjuntoProyectoOrganizacion conjunto = new ConjuntoProyectoOrganizacion( proyecto,
+                        organizaciones.Read( responsablesOrganizacion.ReadOrganizacion( proyectosResponsables.ReadResponsable( proyecto.getIdProyecto() ) ) ) );
+                selectedProjectsTable.getItems().add( conjunto );
             }
         }
     }
@@ -172,10 +182,11 @@ public class SelectProjectsController implements Initializable {
      * Configura las columnas de las tablas availableProjects y selectedProjects
      */
     private void SetTableCellValueFactory() {
-        availableProjectName.setCellValueFactory( new PropertyValueFactory<>( "nombre" ) );
+        availableProjectName.setCellValueFactory( new PropertyValueFactory<>( "nombreProyecto" ) );
         availableProjectKey.setCellValueFactory( new PropertyValueFactory<>( "idProyecto" ) );
         availableTotalSpace.setCellValueFactory( new PropertyValueFactory<>( "numEstudiantesRequeridos" ) );
-        chosenName.setCellValueFactory( new PropertyValueFactory<>( "nombre" ) );
+        availableOrganization.setCellValueFactory( new PropertyValueFactory<>( "nombreOrganizacion" ) );
+        chosenName.setCellValueFactory( new PropertyValueFactory<>( "nombreProyecto" ) );
         chosenKey.setCellValueFactory( new PropertyValueFactory<>( "idProyecto" ) );
     }
 
@@ -186,7 +197,9 @@ public class SelectProjectsController implements Initializable {
         listaProyectos = proyectos.ReadAll();
         for( Proyecto proyecto : listaProyectos ) {
             if( IsProjectAvailable( proyecto ) ) {
-                availableProjectsTable.getItems().add( proyecto );
+                ConjuntoProyectoOrganizacion conjunto = new ConjuntoProyectoOrganizacion( proyecto,
+                        organizaciones.Read( responsablesOrganizacion.ReadOrganizacion( proyectosResponsables.ReadResponsable( proyecto.getIdProyecto() ) ) ) );
+                availableProjectsTable.getItems().add( conjunto );
             }
         }
     }
@@ -217,8 +230,8 @@ public class SelectProjectsController implements Initializable {
      */
     private boolean IsProjectSelected( int idProyecto ) {
         boolean isProjectSelected = false;
-        for( Proyecto proyecto : selectedProjectsTable.getItems() ) {
-            if( proyecto.getIdProyecto() == idProyecto ) {
+        for( ConjuntoProyectoOrganizacion conjunto : selectedProjectsTable.getItems() ) {
+            if( conjunto.getIdProyecto() == idProyecto ) {
                 isProjectSelected = true;
             }
         }
@@ -262,8 +275,8 @@ public class SelectProjectsController implements Initializable {
      */
     private List< Integer > GetSelectedProjects() {
         List< Integer > idProyectos = new ArrayList<>();
-        for( Proyecto proyecto : selectedProjectsTable.getItems() ) {
-            idProyectos.add( proyecto.getIdProyecto() );
+        for( ConjuntoProyectoOrganizacion conjunto : selectedProjectsTable.getItems() ) {
+            idProyectos.add( conjunto.getIdProyecto() );
         }
         return idProyectos;
     }
@@ -275,7 +288,7 @@ public class SelectProjectsController implements Initializable {
      */
     @FXML
     private void ShowProjectDetails( MouseEvent mouseEvent ) {
-        projectDetails.setText( availableProjectsTable.getSelectionModel().getSelectedItem().GetDescripcion() );
+        projectDetails.setText( availableProjectsTable.getSelectionModel().getSelectedItem().getDescripcion() );
     }
 
     private void ClearTextFields() {
