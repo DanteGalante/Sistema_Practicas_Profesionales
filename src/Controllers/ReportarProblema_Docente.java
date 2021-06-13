@@ -54,7 +54,6 @@ public class ReportarProblema_Docente implements Initializable {
         SetUsuario();
         RecuperarGrupo();
         MostrarEstudiantes();
-
     }
 
     /**
@@ -76,14 +75,6 @@ public class ReportarProblema_Docente implements Initializable {
     }
 
     /**
-     * Vuelve a la pantalla principal del docente
-     * @param mouseEvent evento del mouse que inicia el metodo
-     */
-    public void ClicRegresar(MouseEvent mouseEvent) {
-        screenChanger.ShowScreenPrincipalDocente(mouseEvent, errorText);
-    }
-
-    /**
      * Coloca la informacion del usuario actual en las etiquetas. Se coloca nombres, apellidos,
      * y numero personal.
      */
@@ -94,10 +85,60 @@ public class ReportarProblema_Docente implements Initializable {
     }
 
     /**
-     *
+     * Limpia los campos de texto en pantalla y el choicebox
+     */
+    private void LimpiarPantalla() {
+        tfTitulo.setText("");
+        taContenido.setText("");
+        cbEstudianteProblema.getSelectionModel().clearSelection();
+    }
+
+    /**
+     * Verifica que la información del informe sea valida
+     * @param informeProblema
+     * @return True si el informe tiene información valida, False si la información no es valida
+     *         para introducir en la BD
+     */
+    private boolean InformeEsValido(InformeProblema informeProblema) {
+        return inputValidator.IsInformeProblemaInformationValid( informeProblema );
+    }
+
+    /**
+     * Verifica si hay campos vacios en los campos de texto
+     * @return True Si los campos tienen valores, False si hay algun campo vacio
+     */
+    private boolean NoHayCamposVacios() {
+        boolean noHayCamposVacios = tfTitulo.getLength() > 0 && taContenido.getLength() > 0;
+
+        if( noHayCamposVacios == false ){
+            errorText.setText( "Faltan campos por llenar" );
+        }
+
+        return noHayCamposVacios;
+    }
+
+    /**
+     * Se ha seleccionado un estudiante para el reporte de problema
+     * @return True si se ha seleccionado un estudiante, False si no se ha seleccionado un estudiante
+     */
+    private boolean HayEstudianteSeleccionado() {
+        return ( cbEstudianteProblema.getSelectionModel().getSelectedItem() != null );
+    }
+
+    /**
+     * Vuelve a la pantalla principal del docente
+     * @param mouseEvent evento del mouse que inicia el metodo
+     */
+    public void ClicRegresar(MouseEvent mouseEvent) {
+        screenChanger.ShowScreenPrincipalDocente(mouseEvent, errorText);
+    }
+
+    /**
+     * Crea el reporte de problema, verificando si hay un estudiantes seleccionado, no hay campos vacios
+     * el informe tenga informacion valida y el reporte no este repetido en la BD
      */
     public void ClicEnviar() {
-        if( HayEstudianteSeleccionado() ){
+        if( HayEstudianteSeleccionado() && NoHayCamposVacios()){
             InformeProblema nuevoInforme = new InformeProblema(
                     0, //ID InformeProblema
                     LocalDate.now().toString(), //Fecha de envio
@@ -113,38 +154,5 @@ public class ReportarProblema_Docente implements Initializable {
                 LimpiarPantalla();
             }
         }
-    }
-
-    /**
-     * Limpia los campos de texto en pantalla y el choicebox
-     */
-    private void LimpiarPantalla() {
-        tfTitulo.setText("");
-        taContenido.setText("");
-        cbEstudianteProblema.getSelectionModel().clearSelection();
-    }
-
-    /**
-     * Verifica que la información del informe sea valida
-     * @param informeProblema
-     * @return
-     */
-    private boolean InformeEsValido(InformeProblema informeProblema) {
-        return NoHayCamposVacios() &
-                inputValidator.IsInformeProblemaInformationValid( informeProblema );
-    }
-
-    private boolean NoHayCamposVacios() {
-        boolean noHayCamposVacios = tfTitulo.getLength() > 0 && taContenido.getLength() > 0;
-
-        if(noHayCamposVacios==false){
-            errorText.setText( "Faltan campos por llenar" );
-        }
-
-        return noHayCamposVacios;
-    }
-
-    private boolean HayEstudianteSeleccionado() {
-        return ( cbEstudianteProblema.getSelectionModel().getSelectedItem() != null );
     }
 }
