@@ -143,4 +143,32 @@ public class Documento {
      * @param calificacionIn la calificacion del archivo
      */
     public void setCalificacion( float calificacionIn ) { calificacion = calificacionIn; }
+
+    /**
+     * Regresa el tamaño en megabytes (MB) del documento
+     * @return el tamaño en MB del documento
+     */
+    public double getTamanio(){
+        double tamanio = (descripcion.length() / (1024));
+        return tamanio;
+    }
+
+    /**
+     * Regresa la extension del documento
+     * @return el tipo de documento
+     */
+    public String getTipo(){
+        int separador = descripcion.getName().lastIndexOf('.');
+        String tipo = (separador == -1) ? "" : descripcion.getName().substring(separador + 1);
+        return tipo;
+    }
+
+    /**
+     * Regresa el nombre del archivo, asi como su tamaño en megabytes
+     * @return nombre del archivo y tamaño en MB
+     */
+    public String getDescripcionArchivo(){
+        return "Tipo: " + getTipo() + " " +
+                "Tamaño: " + getTamanio() + " MB";
+    }
 }
