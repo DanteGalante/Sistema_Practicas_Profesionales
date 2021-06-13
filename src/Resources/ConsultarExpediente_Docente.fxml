@@ -9,32 +9,32 @@
     <children>
         <SplitPane dividerPositions="0.18481375358166188" layoutX="81.0" layoutY="103.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-image: #2b2e4a;">
                     <children>
-                        <SplitPane dividerPositions="0.36363636363636365" layoutY="67.0" orientation="VERTICAL" prefHeight="398.0" prefWidth="147.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.36363636363636365" layoutY="67.0" orientation="VERTICAL" prefHeight="398.0" prefWidth="147.0" style="-fx-background-image: #2b2e4a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <items>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                     <children>
-                                        <VBox layoutX="14.0" layoutY="-43.0" prefHeight="141.0" prefWidth="145.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <VBox layoutX="14.0" layoutY="-43.0" prefHeight="141.0" prefWidth="145.0" style="-fx-background-color: #2b2e4a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <Label text="Nombre">
+                                                <Label text="Nombre" textFill="RED">
                                                     <VBox.margin>
                                                         <Insets />
                                                     </VBox.margin>
                                                 </Label>
-                                                <Label fx:id="lbNombre" text="...">
+                                                <Label fx:id="lbNombre" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
                                                 </Label>
-                                                <Label text="Apellidos" />
-                                                <Label fx:id="lbApellidos" text="...">
+                                                <Label text="Apellidos" textFill="RED" />
+                                                <Label fx:id="lbApellidos" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
                                                 </Label>
-                                                <Label text="Cedula profesional" />
-                                                <Label fx:id="lbCedulaProfesional" text="...">
+                                                <Label text="Cedula profesional" textFill="RED" />
+                                                <Label fx:id="lbCedulaProfesional" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
@@ -48,14 +48,14 @@
                                 </AnchorPane>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                     <children>
-                                        <VBox alignment="BOTTOM_CENTER" layoutX="31.0" layoutY="14.0" prefHeight="249.0" prefWidth="145.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <VBox alignment="BOTTOM_CENTER" layoutX="31.0" layoutY="14.0" prefHeight="249.0" prefWidth="145.0" style="-fx-background-color: #2b2e4a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <VBox prefHeight="330.0" prefWidth="179.0">
+                                                <VBox prefHeight="330.0" prefWidth="179.0" style="-fx-background-color: #2b2e4a;">
                                                     <children>
-                                                        <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="174.13671875">
-                                             <VBox.margin>
-                                                <Insets left="5.0" right="5.0" />
-                                             </VBox.margin></Text>
+                                                        <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="174.13671875">
+                                                            <VBox.margin>
+                                                                <Insets left="5.0" right="5.0" />
+                                                            </VBox.margin></Text>
                                                     </children></VBox>
                                                 <Button contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#ClicRegresar" prefHeight="25.0" prefWidth="185.0" text="Regresar" />
                                             </children>
@@ -68,11 +68,11 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <VBox layoutX="111.0" layoutY="127.0" prefHeight="398.0" prefWidth="445.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox layoutX="111.0" layoutY="127.0" prefHeight="398.0" prefWidth="445.0" style="-fx-background-color: #2b2e4a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <VBox alignment="TOP_CENTER" prefHeight="593.0" prefWidth="791.0" spacing="5.0">
+                                <VBox alignment="TOP_CENTER" prefHeight="593.0" prefWidth="791.0" spacing="5.0" style="-fx-background-color: #2b2e4a;">
                                     <children>
-                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="EXPEDIENTE">
+                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="EXPEDIENTE" textFill="RED">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>
@@ -81,43 +81,43 @@
                                             <VBox.margin>
                                                 <Insets top="5.0" />
                                             </VBox.margin>
-                                 <children>
-                                    <VBox alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="370.0">
-                                       <children>
-                                          <Label text="Nombre del estudiante:">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Proyecto relacionado:">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets right="5.0" />
-                                       </HBox.margin>
-                                    </VBox>
-                                    <VBox prefHeight="24.0" prefWidth="370.0">
-                                       <children>
-                                          <Label fx:id="lbNombreEstudiante" text="..." />
-                                          <Label fx:id="lbNombreProyecto" text="..." />
-                                       </children>
-                                    </VBox>
-                                 </children>
+                                            <children>
+                                                <VBox alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="370.0">
+                                                    <children>
+                                                        <Label text="Nombre del estudiante:" textFill="RED">
+                                                            <font>
+                                                                <Font name="System Bold" size="12.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="Proyecto relacionado:" textFill="RED">
+                                                            <font>
+                                                                <Font name="System Bold" size="12.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                    <HBox.margin>
+                                                        <Insets right="5.0" />
+                                                    </HBox.margin>
+                                                </VBox>
+                                                <VBox prefHeight="24.0" prefWidth="370.0">
+                                                    <children>
+                                                        <Label fx:id="lbNombreEstudiante" text="..." textFill="RED" />
+                                                        <Label fx:id="lbNombreProyecto" text="..." textFill="RED" />
+                                                    </children>
+                                                </VBox>
+                                            </children>
                                         </HBox>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="ARCHIVOS ENTREGADOS">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <TableView fx:id="tbvDocumentosSubidos" prefHeight="453.0" prefWidth="791.0">
-                                <columns>
-                                  <TableColumn fx:id="tcNombre" prefWidth="379.0" text="Nombre" />
-                                  <TableColumn fx:id="tcDescripcion" prefWidth="411.0" text="Descripcion" />
-                                </columns>
-                              </TableView>
+                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="ARCHIVOS ENTREGADOS" textFill="RED">
+                                            <font>
+                                                <Font size="15.0" />
+                                            </font>
+                                        </Label>
+                                        <TableView fx:id="tbvDocumentosSubidos" prefHeight="453.0" prefWidth="791.0">
+                                            <columns>
+                                                <TableColumn fx:id="tcNombre" prefWidth="379.0" text="Nombre" />
+                                                <TableColumn fx:id="tcDescripcion" prefWidth="411.0" text="Descripcion" />
+                                            </columns>
+                                        </TableView>
                                     </children>
                                     <VBox.margin>
                                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
