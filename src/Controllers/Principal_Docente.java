@@ -36,8 +36,8 @@ import java.util.ResourceBundle;
 public class Principal_Docente implements Initializable {
 
     private EstudianteDAO estudianteDAO = new EstudianteDAO();
-    private List<Estudiante> grupo = new ArrayList<Estudiante>();
-    private List<ArchivoConsulta> archivoConsultas = new ArrayList<ArchivoConsulta>();
+    private List< Estudiante > grupo = new ArrayList< Estudiante >();
+    private List< ArchivoConsulta > archivoConsultas = new ArrayList< ArchivoConsulta >();
     private ScreenChanger screenChanger = new ScreenChanger();
     private OutputMessages outputMessages = new OutputMessages();
     private FileChooser fileChooser = new FileChooser();
@@ -82,10 +82,13 @@ public class Principal_Docente implements Initializable {
         MostrarArchivosSubidos();
     }
 
+    /**
+     * Muestra los archivos de consulta subidos por el docente al sistema
+     */
     public void MostrarArchivosSubidos() {
         tbvArchivosSubidos.getItems().clear();
-        for (ArchivoConsulta archivoConsulta : archivoConsultas) {
-            tbvArchivosSubidos.getItems().add(archivoConsulta);
+        for ( ArchivoConsulta archivoConsulta : archivoConsultas ) {
+            tbvArchivosSubidos.getItems().add( archivoConsulta );
         }
     }
 
@@ -94,7 +97,7 @@ public class Principal_Docente implements Initializable {
      */
     public void MostrarGrupo() {
         tbvGrupo.getItems().clear();
-        for (Estudiante estudiante : grupo) {
+        for ( Estudiante estudiante : grupo) {
             tbvGrupo.getItems().add(estudiante);
         }
     }
@@ -122,9 +125,9 @@ public class Principal_Docente implements Initializable {
     public void RecuperarGrupo() {
         String nrc = LoginSession.GetInstance().GetDocente().GetNrc();
         grupo = estudianteDAO.ReadAllWithProjects();
-        for(Estudiante estudiante : grupo){
-            if(!nrc.equals(estudiante.getNrc())){
-                grupo.remove(estudiante);
+        for( Estudiante estudiante : grupo ){
+            if( !nrc.equals( estudiante.getNrc() ) ){
+                grupo.remove( estudiante );
             }
         }
     }
@@ -141,9 +144,9 @@ public class Principal_Docente implements Initializable {
      * y numero personal.
      */
     public void SetUsuario() {
-        lbNombre.setText(LoginSession.GetInstance().GetDocente().getNombres());
-        lbApellidos.setText(LoginSession.GetInstance().GetDocente().GetApellidos());
-        lbCedulaProfesional.setText(LoginSession.GetInstance().GetDocente().GetNumeroPersonal());
+        lbNombre.setText( LoginSession.GetInstance().GetDocente().getNombres() );
+        lbApellidos.setText( LoginSession.GetInstance().GetDocente().GetApellidos() );
+        lbCedulaProfesional.setText( LoginSession.GetInstance().GetDocente().GetNumeroPersonal() );
     }
 
     /**
@@ -151,51 +154,9 @@ public class Principal_Docente implements Initializable {
      *
      * @param mouseEvent evento del mouse que inicia el metodo
      */
-    public void Logout(MouseEvent mouseEvent) {
+    public void Logout( MouseEvent mouseEvent ) {
         LoginSession.GetInstance().Logout();
-        screenChanger.ShowLoginScreen(mouseEvent, errorText);
-    }
-
-    /**
-     * Muestra la pantalla "DescargarArchivos" y cierra la actual.
-     *
-     * @param mouseEvent evento del mouse que inicia el metodo.
-     */
-    public void irPantallaDescargarArchivos(MouseEvent mouseEvent) {
-        Estudiante estudianteElegido = (Estudiante) tbvGrupo.getSelectionModel().getSelectedItem();
-
-        if (estudianteElegido != null) {
-            SelectionContainer.GetInstance().setEstudianteElegido(estudianteElegido);
-            screenChanger.ShowScreenDescargarArchivoDocente(mouseEvent, errorText);
-        } else {
-            errorText.setText(outputMessages.EstudianteNoSeleccionado());
-        }
-    }
-
-    /**
-     * Muestra una pantalla exploradora de archivos en la que se seleccionara un documento
-     * que se almacenara en la base de datos como un archivo de consulta
-     * @param mouseEvent evento del mouse que inicia el método
-     */
-    public void irPantallaSubirArchivos(MouseEvent mouseEvent) {
-        fileChooser.setTitle("Descargando archivo...");
-        File file = getFile( mouseEvent );
-        if ( file != null ) {
-            if( verificarExtension( getTipoArchivo(file) ) ){
-
-                ArchivoConsulta nuevoArchivo = GenerarArchivoConsulta(file);
-
-                if( FileNameDoesNotExist(nuevoArchivo) ){
-                    archivoConsultaDAO.Create(nuevoArchivo);
-                    successText.setText(outputMessages.UploadSuccesful());
-                }
-
-                RecuperarArchivosConsulta();
-                MostrarArchivosSubidos();
-            }else{
-                errorText.setText( outputMessages.InvalidFileExtension() );
-            }
-        }
+        screenChanger.ShowLoginScreen( mouseEvent, errorText );
     }
 
     /**
@@ -204,7 +165,7 @@ public class Principal_Docente implements Initializable {
      * @return true - si NO existe el nombre en la base de datos<p>
      *     falso - si existe el nombre en la base de datos
      */
-    private boolean FileNameDoesNotExist(ArchivoConsulta archivo ) {
+    private boolean FileNameDoesNotExist( ArchivoConsulta archivo ) {
         boolean nombreNoExiste = true;
 
         for( ArchivoConsulta ejemplar : archivoConsultas ) {
@@ -223,17 +184,17 @@ public class Principal_Docente implements Initializable {
      * @return true - es un archivo del tipo valido, es decir pdf, docx o doc. <p>
      *     false - es un tipo de archivo no valido, por ejemplo png, exe, jpg
      */
-    private boolean verificarExtension(String tipoArchivo) {
-        return tipoArchivo.equals("pdf")  || tipoArchivo.equals("docx") || tipoArchivo.equals("doc");
+    private boolean verificarExtension( String tipoArchivo ) {
+        return tipoArchivo.equals( "pdf" )  || tipoArchivo.equals( "docx" ) || tipoArchivo.equals( "doc" );
     }
 
     /**
      * Regresa la extension del documento
      * @return el tipo de documento
      */
-    public String getTipoArchivo(File archivo){
+    public String getTipoArchivo( File archivo ){
         int separador = archivo.getName().lastIndexOf('.');
-        String tipo = (separador == -1) ? "" : archivo.getName().substring(separador + 1);
+        String tipo = ( separador == -1 ) ? "" : archivo.getName().substring( separador + 1 );
         return tipo;
     }
 
@@ -242,12 +203,12 @@ public class Principal_Docente implements Initializable {
      * @param file Archivo que sera usado para hacer crear un ArchivoConsulta
      * @return Archivo consulta que sera guardado en la base de datos
      */
-    public ArchivoConsulta GenerarArchivoConsulta(File file) {
+    public ArchivoConsulta GenerarArchivoConsulta( File file ) {
         ArchivoConsulta archivoConsulta = new ArchivoConsulta();
 
-        archivoConsulta.SetTitulo(file.getName());
-        archivoConsulta.SetNumeroPersonal(LoginSession.GetInstance().GetDocente().GetNumeroPersonal());
-        archivoConsulta.SetDescripcion(file);
+        archivoConsulta.SetTitulo( file.getName() );
+        archivoConsulta.SetNumeroPersonal( LoginSession.GetInstance().GetDocente().GetNumeroPersonal() );
+        archivoConsulta.SetDescripcion( file );
 
         return archivoConsulta;
     }
@@ -258,22 +219,23 @@ public class Principal_Docente implements Initializable {
      * @param mouseEvent el evento que invocó el método
      * @return una instancia del archivo seleccionado tipo File
      */
-    private File getFile(MouseEvent mouseEvent) {
-        return fileChooser.showOpenDialog( ( (Node)mouseEvent.getSource() ).getScene().getWindow() );
+    private File getFile( MouseEvent mouseEvent ) {
+        LimpiarMensajesPantalla();
+        return fileChooser.showOpenDialog( ( ( Node ) mouseEvent.getSource() ).getScene().getWindow() );
     }
 
     /**
      * Muestra la pantalla de consultar expediente de un estudiante especificado en esta pantalla.
      * @param mouseEvent evento que invoco el método
      */
-    public void ClicConsultarExpediente( MouseEvent mouseEvent){
-        Estudiante estudianteElegido = (Estudiante) tbvGrupo.getSelectionModel().getSelectedItem();
+    public void ClicConsultarExpediente( MouseEvent mouseEvent ){
+        Estudiante estudianteElegido = ( Estudiante ) tbvGrupo.getSelectionModel().getSelectedItem();
 
-        if (estudianteElegido != null) {
-            SelectionContainer.GetInstance().setEstudianteElegido(estudianteElegido);
-            screenChanger.ShowScreenConsultarExpediente(mouseEvent, errorText);
+        if ( estudianteElegido != null ) {
+            SelectionContainer.GetInstance().setEstudianteElegido( estudianteElegido );
+            screenChanger.ShowScreenConsultarExpediente( mouseEvent, errorText );
         } else {
-            errorText.setText(outputMessages.EstudianteNoSeleccionado());
+            errorText.setText( outputMessages.EstudianteNoSeleccionado() );
         }
     }
 
@@ -289,8 +251,10 @@ public class Principal_Docente implements Initializable {
      * Elimina del sistema el archivo de consulta que se seleccione en esta pantalla.
      * @param mouseEvent evento del mouse que inicia el método
      */
-    public void ClicEliminarArchivo(MouseEvent mouseEvent) {
-        ArchivoConsulta archivoEliminar = (ArchivoConsulta) tbvArchivosSubidos.getSelectionModel().getSelectedItem();
+    public void ClicEliminarArchivo( MouseEvent mouseEvent ) {
+        LimpiarMensajesPantalla();
+
+        ArchivoConsulta archivoEliminar = ( ArchivoConsulta ) tbvArchivosSubidos.getSelectionModel().getSelectedItem();
         if( archivoEliminar != null ){
             archivoConsultaDAO.Delete( archivoEliminar.GetId() );
             successText.setText( outputMessages.DeleteFileSucceded() );
@@ -298,5 +262,56 @@ public class Principal_Docente implements Initializable {
             RecuperarArchivosConsulta();
             MostrarArchivosSubidos();
         }
+    }
+
+    /**
+     * Muestra una pantalla exploradora de archivos en la que se seleccionara un documento
+     * que se almacenara en la base de datos como un archivo de consulta
+     * @param mouseEvent evento del mouse que inicia el método
+     */
+    public void irPantallaSubirArchivos( MouseEvent mouseEvent ) {
+        LimpiarMensajesPantalla();
+
+        fileChooser.setTitle("Descargando archivo...");
+        File file = getFile( mouseEvent );
+        if ( file != null ) {
+            if( verificarExtension( getTipoArchivo(file) ) ){
+
+                ArchivoConsulta nuevoArchivo = GenerarArchivoConsulta( file );
+
+                if( FileNameDoesNotExist( nuevoArchivo ) ){
+                    archivoConsultaDAO.Create( nuevoArchivo );
+                    successText.setText( outputMessages.UploadSuccesful() );
+                }
+
+                RecuperarArchivosConsulta();
+                MostrarArchivosSubidos();
+            }else{
+                errorText.setText( outputMessages.InvalidFileExtension() );
+            }
+        }
+    }
+
+    /**
+     * Muestra la pantalla "DescargarArchivos" y cierra la actual.
+     *
+     * @param mouseEvent evento del mouse que inicia el metodo.
+     */
+    public void irPantallaDescargarArchivos( MouseEvent mouseEvent ) {
+        LimpiarMensajesPantalla();
+
+        Estudiante estudianteElegido = ( Estudiante ) tbvGrupo.getSelectionModel().getSelectedItem();
+
+        if (estudianteElegido != null) {
+            SelectionContainer.GetInstance().setEstudianteElegido( estudianteElegido );
+            screenChanger.ShowScreenDescargarArchivoDocente( mouseEvent, errorText );
+        } else {
+            errorText.setText( outputMessages.EstudianteNoSeleccionado() );
+        }
+    }
+
+    private void LimpiarMensajesPantalla() {
+        errorText.setText("");
+        successText.setText("");
     }
 }
