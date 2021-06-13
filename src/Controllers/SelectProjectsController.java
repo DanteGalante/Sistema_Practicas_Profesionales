@@ -126,6 +126,7 @@ public class SelectProjectsController implements Initializable {
      * selectedProjects
      */
     public void SelectProject() {
+        ClearTextFields();
         int idProyecto = availableProjectsTable.getSelectionModel().getSelectedItem().getIdProyecto();
         for( Proyecto proyecto : listaProyectos ) {
             if( DoesSelectedProjectTableHaveSpace() && idProyecto == proyecto.getIdProyecto() &&
@@ -139,6 +140,7 @@ public class SelectProjectsController implements Initializable {
      * Elimina un proyecto seleccionado de la tabla selectedProjects
      */
     public void RemoveProject() {
+        ClearTextFields();
         selectedProjectsTable.getItems().remove( selectedProjectsTable.getSelectionModel().getSelectedItem() );
     }
 
@@ -146,15 +148,22 @@ public class SelectProjectsController implements Initializable {
      * Manda los proyectos seleccionados a la base de datos y actualiza el estado del estudiante
      */
     public void SendSelection() {
+        ClearTextFields();
         if( Selected3Projects() ) {
-            try {
-                proyectosSeleccionados.Create( LoginSession.GetInstance().GetEstudiante().getMatricula(), GetSelectedProjects() );
-                LoginSession.GetInstance().GetEstudiante().SetEstadoEstudiante( EstadoEstudiante.AsignacionPendiente );
-                estudiantes.Update( LoginSession.GetInstance().GetEstudiante() );
-                errorText.setText( "" );
-                successText.setText( outputMessages.ProjectSelectionSuccessful() );
-            } catch( Exception exception ) {
-                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            if( LoginSession.GetInstance().GetEstudiante().getEstado() != EstadoEstudiante.AsignacionPendiente ) {
+                try {
+                    proyectosSeleccionados.Create( LoginSession.GetInstance().GetEstudiante().getMatricula(), GetSelectedProjects() );
+                    LoginSession.GetInstance().GetEstudiante().SetEstadoEstudiante( EstadoEstudiante.AsignacionPendiente );
+                    estudiantes.Update( LoginSession.GetInstance().GetEstudiante() );
+                    errorText.setText( "" );
+                    successText.setText( outputMessages.ProjectSelectionSuccessful() );
+                } catch( Exception exception ) {
+                    successText.setText( "" );
+                    errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+                }
+            }
+            else{
+                errorText.setText( outputMessages.AlreadyChoseProjects() );
             }
         }
     }
@@ -267,5 +276,10 @@ public class SelectProjectsController implements Initializable {
     @FXML
     private void ShowProjectDetails( MouseEvent mouseEvent ) {
         projectDetails.setText( availableProjectsTable.getSelectionModel().getSelectedItem().GetDescripcion() );
+    }
+
+    private void ClearTextFields() {
+        successText.setText( "" );
+        errorText.setText( "" );
     }
 }

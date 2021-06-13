@@ -82,9 +82,13 @@ public class StudentFormatsController implements Initializable{
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        SetUserInformation();
-        SetCellValueFactory();
-        ShowFiles();
+        try {
+            SetUserInformation();
+            SetCellValueFactory();
+            ShowFiles();
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+        }
     }
 
     /**

@@ -229,7 +229,11 @@ public class ReportsScreenController implements Initializable {
      * campo de texto projectText
      */
     private void SetProjectName() {
-        projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
+        try {
+            projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+        }
     }
 
     private void ClearErrorText() { errorText.setText( "" ); }
