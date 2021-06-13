@@ -245,7 +245,7 @@ public class Principal_Coordinador implements Initializable {
             listaAuxiliar.add( expediente.GetMatricula() );
         }
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.GetEstado() == EstadoEstudiante.RegistroAprobado){
+            if(estudiante.getEstado() == EstadoEstudiante.RegistroAprobado){
                 cont ++;
             }
         }
@@ -259,7 +259,7 @@ public class Principal_Coordinador implements Initializable {
             listaAuxiliar.add( expediente.GetMatricula() );
         }
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.GetEstado() != EstadoEstudiante.RegistroAprobado){
+            if(estudiante.getEstado() != EstadoEstudiante.RegistroAprobado){
                 cont ++;
             }
         }
@@ -269,7 +269,7 @@ public class Principal_Coordinador implements Initializable {
     public List MatriculaEstudianteInscrito(){
         List<String> listaAuxiliar = new ArrayList<>();
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.GetEstado() == EstadoEstudiante.RegistroAprobado){
+            if(estudiante.getEstado() == EstadoEstudiante.RegistroAprobado){
                 listaAuxiliar.add( estudiante.getMatricula() );
             }
         }

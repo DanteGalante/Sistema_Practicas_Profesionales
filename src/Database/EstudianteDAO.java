@@ -39,15 +39,15 @@ public class EstudianteDAO implements EstudianteDAOInterface{
 
         try {
             usuarios.Create( new UsuarioUV( estudiante.GetID(), estudiante.getNombres(), estudiante.GetApellidos(),
-                                            estudiante.GetUsuario(), estudiante.GetContrasena(), estudiante.GetCorreo(),
+                                            estudiante.GetKey(), estudiante.GetContrasena(), estudiante.GetCorreo(),
                                             estudiante.GetTelefono() ) );
-            UsuarioUV usuarioTemp = usuarios.Read( estudiante.GetUsuario() );
+            UsuarioUV usuarioTemp = usuarios.Read( estudiante.GetKey() );
             String query = "INSERT INTO Estudiante( Matricula, IDUsuario, NRC, Estado ) VALUES( ?, ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1, estudiante.getMatricula() );
             statement.setInt( 2, usuarioTemp.GetID() );
             statement.setString( 3, estudiante.getNrc() );
-            statement.setInt( 4, estudiante.GetEstado().ordinal() );
+            statement.setInt( 4, estudiante.getEstado().ordinal() );
             statement.executeUpdate();
 
             wasCreated = true;
@@ -275,12 +275,12 @@ public class EstudianteDAO implements EstudianteDAOInterface{
             String query = "UPDATE Estudiante SET NRC = ?, Estado = ? WHERE Matricula = ?;";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1, estudiante.getNrc() );
-            statement.setInt( 2, estudiante.GetEstado().ordinal() );
+            statement.setInt( 2, estudiante.getEstado().ordinal() );
             statement.setString( 3, estudiante.getMatricula() );
             statement.executeUpdate();
 
             usuarios.Update( new UsuarioUV( estudiante.GetID(), estudiante.getNombres(), estudiante.GetApellidos(),
-                                            estudiante.GetUsuario(), estudiante.GetContrasena(), estudiante.GetCorreo(),
+                                            estudiante.GetKey(), estudiante.GetContrasena(), estudiante.GetCorreo(),
                                             estudiante.GetTelefono() ) );
 
             updated = true;
@@ -294,6 +294,7 @@ public class EstudianteDAO implements EstudianteDAOInterface{
 
     /**
      *Elimina un estudiante de la base de datos utilizando la matrícula introducida.
+     * La eliminación realizada es lógica.
      * @param matricula la matrícula del Estudiante que se desea eliminar
      * @return booleano indica éxito o fracaso
      */
@@ -305,7 +306,7 @@ public class EstudianteDAO implements EstudianteDAOInterface{
 
         try {
             Estudiante estudiante = Read( matricula );
-            String query = "DELETE FROM Estudiante WHERE Matricula = ?;";
+            String query = "UPDATE Estudiante SET Estado=5 WHERE Matricula = ?;";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1,  matricula );
             statement.executeUpdate();

@@ -201,6 +201,12 @@ public class OutputMessages {
     public String DatabaseConnectionFailed() { return "No hay conexión a la base de datos. Intente más tarde."; }
 
     /**
+     * Mensaje mostrado cuando ocurre un error en la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String DatabaseConnectionFailed2() { return "No se pudo conectar a la base de datos. Por favor inténtelo más tarde."; }
+
+    /**
      * Mensaje mostrado cuando ya existe un Estudiante en base de datos
      * @return una cadena con el mensaje de error
      */
@@ -427,4 +433,10 @@ public class OutputMessages {
     public String DeleteFileSucceded() {
         return "El archivo ha sido eliminado";
     }
+
+    /**
+     * Mensaje mostrado cuando no se ha seleccionado un archivo para eliminar de la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String FileNotSelectedToDelete(){return "No se ha seleccionado ningun archivo para eliminar";}
 }

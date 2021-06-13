@@ -93,10 +93,14 @@ public class AdditionalDocumentsController implements Initializable {
      */
     @Override
     public void initialize( URL url, ResourceBundle resourceBundle ) {
-        SetUserInformation();
-        SetCellValueFactory();
-        ConfigureFileChoosers();
-        ShowDocuments();
+        try {
+            SetUserInformation();
+            SetCellValueFactory();
+            ConfigureFileChoosers();
+            ShowDocuments();
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+        }
     }
 
     /**
@@ -183,12 +187,17 @@ public class AdditionalDocumentsController implements Initializable {
      */
     @FXML
     public void DeleteDocument( MouseEvent mouseEvent ) {
+        ClearErrorText();
         if( IsDocumentSelected() ) {
             Alert deleteAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.DeleteDocumentConfirmation() );
             deleteAlert.showAndWait().ifPresent( response -> {
                 if( response == ButtonType.OK ) {
-                    documentos.Delete( studentDocumentsTable.getSelectionModel().getSelectedItem().getIdDocumento() );
-                    ShowDocuments();
+                    try {
+                        documentos.Delete( studentDocumentsTable.getSelectionModel().getSelectedItem().getIdDocumento() );
+                        ShowDocuments();
+                    } catch( Exception exception ) {
+                        errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+                    }
                 }
             } );
         }
@@ -200,10 +209,15 @@ public class AdditionalDocumentsController implements Initializable {
      */
     @FXML
     public void DownloadDocument( MouseEvent mouseEvent ) {
+        ClearErrorText();
         if( IsDocumentSelected() ) {
             File directoryFile = GetDirectory( mouseEvent );
-            CopyFile( documentos.Read( studentDocumentsTable.getSelectionModel().getSelectedItem().getIdDocumento() ).GetDescripcion(),
-                      directoryFile );
+            try {
+                CopyFile( documentos.Read( studentDocumentsTable.getSelectionModel().getSelectedItem().getIdDocumento() ).GetDescripcion(),
+                        directoryFile );
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         }
     }
 
@@ -221,10 +235,15 @@ public class AdditionalDocumentsController implements Initializable {
      */
     @FXML
     public void UploadDocument( MouseEvent mouseEvent ) {
+        ClearErrorText();
         File document = GetFile( mouseEvent );
-        if( document != null && DocumentNameDoesNotExist( GetDocument( document ) ) ) {
-            documentos.Create( GetDocument( document ) );
-            ShowDocuments();
+        try {
+            if( document != null && DocumentNameDoesNotExist( GetDocument( document ) ) ) {
+                documentos.Create( GetDocument( document ) );
+                ShowDocuments();
+            }
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
         }
     }
 
@@ -346,4 +365,6 @@ public class AdditionalDocumentsController implements Initializable {
     private void SetProjectName() {
         projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
     }
+
+    private void ClearErrorText() { errorText.setText( "" ); }
 }

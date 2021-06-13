@@ -20,6 +20,7 @@ import Entities.Estudiante;
 import Utilities.ScreenChanger;
 import Utilities.InputValidator;
 import Utilities.OutputMessages;
+import java.util.Random;
 
 /**
  * Clase que se encarga de manejar las acciones de la pantalla
@@ -30,6 +31,7 @@ public class RegistryScreenController {
     private InputValidator inputValidator = new InputValidator();
     private OutputMessages outputMessages = new OutputMessages();
     private EstudianteDAO estudiantes = new EstudianteDAO();
+    private Random randomGenerator = new Random();
 
     @FXML
     private Button registerButton;
@@ -81,8 +83,13 @@ public class RegistryScreenController {
     public void HandleStudentRegistration() {
         CheckUserInput();
         if( inputValidator.IsStudentInformationValid( GetStudent(), confirmPasswordField.getText() ) ) {
-            if( !DoesStudentExist() ) {
-                RegisterStudent();
+            try {
+                if( !DoesStudentExist() ) {
+                    RegisterStudent();
+                }
+            } catch( Exception exception ) {
+                successText.setText( "" );
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
             }
         }
     }
@@ -218,8 +225,53 @@ public class RegistryScreenController {
      * @return una instancia de Estudiante
      */
     private Estudiante GetStudent() {
-        return new Estudiante( 0, nameField.getText(), lastNameField.getText(), "", passwordField.getText(),
+        return new Estudiante( 0, nameField.getText(), lastNameField.getText(), GetRandomKey(), passwordField.getText(),
                 emailField.getText(), phoneField.getText(), matriculaField.getText(), nrcField.getText(),
                 EstadoEstudiante.RegistroPendiente, "" );
+    }
+
+    /**
+     * Regresa una llave unica para el estudiante
+     * @return una llave unica para el estudiante
+     */
+    private String GetRandomKey() {
+        String key = CreateKey();
+        while( DoesKeyExist( key ) ) {
+            key = CreateKey();
+        }
+        return key;
+    }
+
+    /**
+     * Revisa si una llave ya existe en la base de datos
+     * @param key la llave que se desea verificar
+     * @return un booleano indicando si existe la llave
+     */
+    private boolean DoesKeyExist( String key ) {
+        boolean keyExists = false;
+        if( estudiantes.Read( key ) != null ) {
+            keyExists = true;
+        }
+        return keyExists;
+    }
+
+    /**
+     * Crea una llave para el estudiante
+     * @return una llave para el estudiante
+     */
+    private String CreateKey() {
+        String key = "";
+        for( int current = 0; current < 10; current++ ) {
+            key = key + GetRandomNumber();
+        }
+        return key;
+    }
+
+    /**
+     * Metodo utilizado para crear un numero al azar del rango de 0 a 9
+     * @return un numero al azar  del 0 al 9
+     */
+    private int GetRandomNumber() {
+        return randomGenerator.nextInt( 10 );
     }
 }

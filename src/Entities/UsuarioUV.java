@@ -18,7 +18,7 @@ public class UsuarioUV {
     protected int idUsuario;
     protected String nombres;
     protected String apellidos;
-    protected String usuario;
+    protected String key;
     protected String contrasena;
     protected String correoElectronico;
     protected String telefono;
@@ -32,7 +32,7 @@ public class UsuarioUV {
         idUsuario = 0;
         nombres = "";
         apellidos = "";
-        usuario = "";
+        key = "";
         contrasena = "";
         correoElectronico = "";
         telefono = "";
@@ -44,7 +44,7 @@ public class UsuarioUV {
      * @param original instancia existente de UsuarioUV
      */
     public UsuarioUV( UsuarioUV original ) {
-        this( original.idUsuario, original.nombres, original.apellidos, original.usuario, original.contrasena,
+        this( original.idUsuario, original.nombres, original.apellidos, original.key, original.contrasena,
                 original.correoElectronico, original.telefono );
     }
 
@@ -54,17 +54,17 @@ public class UsuarioUV {
      * @param idIn el ID del usuario asignado por el SMBDR.
      * @param nombresIn los nombres del usuario.
      * @param apellidosIn los apellidos del usuario.
-     * @param usuarioIn utilizado para iniciar sesión al SPP.
+     * @param keyIn utilizado para iniciar sesión al SPP.
      * @param contrasenaIn utilizada para iniciar sesión al SPP.
      * @param correoIn correo electrónico del usuario.
      * @param telefonoIn teléfono del usuario.
      */
-    public UsuarioUV( int idIn, String nombresIn, String apellidosIn, String usuarioIn, String contrasenaIn,
+    public UsuarioUV( int idIn, String nombresIn, String apellidosIn, String keyIn, String contrasenaIn,
                       String correoIn, String telefonoIn ) {
         idUsuario = idIn;
         nombres = nombresIn;
         apellidos = apellidosIn;
-        usuario = usuarioIn;
+        key = keyIn;
         contrasena = contrasenaIn;
         correoElectronico = correoIn;
         telefono = telefonoIn;
@@ -98,8 +98,8 @@ public class UsuarioUV {
      * Regresa el nombre de usuario del UsuarioUV
      * @return
      */
-    public String GetUsuario() {
-        return usuario;
+    public String GetKey() {
+        return key;
     }
 
     /**
@@ -130,7 +130,7 @@ public class UsuarioUV {
      * Regresa el nombreCompleto del UsuarioUV
      * @return
      */
-    public String getNombreCompleto(){return nombres + " " + apellidos;}
+    public String getNombreCompleto(){ return nombres + " " + apellidos; }
 
     /**
      * Cambio los nombres del UsuarioUV al valor introducido
@@ -153,7 +153,7 @@ public class UsuarioUV {
      * @param usuarioIn
      */
     public void SetUsuario( String usuarioIn ) {
-        usuario = usuarioIn;
+        key = usuarioIn;
     }
 
     /**

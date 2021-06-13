@@ -38,9 +38,9 @@ public class DocenteDAO  implements DocenteDAOInterface{
 
         try {
             usuarios.Create( new UsuarioUV( docente.GetID(), docente.getNombres(), docente.GetApellidos(),
-                    docente.GetUsuario(), docente.GetContrasena(), docente.GetCorreo(),
+                    docente.GetKey(), docente.GetContrasena(), docente.GetCorreo(),
                     docente.GetTelefono() ) );
-            UsuarioUV usuarioTemp = usuarios.Read( docente.GetUsuario() );
+            UsuarioUV usuarioTemp = usuarios.Read( docente.GetKey() );
 
             String query = "INSERT INTO Docente( NumeroPersonal, IDUsuario, NRC ) VALUES( ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
@@ -139,7 +139,7 @@ public class DocenteDAO  implements DocenteDAOInterface{
             statement.executeUpdate();
 
             usuarios.Update( new UsuarioUV( docente.GetID(), docente.getNombres(), docente.GetApellidos(),
-                    docente.GetUsuario(), docente.GetContrasena(), docente.GetCorreo(), docente.GetTelefono() ) );
+                    docente.GetKey(), docente.GetContrasena(), docente.GetCorreo(), docente.GetTelefono() ) );
 
             updated = true;
         } catch( Exception exception ) {

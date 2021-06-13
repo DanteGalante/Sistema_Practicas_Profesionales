@@ -11,6 +11,7 @@ package Controllers;
 import Database.*;
 import Entities.*;
 import Enumerations.EstadoProyecto;
+import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,6 +37,7 @@ public class ProjectDetailsController implements Initializable {
     private ResponsableProyectoDAO responsables = new ResponsableProyectoDAO();
     private ResponsablesOrganizacionDAO responsablesOrganizacion = new ResponsablesOrganizacionDAO();
     private ProyectosDeResponsablesDAO responsablesProyectos = new ProyectosDeResponsablesDAO();
+    private OutputMessages outputMessages = new OutputMessages();
     private Proyecto proyecto;
     private OrganizacionVinculada organizacion;
     private ResponsableProyecto responsable;
@@ -102,10 +104,14 @@ public class ProjectDetailsController implements Initializable {
     @Override
     public void initialize( URL url, ResourceBundle resourceBundle ) {
         SetUserInformation();
-        SetProjectTexts();
-        SetResponsableTexts();
-        SetOrganizacionTexts();
-        SetStudentNames( GetStudentNames() );
+        try {
+            SetProjectTexts();
+            SetResponsableTexts();
+            SetOrganizacionTexts();
+            SetStudentNames( GetStudentNames() );
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+        }
     }
 
     /**
