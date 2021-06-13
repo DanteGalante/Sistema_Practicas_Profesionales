@@ -261,6 +261,8 @@ public class Principal_Docente implements Initializable {
 
             RecuperarArchivosConsulta();
             MostrarArchivosSubidos();
+        }else{
+            errorText.setText(outputMessages.FileNotSelectedToDelete());
         }
     }
 
