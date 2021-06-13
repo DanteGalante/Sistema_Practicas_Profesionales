@@ -59,7 +59,7 @@
                     </columns>
                   </TableView>
                   <Button fx:id="uploadDocumento" layoutX="605.0" layoutY="535.0" mnemonicParsing="false" onMouseClicked="#UploadDocument" text="Subir Documento" />
-                  <Text fx:id="errorText" fill="#e84545" layoutX="178.0" layoutY="580.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="421.14306640625">
+                  <Text fx:id="errorText" fill="#e84545" layoutX="138.0" layoutY="580.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="499.14306640625">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

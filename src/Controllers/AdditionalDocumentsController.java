@@ -93,10 +93,14 @@ public class AdditionalDocumentsController implements Initializable {
      */
     @Override
     public void initialize( URL url, ResourceBundle resourceBundle ) {
-        SetUserInformation();
-        SetCellValueFactory();
-        ConfigureFileChoosers();
-        ShowDocuments();
+        try {
+            SetUserInformation();
+            SetCellValueFactory();
+            ConfigureFileChoosers();
+            ShowDocuments();
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+        }
     }
 
     /**

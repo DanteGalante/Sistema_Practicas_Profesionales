@@ -113,7 +113,7 @@ public class EstudianteMainMenuController implements Initializable {
         if( DoesStudentHaveProjectAssigned() ) {
             screenChanger.ShowStudentFormatsScreen( mouseEvent, errorText );
         } else {
-            errorText.setText( outputMessages.StudentFormatsMissing() );
+            errorText.setText( outputMessages.ProjectNotAssigned() );
         }
     }
 
@@ -135,7 +135,11 @@ public class EstudianteMainMenuController implements Initializable {
      */
     public void ShowChooseProjects( MouseEvent mouseEvent ) {
         if( !HasStudentChosenProjects() ) {
-            screenChanger.ShowChooseProjectsScreen( mouseEvent, errorText );
+            try {
+                screenChanger.ShowChooseProjectsScreen( mouseEvent, errorText );
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         } else {
             errorText.setText( outputMessages.AlreadyChoseProjects() );
         }
@@ -175,7 +179,11 @@ public class EstudianteMainMenuController implements Initializable {
      */
     private void SetProjectName() {
         if( DoesStudentHaveProjectAssigned() ) {
-            projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
+            try {
+                projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         }
     }
 
