@@ -38,13 +38,14 @@ public class OrganizacionVinculadaDAO implements OrganizacionVinculadaDAOInterfa
 
         try {
             String query = "INSERT INTO OrganizacionVinculada( Nombre, Direccion, " +
-                    "Sector, Telefono, CorreoElectronico ) VALUES ( ?, ?, ?, ?, ? );";
+                    "Sector, Telefono, CorreoElectronico, Activa ) VALUES ( ?, ?, ?, ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1, organizacion.getNombre() );
             statement.setString( 2, organizacion.getDireccion() );
             statement.setInt( 3, organizacion.getSector().ordinal() );
             statement.setString( 4, organizacion.getTelefono() );
             statement.setString( 5, organizacion.getCorreo() );
+            statement.setBoolean(6, organizacion.getActiveStatus());
             statement.executeUpdate();
 
             responsables.Create( organizacion.getIdOrganizacion(), organizacion.getResponsables() );
