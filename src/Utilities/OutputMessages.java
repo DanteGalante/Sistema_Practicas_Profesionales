@@ -202,6 +202,22 @@ public class OutputMessages {
             "ModificarProyecto_Coordinador."; }
 
     /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * ModificarEstudiante_Coordinador
+     * @return una cadena con el mensaje de error
+     */
+    public String PantallaModificarEstudiante() { return "No se encontró el archivo FXML de la pantalla " +
+            "ModificarEstudiante_Coordinador."; }
+
+    /**
+     * Mensaje mostrado cuando se modifica un estudiante de la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ModificacionEstudianteExitoso() { return "Modificación de Estudiante Exitoso"; }
+
+
+    /**
      * Mensaje mostrado cuando se registra un nuevo Estudiante a la
      * base de datos de manera exitosa.
      * @return una cadena con el mensaje de éxito
