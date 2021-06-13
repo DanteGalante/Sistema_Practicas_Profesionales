@@ -433,4 +433,10 @@ public class OutputMessages {
     public String DeleteFileSucceded() {
         return "El archivo ha sido eliminado";
     }
+
+    /**
+     * Mensaje mostrado cuando no se ha seleccionado un archivo para eliminar de la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String FileNotSelectedToDelete(){return "No se ha seleccionado ningun archivo para eliminar";}
 }
