@@ -126,13 +126,17 @@ public class ReportsScreenController implements Initializable {
      */
     private void ShowReports() {
         studentReportsTable.getItems().clear();
-        reportesEstudiante = reportes.ReadAll();
-        int claveExpediente = GetUserExpediente().GetClave();
-        for( Reporte reporte : reportesEstudiante )
-        {
-            if( reporte.GetClaveExpediente() == claveExpediente ) {
-                studentReportsTable.getItems().add( reporte );
+        try {
+            reportesEstudiante = reportes.ReadAll();
+            int claveExpediente = GetUserExpediente().GetClave();
+            for( Reporte reporte : reportesEstudiante )
+            {
+                if( reporte.GetClaveExpediente() == claveExpediente ) {
+                    studentReportsTable.getItems().add( reporte );
+                }
             }
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
         }
     }
 
@@ -151,10 +155,15 @@ public class ReportsScreenController implements Initializable {
      */
     @FXML
     public void TurnInReport( MouseEvent mouseEvent ) {
+        ClearErrorText();
         File report = GetFile( mouseEvent );
-        if( report != null && ReportNameDoesNotExist( GetReport( report ) ) ) {
-            reportes.Create( GetReport( report ) );
-            ShowReports();
+        try {
+            if( report != null && ReportNameDoesNotExist( GetReport( report ) ) ) {
+                reportes.Create( GetReport( report ) );
+                ShowReports();
+            }
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
         }
     }
 
@@ -220,6 +229,12 @@ public class ReportsScreenController implements Initializable {
      * campo de texto projectText
      */
     private void SetProjectName() {
-        projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
+        try {
+            projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+        }
     }
+
+    private void ClearErrorText() { errorText.setText( "" ); }
 }

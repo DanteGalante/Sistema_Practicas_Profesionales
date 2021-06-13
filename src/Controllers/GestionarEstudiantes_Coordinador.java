@@ -107,10 +107,14 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
      */
     private void ShowStudents() {
         estudiantesTable.getItems().clear();
-        for( Estudiante estudiante : estudiantes.ReadAll() ) {
-            if( estudiante.getEstado() != EstadoEstudiante.Eliminado && estudiante.getEstado() != EstadoEstudiante.RegistroPendiente ) {
-                estudiantesTable.getItems().add( estudiante );
+        try {
+            for( Estudiante estudiante : estudiantes.ReadAll() ) {
+                if( estudiante.getEstado() != EstadoEstudiante.Eliminado && estudiante.getEstado() != EstadoEstudiante.RegistroPendiente ) {
+                    estudiantesTable.getItems().add( estudiante );
+                }
             }
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
         }
     }
 
@@ -119,12 +123,17 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
      */
     @FXML
     void EliminarEstudiante() {
+        ClearErrorText();
         if( IsStudentSelected() ) {
             Alert deleteAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.DeleteDocumentConfirmation() );
             deleteAlert.showAndWait().ifPresent( response -> {
                 if( response == ButtonType.OK ) {
-                    estudiantes.Delete( estudiantesTable.getSelectionModel().getSelectedItem().getMatricula() );
-                    ShowStudents();
+                    try {
+                        estudiantes.Delete( estudiantesTable.getSelectionModel().getSelectedItem().getMatricula() );
+                        ShowStudents();
+                    } catch( Exception exception ) {
+                        errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+                    }
                 }
             } );
         }
@@ -136,9 +145,7 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     }
 
     @FXML
-    void ShowGestionarReportes( MouseEvent event ) {
-
-    }
+    void ShowGestionarReportes( MouseEvent event ) {}
 
     /**
      * Revisa si un estudiante ha sido seleccionado de la tabla
@@ -152,4 +159,6 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
         }
         return isSelected;
     }
+
+    private void ClearErrorText() { errorText.setText( "" ); }
 }

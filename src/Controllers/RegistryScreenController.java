@@ -81,8 +81,13 @@ public class RegistryScreenController {
     public void HandleStudentRegistration() {
         CheckUserInput();
         if( inputValidator.IsStudentInformationValid( GetStudent(), confirmPasswordField.getText() ) ) {
-            if( !DoesStudentExist() ) {
-                RegisterStudent();
+            try {
+                if( !DoesStudentExist() ) {
+                    RegisterStudent();
+                }
+            } catch( Exception exception ) {
+                successText.setText( "" );
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
             }
         }
     }
