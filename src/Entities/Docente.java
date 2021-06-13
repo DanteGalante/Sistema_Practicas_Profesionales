@@ -32,12 +32,12 @@ public class Docente extends UsuarioUV {
      * @param original instancia existente de coordinador.
      */
     public Docente( Docente original ) {
-        this( original.idUsuario, original.nombres, original.apellidos, original.usuario, original.contrasena,
+        this( original.idUsuario, original.nombres, original.apellidos, original.key, original.contrasena,
                 original.correoElectronico, original.telefono, original.numeroPersonal, original.nrc );
     }
 
     public Docente( UsuarioUV usuario, String numeroPersonalIn, String nrcIn ) {
-        this( usuario.idUsuario, usuario.nombres, usuario.apellidos, usuario.usuario, usuario.contrasena,
+        this( usuario.idUsuario, usuario.nombres, usuario.apellidos, usuario.key, usuario.contrasena,
                 usuario.correoElectronico, usuario.telefono, numeroPersonalIn, nrcIn );
     }
 

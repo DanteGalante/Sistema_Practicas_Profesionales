@@ -38,9 +38,9 @@ public class CoordinadorDAO implements CoordinadorDAOInterface{
 
         try {
             usuarios.Create( new UsuarioUV( coordinador.GetID(), coordinador.getNombres(), coordinador.GetApellidos(),
-                    coordinador.GetUsuario(), coordinador.GetContrasena(), coordinador.GetCorreo(),
+                    coordinador.GetKey(), coordinador.GetContrasena(), coordinador.GetCorreo(),
                     coordinador.GetTelefono() ) );
-            UsuarioUV usuarioTemp = usuarios.Read( coordinador.GetUsuario() );
+            UsuarioUV usuarioTemp = usuarios.Read( coordinador.GetKey() );
 
             String query = "INSERT INTO Coordinador( NumeroPersonal, IDUsuario ) VALUES( ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
@@ -131,7 +131,7 @@ public class CoordinadorDAO implements CoordinadorDAOInterface{
 
         try {
             usuarios.Update( new UsuarioUV( coordinador.GetID(), coordinador.getNombres(), coordinador.GetApellidos(),
-                    coordinador.GetUsuario(), coordinador.GetContrasena(), coordinador.GetCorreo(),
+                    coordinador.GetKey(), coordinador.GetContrasena(), coordinador.GetCorreo(),
                     coordinador.GetTelefono() ) );
 
             updated = true;

@@ -43,10 +43,10 @@ public interface UsuarioUVDAOInterface {
      * Regresa un UsuarioUV de la base de base de datos. Utiliza el nombre usuario del
      * para encontrar el usuario deseado. Regresa Null en caso de no
      * encontrar el UsuarioUV
-     * @param nombreUsuario el nombre usuario
+     * @param llaveUsuario el nombre usuario
      * @return una instancia del UsuarioUV
      */
-    UsuarioUV Read( String nombreUsuario );
+    UsuarioUV Read( String llaveUsuario );
 
     /**
      * Actualiza un UsuarioUV en la base de datos con los datos del
