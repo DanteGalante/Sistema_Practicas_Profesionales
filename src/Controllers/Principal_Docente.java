@@ -254,6 +254,34 @@ public class Principal_Docente implements Initializable {
     }
 
     /**
+     * Muestra una pantalla exploradora de archivos en la que se seleccionara un documento
+     * que se almacenara en la base de datos como un archivo de consulta
+     * @param mouseEvent evento del mouse que inicia el método
+     */
+    public void irPantallaSubirArchivos( MouseEvent mouseEvent ) {
+        LimpiarMensajesPantalla();
+
+        fileChooser.setTitle("Descargando archivo...");
+        File file = getFile( mouseEvent );
+        if ( file != null ) {
+            if( verificarExtension( getTipoArchivo( file ) ) ){
+
+                ArchivoConsulta nuevoArchivo = GenerarArchivoConsulta( file );
+
+                if( FileNameDoesNotExist( nuevoArchivo ) ){
+                    archivoConsultaDAO.Create( nuevoArchivo );
+                    successText.setText( outputMessages.UploadSuccesful() );
+                }
+
+                RecuperarArchivosConsulta();
+                MostrarArchivosSubidos();
+            }else{
+                errorText.setText( outputMessages.InvalidFileExtension() );
+            }
+        }
+    }
+
+    /**
      * Elimina del sistema el archivo de consulta que se seleccione en esta pantalla.
      * @param mouseEvent evento del mouse que inicia el método
      */
@@ -269,34 +297,6 @@ public class Principal_Docente implements Initializable {
             MostrarArchivosSubidos();
         }else{
             errorText.setText(outputMessages.FileNotSelectedToDelete());
-        }
-    }
-
-    /**
-     * Muestra una pantalla exploradora de archivos en la que se seleccionara un documento
-     * que se almacenara en la base de datos como un archivo de consulta
-     * @param mouseEvent evento del mouse que inicia el método
-     */
-    public void irPantallaSubirArchivos( MouseEvent mouseEvent ) {
-        LimpiarMensajesPantalla();
-
-        fileChooser.setTitle("Descargando archivo...");
-        File file = getFile( mouseEvent );
-        if ( file != null ) {
-            if( verificarExtension( getTipoArchivo(file) ) ){
-
-                ArchivoConsulta nuevoArchivo = GenerarArchivoConsulta( file );
-
-                if( FileNameDoesNotExist( nuevoArchivo ) ){
-                    archivoConsultaDAO.Create( nuevoArchivo );
-                    successText.setText( outputMessages.UploadSuccesful() );
-                }
-
-                RecuperarArchivosConsulta();
-                MostrarArchivosSubidos();
-            }else{
-                errorText.setText( outputMessages.InvalidFileExtension() );
-            }
         }
     }
 
