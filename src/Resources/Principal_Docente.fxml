@@ -90,11 +90,11 @@
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <TableView fx:id="tbvGrupo" prefHeight="245.0" prefWidth="791.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                              <TableView fx:id="tbvGrupo" prefHeight="245.0" prefWidth="791.0" VBox.vgrow="ALWAYS">
                                  <columns>
                                     <TableColumn fx:id="tcMatricula" prefWidth="158.0" text="Matricula" />
                                     <TableColumn fx:id="tcNombre" prefWidth="280.0" text="Nombre" />
-                                    <TableColumn fx:id="tcProyectoAsignado" prefWidth="352.0" text="Proyecto asignado" />
+                                    <TableColumn fx:id="tcProyectoAsignado" editable="false" prefWidth="352.0" text="Proyecto asignado" />
                                  </columns>
                               </TableView>
                               <HBox prefHeight="24.0" prefWidth="546.0" spacing="10.0">
