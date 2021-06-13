@@ -125,10 +125,16 @@ public class Principal_Docente implements Initializable {
     public void RecuperarGrupo() {
         String nrc = LoginSession.GetInstance().GetDocente().GetNrc();
         grupo = estudianteDAO.ReadAllWithProjects();
+        List<Estudiante> auxiliar = new ArrayList<>();
+
         for( Estudiante estudiante : grupo ){
             if( !nrc.equals( estudiante.getNrc() ) ){
-                grupo.remove( estudiante );
+                auxiliar.add( estudiante );
             }
+        }
+        grupo.clear();
+        for ( Estudiante estudiante : auxiliar ) {
+            grupo.add( estudiante );
         }
     }
 
