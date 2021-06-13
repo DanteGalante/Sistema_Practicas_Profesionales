@@ -13,6 +13,7 @@ import Entities.Estudiante;
 import Enumerations.EstadoEstudiante;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
+import Utilities.SelectionContainer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -147,6 +148,12 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     @FXML
     void ShowGestionarReportes( MouseEvent event ) {}
 
+    @FXML
+    void ClicModificar( MouseEvent event){
+        SelectionContainer.GetInstance().setEstudianteElegido( RecuperarEstudiante() );
+        screenChanger.MostrarPantallaModificarEstudiante( event, errorText );
+    }
+
     /**
      * Revisa si un estudiante ha sido seleccionado de la tabla
      * estudiantesTable
@@ -161,4 +168,8 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     }
 
     private void ClearErrorText() { errorText.setText( "" ); }
+
+    public Estudiante RecuperarEstudiante(){
+        return estudiantesTable.getSelectionModel().getSelectedItem();
+    }
 }

@@ -25,8 +25,8 @@
                 <Text fill="#e84545" layoutX="181.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Matrícula" />
                 <Text fill="#e84545" layoutX="103.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NRC" />
                 <Text fill="#e84545" layoutX="266.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono" />
-                <Button fx:id="modificarButton" layoutX="213.0" layoutY="454.0" mnemonicParsing="false" text="Modificar" />
-                <Button fx:id="cancelButton" layoutX="312.0" layoutY="454.0" mnemonicParsing="false" text="Cancelar" />
+                <Button fx:id="modificarButton" layoutX="213.0" layoutY="454.0" mnemonicParsing="false" onMouseClicked="#ManejoRegistroEstudiante" text="Modificar" />
+                <Button fx:id="cancelButton" layoutX="312.0" layoutY="454.0" mnemonicParsing="false" onMouseClicked="#ClicCancelar" text="Cancelar" />
                 <TextField fx:id="lastNameField" alignment="CENTER" layoutX="206.0" layoutY="80.0" prefHeight="25.0" prefWidth="168.0" promptText="eje: Sandoval Carranza" />
                 <TextField fx:id="nrcField" alignment="CENTER" layoutX="27.0" layoutY="144.0" prefHeight="25.0" prefWidth="168.0" promptText="nrc de materia de prácticas" />
                 <TextField fx:id="phoneField" alignment="CENTER" layoutX="206.0" layoutY="144.0" prefHeight="25.0" prefWidth="168.0" promptText="Número de 10 dígitos" />
