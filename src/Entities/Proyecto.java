@@ -161,4 +161,10 @@ public class Proyecto {
     public void SetFechaRegistro( String fechaIn ) {
         fechaRegistro = fechaIn;
     }
+
+    /**
+     * Cambia el estado de registro al valor introducido
+     * @param estadoIn el nuevo estado de registro
+     */
+    public void SetEstado( EstadoProyecto estadoIn ) { estado = estadoIn;}
 }
