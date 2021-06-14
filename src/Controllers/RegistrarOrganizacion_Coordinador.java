@@ -2,6 +2,7 @@ package Controllers;
 
 import Database.OrganizacionVinculadaDAO;
 import Database.ResponsableProyectoDAO;
+import Database.ResponsablesOrganizacionDAO;
 import Entities.ResponsableProyecto;
 import Enumerations.TipoSector;
 import Entities.OrganizacionVinculada;
@@ -29,6 +30,8 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
     private InputValidator inputValidator = new InputValidator();
     private List<ResponsableProyecto> listaResponsables = new ArrayList<>();
     private ResponsableProyectoDAO responsableProyecto = new ResponsableProyectoDAO();
+    private ResponsablesOrganizacionDAO responsablesOrganizacion = new ResponsablesOrganizacionDAO();
+    private List<Integer> listaResponsablesProyecto = new ArrayList<>();
 
     @FXML
     private Label lbNombres;
@@ -104,13 +107,19 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
     }
 
     public void ManejoRegistroOrganizacion(){
-        ManejoRegistroRepresentante();
-        VerificarDatos();
-        if( inputValidator.IsOrganizationInformationValid( ObtenerOrganizacionVinculada() ) ) {
-            //       if ( !OrganizacionExistente() ) {
-            RegistrarOrganizacion();
+        if(ManejoRegistroRepresentante()){
+            VerificarDatos();
+            if( NombreValido() == true && DireccionValida() == true && CorreoValido() == true && TelefonoValido() == true ){
+                if( inputValidator.IsOrganizationInformationValid( ObtenerOrganizacionVinculada() ) ) {
+                    if ( !OrganizacionExistente() ) {
+                        RegistrarOrganizacion();
+                        listaResponsablesProyecto.clear();
+                        listaResponsablesProyecto.add(ObtenerResponsableProyecto().getIdResponsableProyecto());
+                        responsablesOrganizacion.Create( ObtenerOrganizacionVinculada().getIdOrganizacion(),listaResponsablesProyecto );
+                    }
+                }
+            }
         }
-        //   }
     }
 
     public List ObtenerListaResponsables(){
@@ -176,41 +185,60 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
     /**
      * Revisa que el nombre introducido sea valido.
      */
-    private void NombreValido() {
+    private boolean NombreValido() {
+        boolean valido = false;
         if ( !inputValidator.AreNamesValid(tfNombre.getText() ) ) {
             errorText.setText(outputMessages.InvalidNames() );
             successText.setText( "" );
+            valido = false;
+        }else{
+            valido = true;
         }
+        return valido;
     }
 
     /**
      * Revisa que la dirección introducida sea valida.
      */
-    private void DireccionValida() {
+    private boolean DireccionValida() {
+        boolean valido = false;
         if ( !inputValidator.DireccionValida( tfDireccion.getText() ) ) {
             errorText.setText( outputMessages.DireccionInvalida() );
             successText.setText( "" );
+        }else{
+            valido = true;
         }
+        return valido;
     }
 
     /**
      * Revisa que el correo eléctronico introducido sea valido.
      */
-    private void CorreoValido() {
+    private boolean CorreoValido() {
+        boolean valido = false;
         if ( !inputValidator.IsEmailValid( tfCorreoElectronico.getText() ) ) {
             errorText.setText( outputMessages.InvalidEmail() );
             successText.setText( "" );
+            valido = false;
+        }else{
+            valido = true;
         }
+        return valido;
     }
 
     /**
      * Revisa que el télefono introducido sea valido.
      */
-    private void TelefonoValido() {
+    private boolean TelefonoValido() {
+        boolean valido = false;
         if ( !inputValidator.IsTelephoneValid( tfTelefono.getText() ) ) {
             errorText.setText( outputMessages.InvalidTelephone() );
             successText.setText( "" );
+            valido = false;
+        }else{
+            valido = true;
         }
+        return valido;
     }
 
     /**
@@ -253,23 +281,29 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
      * el mensaje correspondiente en caso de éxito o fracaso.
      */
     private void RegistrarResponsableProyecto() {
-        if( responsableProyecto.Create ( ObtenerResponsableProyecto() ) ) {
-            errorText.setText( "" );
-            successText.setText( outputMessages.RegistroResponsableExitoso() );
-        }
-        else {
+        try{
+            if( responsableProyecto.Create ( ObtenerResponsableProyecto() ) ) {
+                errorText.setText( "" );
+                successText.setText( outputMessages.RegistroResponsableExitoso() );
+            }
+        }catch (Exception e){
             errorText.setText( outputMessages.DatabaseConnectionFailed() );
             successText.setText( "" );
         }
     }
 
-    public void ManejoRegistroRepresentante(){
+    public boolean ManejoRegistroRepresentante(){
+        boolean creado = false;
         VerificarDatosResponsable();
-        if( inputValidator.IsResponsableInformationValid( ObtenerResponsableProyecto() ) ) {
-            //    if ( !ResponsableExistente() ) {
-            RegistrarResponsableProyecto();
-            //    }
+        if(NombresResponsableValido() == true && ApellidosResponsableValido() == true && CorreoResponsableValido() == true && TelefonoResponsableValido() == true ){
+            if( inputValidator.IsResponsableInformationValid( ObtenerResponsableProyecto() ) ) {
+                if ( !ResponsableExistente() ) {
+                RegistrarResponsableProyecto();
+                creado = true;
+                }
+            }
         }
+        return creado;
     }
 
     private void VerificarDatosResponsable() {
@@ -282,40 +316,57 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
     /**
      * Revisa que el nombre introducido sea valido.
      */
-    private void NombresResponsableValido() {
+    private boolean NombresResponsableValido() {
+        boolean valido = false;
         if ( !inputValidator.AreNamesValid(tfNombresRepresentante.getText() ) ) {
             errorText.setText(outputMessages.InvalidNames() );
             successText.setText( "" );
+        }else{
+            valido = true;
         }
+        return valido;
     }
 
     /**
      * Revisa que la dirección introducida sea valida.
      */
-    private void ApellidosResponsableValido() {
-        if ( !inputValidator.DireccionValida( tfApellidosRepresentante.getText() ) ) {
-            errorText.setText( outputMessages.DireccionInvalida() );
+    private boolean ApellidosResponsableValido() {
+        boolean valido = false;
+        if ( !inputValidator.AreLastNamesValid( tfApellidosRepresentante.getText() ) ) {
+            errorText.setText( outputMessages.InvalidLastNames() );
             successText.setText( "" );
+        }else{
+            valido = true;
         }
+        return valido;
     }
 
     /**
      * Revisa que el correo eléctronico introducido sea valido.
      */
-    private void CorreoResponsableValido() {
+    private boolean CorreoResponsableValido() {
+        boolean valido = false;
         if ( !inputValidator.IsEmailValid( tfCorreoRepresentante.getText() ) ) {
             errorText.setText( outputMessages.InvalidEmail() );
             successText.setText( "" );
+            valido = false;
+        }else{
+            valido = true;
         }
+        return valido;
     }
 
     /**
      * Revisa que el télefono introducido sea valido.
      */
-    private void TelefonoResponsableValido() {
+    private boolean TelefonoResponsableValido() {
+        boolean valido = false;
         if ( !inputValidator.IsTelephoneValid( tfTelefonoRepresentante.getText() ) ) {
             errorText.setText( outputMessages.InvalidTelephone() );
             successText.setText( "" );
+        }else{
+            valido = true;
         }
+        return valido;
     }
 }
