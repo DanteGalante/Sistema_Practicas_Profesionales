@@ -1,6 +1,5 @@
 package Controllers;
 
-
 import Utilities.LoginSession;
 import Utilities.ScreenChanger;
 import javafx.fxml.FXML;
@@ -13,7 +12,7 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Menu_Coordinador implements Initializable {
+public class Reportes_Coordinador implements Initializable {
 
     private ScreenChanger screenChanger = new ScreenChanger();
 
@@ -54,12 +53,12 @@ public class Menu_Coordinador implements Initializable {
      * Coloca la información del usuario actual en los campos de texto de
      * nombres, apellidos y No.Trabajador
      */
+    
     public void DatosUsuario(){
         lbNombres.setText( LoginSession.GetInstance().GetCoordinador().getNombres() );
         lbApellidos.setText( LoginSession.GetInstance().GetCoordinador().GetApellidos() );
         lbNoTrabajador.setText( LoginSession.GetInstance().GetCoordinador().GetNumeroPersonal() );
     }
-
     /**
      * Permite cambiar la pantalla a la pantalla GestionarEstudiante
      */
