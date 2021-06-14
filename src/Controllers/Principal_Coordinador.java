@@ -245,7 +245,7 @@ public class Principal_Coordinador implements Initializable {
             listaAuxiliar.add( expediente.GetMatricula() );
         }
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.getEstado() == EstadoEstudiante.RegistroAprobado){
+            if(estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado){
                 cont ++;
             }
         }
@@ -259,7 +259,7 @@ public class Principal_Coordinador implements Initializable {
             listaAuxiliar.add( expediente.GetMatricula() );
         }
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.getEstado() != EstadoEstudiante.RegistroAprobado){
+            if(estudiante.getEstado() == EstadoEstudiante.Eliminado ){
                 cont ++;
             }
         }
@@ -269,10 +269,18 @@ public class Principal_Coordinador implements Initializable {
     public List MatriculaEstudianteInscrito(){
         List<String> listaAuxiliar = new ArrayList<>();
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.getEstado() == EstadoEstudiante.RegistroAprobado){
+            if(estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado){
                 listaAuxiliar.add( estudiante.getMatricula() );
             }
         }
         return listaAuxiliar;
+    }
+
+    /**
+     * Cambia a la pantalla ValidarInscripcion
+     * @param mouseEvent el evento del mouse que inicio el cambio
+     */
+    public void ClicValidarInscripcion(MouseEvent mouseEvent) {
+        screenChanger.ShowScreenValidarInscripcion( mouseEvent, errorText );
     }
 }
