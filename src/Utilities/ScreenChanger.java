@@ -52,6 +52,9 @@ public class ScreenChanger {
     private String descargarArchivos_Coordinador = "../Resources/DescargarArchivo_Coordinador.fxml";
     private String eliminarArchivoConsulta_Docente = "../Resources/EliminarArchivosConsulta_Docente.fxml";
     private String menu_Coordinador = "../Resources/Menu_Coordinador.fxml";
+    private String asignarProyectoAEstudianteScreen = "../Resources/AsignarProyectoAEstudiante.fxml";
+    private String consultarOrganizacionScreen = "../Resources/ConsultarOrganizacion.fxml";
+
 
 
     /**
@@ -409,9 +412,9 @@ public class ScreenChanger {
         try {
             SetScene( mouseEvent, consultarExpedienteCoordinadorScreen );
         }catch( IOException exception){
-            //errorText.setText( outputMessages.ConsultarExpedienteDocenteScreenMissing() );
+            errorText.setText( outputMessages.ConsultarExpedienteDocenteScreenMissing() );
             errorText.setText("");
-            //exception.printStackTrace();
+            exception.printStackTrace();
         }
     }
 
@@ -437,4 +440,35 @@ public class ScreenChanger {
             exception.printStackTrace();
         }
     }
+
+    /**
+     * Hace el cambio de pantalla a la pantalla de asignar proyecto a
+     * estudiante
+     * @param mouseEvent el evento de mouse que inicio el cambio
+     * @param errorText el campo de texto donde se coloca un mensaje en caso de error
+     */
+    public void ShowAsignarProyecto( MouseEvent mouseEvent, Text errorText ) {
+        try {
+            SetScene( mouseEvent, asignarProyectoAEstudianteScreen );
+        } catch( IOException exception ) {
+            errorText.setText( outputMessages.AsignarProyectoScreenMissing() );
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Hace el cambio de pantalla a la pantalla de consultar organizacion
+     * @param mouseEvent el evento de mouse que inicio el cambio
+     * @param errorText el campo de texto donde se coloca un mensaje en caso de error
+     */
+    public void ShowConsultarOrganizacion( MouseEvent mouseEvent, Text errorText ) {
+        try {
+            SetScene( mouseEvent, consultarOrganizacionScreen );
+        } catch( IOException exception ) {
+            errorText.setText( outputMessages.ConsultarOrganizacionScreenMissing() );
+            exception.printStackTrace();
+        }
+    }
+
+
 }
