@@ -526,7 +526,7 @@ public class OutputMessages {
     public String FileNotSelectedToDelete(){return "No se ha seleccionado ningun archivo para eliminar";}
 
     /**
-<<<<<<< Updated upstream
+
      * Mensaje mostrado en caso de no encontrar el archvio FXML de la pantalla
      * EliminarArchivosConsulta_Docente
      * @return una cadena con el mensaje de error
@@ -534,6 +534,15 @@ public class OutputMessages {
     public String EliminarArchivoScreenMissing() {
         return "No se encontro el archivo FXML de la pantalla eliminar archivo del docente";
     }
+
+    /**
+     * Mensaje mostrado en caso de que un documento se intente descargar, pero falle en el proceso
+     * @return una cadena con el mensaje de error
+     */
+    public String DeleteDocumentFailed() {
+        return "Se ha producido un error al intentar descargar el archivo";
+    }
+
     /**
      * Mensaje mostrado cuando se registra un nuevo proyecto a la
      * base de datos de manera exitosa.
@@ -598,6 +607,4 @@ public class OutputMessages {
      * @return una cadena con el mensaje de error
      */
     public String ConsultarOrganizacionScreenMissing() { return "No se encontró el archivo FXML de la pantalla ConsultarOrganizacion"; }
-
-
 }
