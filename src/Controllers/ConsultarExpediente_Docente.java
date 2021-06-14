@@ -101,6 +101,7 @@ public class ConsultarExpediente_Docente implements Initializable {
      */
     private boolean EstudianteTieneExpediente() {
         boolean estudianteTieneExpediente = false;
+
         try {
             if ( expedienteDAO.ReadPorMatricula( estudianteSeleccionado.getMatricula() ) != null ) {
                 estudianteTieneExpediente = true;
@@ -108,7 +109,6 @@ public class ConsultarExpediente_Docente implements Initializable {
         } catch (Exception exception) {
             errorText.setText( outputMessages.DatabaseConnectionFailed3() );
         }
-
 
         return estudianteTieneExpediente;
     }
