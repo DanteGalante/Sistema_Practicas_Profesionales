@@ -8,13 +8,15 @@
  */
 package Utilities;
 
-import Entities.Estudiante;
-import Entities.Proyecto;
+import Entities.*;
 
 public final class SelectionContainer {
     private static SelectionContainer selectionContainer;
     private Proyecto proyectoElegido;
     private Estudiante estudianteElegido;
+    private OrganizacionVinculada organizacionElegida;
+    private ResponsableProyecto responsableElegido;
+    private InformeProblema informeElegido;
 
     private SelectionContainer() {
         this.estudianteElegido = null;
@@ -36,15 +38,45 @@ public final class SelectionContainer {
         return estudianteElegido;
     }
 
+    public ResponsableProyecto getResponsableElegido() {
+        return responsableElegido;
+    }
+
+    public OrganizacionVinculada getOrganizacionElegida(){
+        return organizacionElegida;
+    }
+
     public void setProyectoElegido(Proyecto proyectoElegido) {
         if( proyectoElegido != null ) {
             this.proyectoElegido = proyectoElegido;
         }
     }
 
+    public InformeProblema getInformeElegido(){
+        return informeElegido;
+    }
+
     public void setEstudianteElegido(Estudiante estudianteElegido) {
         if( estudianteElegido != null ) {
             this.estudianteElegido = estudianteElegido;
+        }
+    }
+
+    public void setOrganizacionElegida( OrganizacionVinculada organizacionElegida ){
+        if( organizacionElegida != null ) {
+            this.organizacionElegida = organizacionElegida;
+        }
+    }
+
+    public void setResponsableElegido( ResponsableProyecto responsableElegido ){
+        if( responsableElegido != null ) {
+            this.responsableElegido = responsableElegido;
+        }
+    }
+
+    public void setInformeElegido( InformeProblema informeElegido ){
+        if( informeElegido != null ) {
+            this.informeElegido = informeElegido;
         }
     }
 }

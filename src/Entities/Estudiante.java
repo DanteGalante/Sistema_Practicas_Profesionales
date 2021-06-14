@@ -19,6 +19,7 @@ public class Estudiante extends UsuarioUV {
     private String matricula;
     private String nrc;
     private EstadoEstudiante estado;
+    private String proyecto;
     private CheckBox validado;
     private CheckBox depurado;
 
@@ -41,8 +42,9 @@ public class Estudiante extends UsuarioUV {
      * @param original instancia existente de Estudiante.
      */
     public Estudiante( Estudiante original ) {
-        this( original.idUsuario, original.nombres, original.apellidos, original.usuario, original.contrasena,
-                original.correoElectronico, original.telefono, original.matricula, original.nrc, original.estado );
+        this( original.idUsuario, original.nombres, original.apellidos, original.key, original.contrasena,
+                original.correoElectronico, original.telefono, original.matricula, original.nrc, original.estado,
+                original.proyecto );
     }
 
     /**
@@ -52,10 +54,11 @@ public class Estudiante extends UsuarioUV {
      * @param matriculaIn la matrícula del estudiante
      * @param nrcIn el nrc al que pertenece el estudiante
      * @param estadoIn el estado actual del estudiante
+     * @param proyecto proyecto que tiene asignado, puede no tener un proyecto asignado
      */
-    public Estudiante( UsuarioUV usuario, String matriculaIn, String nrcIn, EstadoEstudiante estadoIn) {
-        this( usuario.idUsuario, usuario.nombres, usuario.apellidos, usuario.usuario, usuario.contrasena, usuario.correoElectronico,
-              usuario.telefono, matriculaIn, nrcIn, estadoIn);
+    public Estudiante( UsuarioUV usuario, String matriculaIn, String nrcIn, EstadoEstudiante estadoIn, String proyecto ) {
+        this( usuario.idUsuario, usuario.nombres, usuario.apellidos, usuario.key, usuario.contrasena, usuario.correoElectronico,
+                usuario.telefono, matriculaIn, nrcIn, estadoIn, proyecto );
     }
 
     /**
@@ -71,15 +74,17 @@ public class Estudiante extends UsuarioUV {
      * @param matriculaIn matrícula del Estudiante.
      * @param nrcIn nrc de la materia del Estudiante.
      * @param estadoIn estado actual del Estudiante.
+     * @param proyecto proyecto que tiene asignado, puede no tener un proyecto asignado.
      */
     public Estudiante( int idIn, String nombresIn, String apellidosIn, String usuarioIn, String contrasenaIn, String correoElectronicoIn,
-                       String telefonoIn, String matriculaIn, String nrcIn, EstadoEstudiante estadoIn) {
+                       String telefonoIn, String matriculaIn, String nrcIn, EstadoEstudiante estadoIn, String proyecto ) {
         super( idIn, nombresIn, apellidosIn, usuarioIn, contrasenaIn, correoElectronicoIn, telefonoIn );
         matricula = matriculaIn;
         nrc = nrcIn;
         estado = estadoIn;
         validado = new CheckBox();
         depurado = new CheckBox();
+        this.proyecto = proyecto;
     }
 
     /**
@@ -102,7 +107,7 @@ public class Estudiante extends UsuarioUV {
      * Regresa el estado actual del Estudiante
      * @return enumeración del estado actual del estudiante
      */
-    public EstadoEstudiante GetEstado() {
+    public EstadoEstudiante getEstado() {
         return estado;
     }
 
@@ -126,9 +131,16 @@ public class Estudiante extends UsuarioUV {
      * Regresa el nombre completo del estudiante
      * @return nombre completo del estudiante
      */
-    @Override
-    public String getNombreCompleto(){
+    public String getNombre(){
         return super.getNombreCompleto();
+    }
+
+    /**
+     * Regresa el proyecto al que pertenece el estudiante
+     * @return nombre del proyecto al que pertenece el estudiante
+     */
+    public String getProyecto() {
+        return proyecto;
     }
 
     /**
@@ -162,12 +174,21 @@ public class Estudiante extends UsuarioUV {
     public void setValidado(boolean validado) {
         this.validado.setSelected(validado);
     }
+
     /**
      * Cambia el estado del checkbox que representa una inscripción depurada
      * @param depurado boolean que cambia el estado del checkbox
      */
     public void setDepurado(boolean depurado) {
         this.depurado.setSelected(depurado);
+    }
+
+    /**
+     * Cambia el nombre del proyecto al que esta asignado un estudiante
+     * @param proyecto nuevo nombre del proyecto asignado al estudiante
+     */
+    public void setProyecto(String proyecto) {
+        this.proyecto = proyecto;
     }
 
     @Override

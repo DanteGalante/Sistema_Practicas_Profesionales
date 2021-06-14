@@ -6,15 +6,16 @@ import Entities.ResponsableProyecto;
 import Enumerations.TipoSector;
 import Entities.OrganizacionVinculada;
 import Utilities.InputValidator;
+import Utilities.LoginSession;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import Utilities.LoginSession;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
     private OutputMessages outputMessages = new OutputMessages();
     private ScreenChanger screenChanger = new ScreenChanger();
     private InputValidator inputValidator = new InputValidator();
-    private List< ResponsableProyecto > listaResponsables = new ArrayList<>();
+    private List<ResponsableProyecto> listaResponsables = new ArrayList<>();
     private ResponsableProyectoDAO responsableProyecto = new ResponsableProyectoDAO();
 
     @FXML
@@ -77,31 +78,19 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
     @FXML
     private Text successText;
 
-    @FXML
-    private TableView <ResponsableProyectoDAO> tbResponsable;
-
-    @FXML
-    private TableColumn <ResponsableProyectoDAO, String> clnResponsable;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-  //      AsignarValorColumnasResponsableProyecto();
-  //      MostrarResponsablesDisponibles();
         DatosDeUsuario();
     }
 
     /**
-     * Cambia la pantalla de RegistrarOrganizacion_Coordinador a GestionarOrganizacion_Coordinador.
+     * Cambia la pantalla de Registro_Estudiante a IniciarSesión.
      * @param mouseEvent el evento de mouse que activo la acción.
      */
     public void ClicRegresar ( MouseEvent mouseEvent ){
         screenChanger.MostrarPantallaGestionarOrganizacion( mouseEvent, errorText );
     }
 
-    /**
-     * Limpia los campos de datos de organización.
-     * @param mouseEvent el evento de mouse que activo la acción.
-     */
     public void ClicCancelar ( MouseEvent mouseEvent ){
 
         tfNombre.setText("");
@@ -118,21 +107,12 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
         ManejoRegistroRepresentante();
         VerificarDatos();
         if( inputValidator.IsOrganizationInformationValid( ObtenerOrganizacionVinculada() ) ) {
-            if ( !OrganizacionExistente() ) {
-                RegistrarOrganizacion();
-            }
+            //       if ( !OrganizacionExistente() ) {
+            RegistrarOrganizacion();
         }
+        //   }
     }
 
-    //Este método ayudara a que se cree la lsita de responsables de los proyectos.
-
-    /*public void MostrarResponsablesDisponibles(){
-        listaResponsables = responsableProyecto.ReadAll();
-        for( ResponsableProyecto responsableProyecto : listaResponsables){
-            responsableProyecto.GetNombres();
-            tbResponsable.getItems().add( responsableProyecto );
-        }
-    }*/
     public List ObtenerListaResponsables(){
         listaResponsables = responsableProyecto.ReadAll();
         for( ResponsableProyecto responsableProyecto : listaResponsables) {
@@ -146,9 +126,9 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
      * introducida por el usuario en todos los campos de texto.
      * @return una instancia de OrganizacionVinculada
      */
-   private OrganizacionVinculada ObtenerOrganizacionVinculada() {
+    private OrganizacionVinculada ObtenerOrganizacionVinculada() {
         return new OrganizacionVinculada ( tfNombre.getText(), tfDireccion.getText(), TipoSector.Publico,
-                tfTelefono.getText(),tfCorreoElectronico.getText(),0,ObtenerListaResponsables());
+                tfTelefono.getText(),tfCorreoElectronico.getText(),0,ObtenerListaResponsables(), true);
 
     }
 
@@ -286,9 +266,9 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
     public void ManejoRegistroRepresentante(){
         VerificarDatosResponsable();
         if( inputValidator.IsResponsableInformationValid( ObtenerResponsableProyecto() ) ) {
-            if ( !ResponsableExistente() ) {
-                RegistrarResponsableProyecto();
-            }
+            //    if ( !ResponsableExistente() ) {
+            RegistrarResponsableProyecto();
+            //    }
         }
     }
 
@@ -338,5 +318,4 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
             successText.setText( "" );
         }
     }
-
 }

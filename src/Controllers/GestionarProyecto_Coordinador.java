@@ -3,6 +3,7 @@ package Controllers;
 import Database.ProyectoDAO;
 import Entities.Proyecto;
 import Utilities.ScreenChanger;
+import Utilities.SelectionContainer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -102,7 +103,14 @@ public class GestionarProyecto_Coordinador implements Initializable {
         screenChanger.MostrarPantallaGestionarOrganizacion( mouseEvent,errorText );
     }
 
-    public void ClicModificarProyecto( MouseEvent mouseEvent ){
-        screenChanger.MostrarPantallaModificarProyecto( mouseEvent, errorText );
+    @FXML
+    void ClicModificarProyecto( MouseEvent event){
+        SelectionContainer.GetInstance().setProyectoElegido( RecuperarProyecto() );
+        screenChanger.MostrarPantallaModificarProyecto( event, errorText );
     }
+
+    public Proyecto RecuperarProyecto(){
+        return tbProyectos.getSelectionModel().getSelectedItem();
+    }
+
 }

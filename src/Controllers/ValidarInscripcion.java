@@ -1,11 +1,11 @@
 /*
-* Autor: Dan Javier Olvera Villeda
-* Versión: 1.0
-* Fecha Creación: 30 - abr - 2021
-* Descripción:
-* Clase encargada de manejar los eventos de la pantalla
-* ValidarInscripcion.
-*/
+ * Autor: Dan Javier Olvera Villeda
+ * Versión: 1.0
+ * Fecha Creación: 30 - abr - 2021
+ * Descripción:
+ * Clase encargada de manejar los eventos de la pantalla
+ * ValidarInscripcion.
+ */
 package Controllers;
 
 import Database.EstudianteDAO;

@@ -8,11 +8,12 @@
  */
 package Controllers;
 
-import Database.ArchivoConsultaDAO;
-import Database.DocenteDAO;
-import Database.RegistroGrupoDAO;
+import Database.*;
 import Entities.ArchivoConsulta;
 import Entities.Docente;
+import Entities.Expediente;
+import Enumerations.EstadoProyecto;
+import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +31,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -40,8 +42,11 @@ public class StudentFormatsController implements Initializable{
     private ScreenChanger screenChanger = new ScreenChanger();
     private ArchivoConsultaDAO archivos = new ArchivoConsultaDAO();
     private RegistroGrupoDAO registros = new RegistroGrupoDAO();
+    private ProyectoDAO proyectos = new ProyectoDAO();
+    private ExpedienteDAO expedientes = new ExpedienteDAO();
     private DocenteDAO docentes = new DocenteDAO();
     private DirectoryChooser directoryChooser = new DirectoryChooser();
+    private OutputMessages outputMessages = new OutputMessages();
 
     @FXML
     private Text nameText;
@@ -77,9 +82,13 @@ public class StudentFormatsController implements Initializable{
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        SetUserInformation();
-        SetCellValueFactory();
-        ShowFiles();
+        try {
+            SetUserInformation();
+            SetCellValueFactory();
+            ShowFiles();
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+        }
     }
 
     /**
@@ -90,6 +99,7 @@ public class StudentFormatsController implements Initializable{
         nameText.setText( LoginSession.GetInstance().GetEstudiante().getNombres() );
         lastNameText.setText( LoginSession.GetInstance().GetEstudiante().GetApellidos() );
         matriculaText.setText( LoginSession.GetInstance().GetEstudiante().getMatricula() );
+        SetProjectName();
     }
 
     /**
@@ -135,10 +145,15 @@ public class StudentFormatsController implements Initializable{
      */
     @FXML
     void DownloadFormat( MouseEvent mouseEvent ) {
+        ClearErrorText();
         if( IsFileSelected() ) {
             File directoryFile = GetDirectory( mouseEvent );
-            CopyFile( archivos.Read( formatosTable.getSelectionModel().getSelectedItem().GetId() ).GetDescripcion(),
-                    directoryFile );
+            try {
+                CopyFile( archivos.Read( formatosTable.getSelectionModel().getSelectedItem().GetId() ).GetDescripcion(),
+                        directoryFile );
+            } catch( Exception exception ) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
         }
     }
 
@@ -223,4 +238,30 @@ public class StudentFormatsController implements Initializable{
             targetFile.createNewFile();
         }
     }
+
+    /**
+     * Recupera el proyecto asignado del usuario y coloca su nombre en el
+     * campo de texto projectText
+     */
+    private void SetProjectName() {
+        projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
+    }
+
+    /**
+     * Recupera el expediente del usuario actual
+     * @return una instancia del expediente
+     */
+    private Expediente GetUserExpediente() {
+        List< Expediente > expedienteList = expedientes.ReadAll();
+        Expediente userExpediente = null;
+        for( Expediente expediente : expedienteList ) {
+            if( expediente.GetMatricula().equals( LoginSession.GetInstance().GetEstudiante().getMatricula() ) &&
+                    expediente.GetActivo() ) {
+                userExpediente = expediente;
+            }
+        }
+        return userExpediente;
+    }
+
+    private void ClearErrorText() { errorText.setText( "" ); }
 }

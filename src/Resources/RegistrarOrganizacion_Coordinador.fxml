@@ -48,40 +48,40 @@
                 <Label id="bold" layoutX="40.0" layoutY="251.0" prefHeight="17.0" prefWidth="135.0" style="-fx-font-weight: bold;" text="Teléfono:" textFill="#e84545" />
                 <TextField fx:id="tfCorreoElectronico" layoutX="183.0" layoutY="214.0" />
                 <TextField fx:id="tfTelefono" layoutX="183.0" layoutY="251.0" />
-            <Label layoutX="354.0" layoutY="142.0" text="Nombres:" textFill="#e84545">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="354.0" layoutY="180.0" text="Apellidos:" textFill="#e84545">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="354.0" layoutY="218.0" text="Correo Electrónico:" textFill="#e84545">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="355.0" layoutY="251.0" text="Teléfono:" textFill="#e84545">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfNombresRepresentante" layoutX="487.0" layoutY="138.0" />
-            <TextField fx:id="tfApellidosRepresentante" layoutX="487.0" layoutY="176.0" />
-            <TextField fx:id="tfCorreoRepresentante" layoutX="487.0" layoutY="214.0" />
-            <TextField fx:id="tfTelefonoRepresentante" layoutX="487.0" layoutY="251.0" />
-            <Label layoutX="128.0" layoutY="81.0" text="Datos Organización" textFill="#e84545">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="428.0" layoutY="81.0" text="Datos Representante" textFill="#e84545">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
+                <Label layoutX="354.0" layoutY="142.0" text="Nombres:" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="354.0" layoutY="180.0" text="Apellidos:" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="354.0" layoutY="218.0" text="Correo Electrónico:" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="355.0" layoutY="251.0" text="Teléfono:" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="tfNombresRepresentante" layoutX="487.0" layoutY="138.0" />
+                <TextField fx:id="tfApellidosRepresentante" layoutX="487.0" layoutY="176.0" />
+                <TextField fx:id="tfCorreoRepresentante" layoutX="487.0" layoutY="214.0" />
+                <TextField fx:id="tfTelefonoRepresentante" layoutX="487.0" layoutY="251.0" />
+                <Label layoutX="128.0" layoutY="81.0" text="Datos Organización" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="428.0" layoutY="81.0" text="Datos Representante" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
             </children></AnchorPane>
     </items>
 </SplitPane>

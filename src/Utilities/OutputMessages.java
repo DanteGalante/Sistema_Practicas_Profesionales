@@ -150,11 +150,42 @@ public class OutputMessages {
             "GestionarProyecto_Coordinador."; }
 
     /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * VisualizarReporte_Coordinador
+     * @return una cadena con el mensaje de error
+     */
+    public String PantallaVisualizarReportePerdido() { return "No se encontró el archivo FXML de la pantalla " +
+            "VisualizarReporte_Coordinador."; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * VisualizarReporte_Coordinador
+     * @return una cadena con el mensaje de error
+     */
+    public String PantallaReporteSeleccionadoPerdido() { return "No se encontró el archivo FXML de la pantalla " +
+            "ReporteSeleccionado_Coordinador."; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * Reportes_Coordinador
+     * @return una cadena con el mensaje de error
+     */
+    public String PantallaReportesPerdido() { return "No se encontró el archivo FXML de la pantalla " +
+            "Reportes_Coordinador."; }
+
+    /**
      * Mensaje mostrado cuando se registra una nueva Organización a la
      * base de datos de manera exitosa.
      * @return una cadena con el mensaje de éxito
      */
     public String RegistroOrganizacionExitoso() { return "Registro de Organizacion Exitoso"; }
+
+    /**
+     * Mensaje mostrado cuando se modifica una Organización de la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ModificacionOrganizacionExitoso() { return "Modificación de Organizacion Exitoso"; }
 
     /**
      * Mensaje mostrado cuando se registra un nuevo Responsable a la
@@ -164,12 +195,41 @@ public class OutputMessages {
     public String RegistroResponsableExitoso() { return "Registro de Responsable Exitoso"; }
 
     /**
+     * Mensaje mostrado cuando se modifica un responsable de la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ModificacionResponsableExitoso() { return "Modificación de Organizacion Exitoso"; }
+
+    /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
      * ModificarProyecto_Coordinador
      * @return una cadena con el mensaje de error
      */
     public String PantallaModificarProyectoPerdido() { return "No se encontró el archivo FXML de la pantalla " +
             "ModificarProyecto_Coordinador."; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * ModificarEstudiante_Coordinador
+     * @return una cadena con el mensaje de error
+     */
+    public String PantallaModificarEstudiante() { return "No se encontró el archivo FXML de la pantalla " +
+            "ModificarEstudiante_Coordinador."; }
+
+    /**
+     * Mensaje mostrado cuando se modifica un estudiante de la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ModificacionEstudianteExitoso() { return "Modificación de Estudiante Exitoso"; }
+
+    /**
+     * Mensaje mostrado cuando se modifica un proyecto de la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ModificacionProyectoExitoso() { return "Modificación de Proyecto Exitoso"; }
 
     /**
      * Mensaje mostrado cuando se registra un nuevo Estudiante a la
@@ -183,6 +243,12 @@ public class OutputMessages {
      * @return una cadena con el mensaje de error
      */
     public String DatabaseConnectionFailed() { return "No hay conexión a la base de datos. Intente más tarde."; }
+
+    /**
+     * Mensaje mostrado cuando ocurre un error en la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String DatabaseConnectionFailed2() { return "No se pudo conectar a la base de datos. Por favor inténtelo más tarde."; }
 
     /**
      * Mensaje mostrado cuando ya existe un Estudiante en base de datos
@@ -229,6 +295,13 @@ public class OutputMessages {
      * @return una cadena con el mensaje de confirmacion
      */
     public String DeleteDocumentConfirmation() { return "¿Estas seguro/a que deseas eliminar el archivo?"; }
+
+    /**
+     * Mensaje mostrado cuando se intenta Generar un reporte en
+     * la pantalla Principal_Coordinador
+     * @return una cadena con el mensaje de confirmacion
+     */
+    public String GenerarReporteConfirmation() { return "¿Estas seguro/a que deseas Generar el reporte?"; }
 
     /**
      * Mensaje mostrado cuando se intenta eliminar un estudiante en
@@ -346,6 +419,20 @@ public class OutputMessages {
     public String DireccionInvalida() { return "La dirección es inválida.."; }
 
     /**
+     * Mensaje mostrado cuando la descripción introducida por el usuario
+     * es inválida
+     * @return una cadena con el mensaje de error
+     */
+    public String DescripcionInvalida() { return "La descripción es inválida.."; }
+
+    /**
+     * Mensaje mostrado cuando la descripción introducida por el usuario
+     * es inválida
+     * @return una cadena con el mensaje de error
+     */
+    public String  EstudiantesRequeridosInvalidos() { return "Estudiantes requeridos inválidos.."; }
+
+    /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
      * ValidarInscripcion
      * @return una cadena con el mensaje de error
@@ -404,4 +491,10 @@ public class OutputMessages {
     public String DeleteFileSucceded() {
         return "El archivo ha sido eliminado";
     }
+
+    /**
+     * Mensaje mostrado cuando no se ha seleccionado un archivo para eliminar de la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String FileNotSelectedToDelete(){return "No se ha seleccionado ningun archivo para eliminar";}
 }

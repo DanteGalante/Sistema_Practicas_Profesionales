@@ -34,7 +34,6 @@ public class ConsultarExpedienteController implements Initializable {
     private ExpedienteDAO expediente = new ExpedienteDAO();
     private Expediente expedienteInstancia = new Expediente();
     private EstudianteDAO estudiante = new EstudianteDAO();
-    private UsuarioUV usuarioUVElegido = SelectionContainer.GetInstance().getUsuarioUV();
     private Estudiante estudianteElegido= SelectionContainer.GetInstance().getEstudianteElegido();
 
 
@@ -107,13 +106,12 @@ public class ConsultarExpedienteController implements Initializable {
      * nombres, apellidos y No.Trabajador
      */
     public void DatosExpediente() {
-        int idEstudiante = usuarioUVElegido.GetID();
-        estudianteElegido = estudiante.ReadPorID(idEstudiante);
+        int idEstudiante = estudianteElegido.GetID();
         String matricula = estudianteElegido.getMatricula();
         TxNombreEstudiante.setText(estudianteElegido.getNombreCompleto());
         TxMatriculaEstudiante.setText(estudianteElegido.getMatricula());
         TxNRCEstudiante.setText(estudianteElegido.getNrc());
-        TxEstadoEstudiante.setText(String.valueOf(estudianteElegido.GetEstado()));
+        TxEstadoEstudiante.setText(String.valueOf(estudianteElegido.getEstado()));
         TxCorreoEstudiante.setText(estudianteElegido.GetCorreo());
         TxTelefonoEstudiante.setText(estudianteElegido.GetTelefono());
 
@@ -128,6 +126,10 @@ public class ConsultarExpedienteController implements Initializable {
      */
     public void MostrarPantallaPrincipalCoordinador( MouseEvent mouseEvent ) {
         screenChanger.MostrarPantallaPrincipalCoordinador( mouseEvent, TxError );
+    }
+
+    public void MostrarPantallaDescargarArchivo_Coordinador(MouseEvent mouseEvent) {
+        screenChanger.ShowScreenDescargarArchivoCoordinador(mouseEvent, TxError);
     }
 }
 

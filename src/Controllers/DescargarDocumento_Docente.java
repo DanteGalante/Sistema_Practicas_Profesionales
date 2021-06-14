@@ -38,7 +38,7 @@ public class DescargarDocumento_Docente implements Initializable {
     DirectoryChooser directoryChooser = new DirectoryChooser();
 
     List< Documento > documentosSubidos = new ArrayList<>();
-    Expediente expedienteEstudiante = expedienteDAO.ReadByStudent( estudianteElegido.getMatricula() );
+    Expediente expedienteEstudiante = expedienteDAO.ReadPorMatricula( estudianteElegido.getMatricula() );
 
     @FXML
     private Label lbNombre;
@@ -170,13 +170,13 @@ public class DescargarDocumento_Docente implements Initializable {
      */
     private String FixFilePath( String targetString ) {
 
-            for( int i = 0; i < targetString.length(); i++ ) {
-                if( targetString.charAt( i ) == 92 ) {
-                    targetString = targetString.substring( 0, i ) + "\\" + targetString.substring( i );
-                    i++;
-                }
+        for( int i = 0; i < targetString.length(); i++ ) {
+            if( targetString.charAt( i ) == 92 ) {
+                targetString = targetString.substring( 0, i ) + "\\" + targetString.substring( i );
+                i++;
             }
-            return targetString;
+        }
+        return targetString;
     }
 
     /**

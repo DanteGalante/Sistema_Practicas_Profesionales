@@ -38,10 +38,10 @@ public class InformeProblemaDAO implements InformeProblemaDAOInterface {
             String query = "INSERT INTO InformeProblema( FechaEnviada, NumeroPersonal, nombreEstudiante, Asunto, Contenido ) " +
                     "VALUES ( ?, ?, ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
-            statement.setString( 1, informe.GetFechaEnviada() );
-            statement.setString( 2, informe.GetNumeroPersonal() );
-            statement.setString( 3, informe.GetEstudiante() );
-            statement.setString( 4, informe.GetAsunto() );
+            statement.setString( 1, informe.getFechaEnviada() );
+            statement.setString( 2, informe.getNumeroPersonal() );
+            statement.setString( 3, informe.getEstudiante() );
+            statement.setString( 4, informe.getAsunto() );
             statement.setString( 5, informe.GetContenido() );
             statement.executeUpdate();
             wasCreated = true;
@@ -132,10 +132,10 @@ public class InformeProblemaDAO implements InformeProblemaDAOInterface {
             String query = "UPDATE InformeProyect SET FechaEnviada = ?, NumeroPersonal = ?, Estudiante = ?, Asunto = ?, Contenido = ?" +
                     " WHERE Identificador = ?;";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
-            statement.setString( 1, informe.GetFechaEnviada() );
-            statement.setString( 2, informe.GetNumeroPersonal() );
-            statement.setString( 3, informe.GetEstudiante() );
-            statement.setString( 4, informe.GetAsunto() );
+            statement.setString( 1, informe.getFechaEnviada() );
+            statement.setString( 2, informe.getNumeroPersonal() );
+            statement.setString( 3, informe.getEstudiante() );
+            statement.setString( 4, informe.getAsunto() );
             statement.setString( 5, informe.GetContenido() );
             statement.executeUpdate();
             updated = true;

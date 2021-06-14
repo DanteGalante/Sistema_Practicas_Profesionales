@@ -36,7 +36,7 @@ public class Reporte extends Documento {
      */
     public Reporte( Reporte original ) {
         this( original.idDocumento, original.idReporte, original.titulo, original.descripcion, original.fechaEntrega,
-                original.GetClaveExpediente(), original.horasReportadas, original.tipo );
+                original.GetClaveExpediente(), original.horasReportadas, original.tipo, original.comentarios, original.calificacion );
     }
 
     /**
@@ -47,7 +47,7 @@ public class Reporte extends Documento {
      */
     public Reporte( Documento documento, TipoReporte tipoIn, int horasReportadasIn, int idReporteIn ) {
         this( documento.getIdDocumento(), idReporteIn, documento.getTitulo(), documento.GetDescripcion(), documento.getFechaEntrega(),
-                documento.GetClaveExpediente(), horasReportadasIn, tipoIn );
+                documento.GetClaveExpediente(), horasReportadasIn, tipoIn, documento.comentarios, documento.calificacion  );
     }
 
     /**
@@ -60,8 +60,8 @@ public class Reporte extends Documento {
      * @param tipoIn el tipo de reporte
      */
     public Reporte(int idDocumentoIn, int idReporteIn, String tituloIn, File descripcionIn, String fechaIn, int claveExpedienteIn,
-                   int horasReportadasIn, TipoReporte tipoIn ) {
-        super( idDocumentoIn, tituloIn, descripcionIn, fechaIn, claveExpedienteIn );
+                   int horasReportadasIn, TipoReporte tipoIn, String comentariosIn, float calificacionIn ) {
+        super( idDocumentoIn, tituloIn, descripcionIn, fechaIn, claveExpedienteIn, comentariosIn, calificacionIn );
         horasReportadas = horasReportadasIn;
         tipo = tipoIn;
         idReporte = idReporteIn;

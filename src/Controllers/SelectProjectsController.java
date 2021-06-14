@@ -12,7 +12,12 @@ package Controllers;
 import Database.EstudianteDAO;
 import Database.ProyectoDAO;
 import Database.ProyectosSeleccionadosDAO;
+import Database.ProyectosDeResponsablesDAO;
+import Database.ResponsablesOrganizacionDAO;
+import Database.OrganizacionVinculadaDAO;
 import Entities.Proyecto;
+import Entities.OrganizacionVinculada;
+import Entities.ConjuntoProyectoOrganizacion;
 import Enumerations.EstadoEstudiante;
 import Enumerations.EstadoProyecto;
 import Utilities.OutputMessages;
@@ -35,6 +40,9 @@ public class SelectProjectsController implements Initializable {
     private ScreenChanger screenChanger = new ScreenChanger();
     private OutputMessages outputMessages = new OutputMessages();
     private ProyectoDAO proyectos = new ProyectoDAO();
+    private ProyectosDeResponsablesDAO proyectosResponsables = new ProyectosDeResponsablesDAO();
+    private ResponsablesOrganizacionDAO responsablesOrganizacion = new ResponsablesOrganizacionDAO();
+    private OrganizacionVinculadaDAO organizaciones = new OrganizacionVinculadaDAO();
     private EstudianteDAO estudiantes = new EstudianteDAO();
     private ProyectosSeleccionadosDAO proyectosSeleccionados = new ProyectosSeleccionadosDAO();
     private List< Proyecto > listaProyectos = new ArrayList< Proyecto >();
@@ -62,28 +70,22 @@ public class SelectProjectsController implements Initializable {
     private Text successText;
 
     @FXML
-    private TableView< Proyecto > availableProjectsTable;
+    private TableView< ConjuntoProyectoOrganizacion > availableProjectsTable;
 
     @FXML
-    private TableView< Proyecto > selectedProjectsTable;
+    private TableView< ConjuntoProyectoOrganizacion > selectedProjectsTable;
 
     @FXML
-    private TableColumn< Proyecto, String > availableProjectName;
+    private TableColumn< ConjuntoProyectoOrganizacion, String > availableProjectName;
 
     @FXML
-    private TableColumn< Proyecto, String > availableProjectKey;
+    private TableColumn< ConjuntoProyectoOrganizacion, String > availableTotalSpace;
 
     @FXML
-    private TableColumn< Proyecto, String > availableTotalSpace;
+    private TableColumn< ConjuntoProyectoOrganizacion, String > availableOrganization;
 
     @FXML
-    private TableColumn< Proyecto, String > availableOrganization;
-
-    @FXML
-    private TableColumn< Proyecto, String > chosenName;
-
-    @FXML
-    private TableColumn< Proyecto, String > chosenKey;
+    private TableColumn< ConjuntoProyectoOrganizacion, String > chosenName;
 
     @FXML
     private TableColumn< Proyecto, String > chosenOrganization;
@@ -126,11 +128,14 @@ public class SelectProjectsController implements Initializable {
      * selectedProjects
      */
     public void SelectProject() {
+        ClearTextFields();
         int idProyecto = availableProjectsTable.getSelectionModel().getSelectedItem().getIdProyecto();
         for( Proyecto proyecto : listaProyectos ) {
             if( DoesSelectedProjectTableHaveSpace() && idProyecto == proyecto.getIdProyecto() &&
                     !IsProjectSelected( idProyecto ) ) {
-                selectedProjectsTable.getItems().add( proyecto );
+                ConjuntoProyectoOrganizacion conjunto = new ConjuntoProyectoOrganizacion( proyecto,
+                        organizaciones.Read( responsablesOrganizacion.ReadOrganizacion( proyectosResponsables.ReadResponsable( proyecto.getIdProyecto() ) ) ) );
+                selectedProjectsTable.getItems().add( conjunto );
             }
         }
     }
@@ -139,6 +144,7 @@ public class SelectProjectsController implements Initializable {
      * Elimina un proyecto seleccionado de la tabla selectedProjects
      */
     public void RemoveProject() {
+        ClearTextFields();
         selectedProjectsTable.getItems().remove( selectedProjectsTable.getSelectionModel().getSelectedItem() );
     }
 
@@ -146,12 +152,23 @@ public class SelectProjectsController implements Initializable {
      * Manda los proyectos seleccionados a la base de datos y actualiza el estado del estudiante
      */
     public void SendSelection() {
+        ClearTextFields();
         if( Selected3Projects() ) {
-            proyectosSeleccionados.Create( LoginSession.GetInstance().GetEstudiante().getMatricula(), GetSelectedProjects() );
-            LoginSession.GetInstance().GetEstudiante().SetEstadoEstudiante( EstadoEstudiante.AsignacionPendiente );
-            estudiantes.Update( LoginSession.GetInstance().GetEstudiante() );
-            errorText.setText( "" );
-            successText.setText( outputMessages.ProjectSelectionSuccessful() );
+            if( LoginSession.GetInstance().GetEstudiante().getEstado() != EstadoEstudiante.AsignacionPendiente ) {
+                try {
+                    proyectosSeleccionados.Create( LoginSession.GetInstance().GetEstudiante().getMatricula(), GetSelectedProjects() );
+                    LoginSession.GetInstance().GetEstudiante().SetEstadoEstudiante( EstadoEstudiante.AsignacionPendiente );
+                    estudiantes.Update( LoginSession.GetInstance().GetEstudiante() );
+                    errorText.setText( "" );
+                    successText.setText( outputMessages.ProjectSelectionSuccessful() );
+                } catch( Exception exception ) {
+                    successText.setText( "" );
+                    errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+                }
+            }
+            else{
+                errorText.setText( outputMessages.AlreadyChoseProjects() );
+            }
         }
     }
 
@@ -159,11 +176,11 @@ public class SelectProjectsController implements Initializable {
      * Configura las columnas de las tablas availableProjects y selectedProjects
      */
     private void SetTableCellValueFactory() {
-        availableProjectName.setCellValueFactory( new PropertyValueFactory<>( "nombre" ) );
-        availableProjectKey.setCellValueFactory( new PropertyValueFactory<>( "idProyecto" ) );
+        availableProjectName.setCellValueFactory( new PropertyValueFactory<>( "nombreProyecto" ) );
         availableTotalSpace.setCellValueFactory( new PropertyValueFactory<>( "numEstudiantesRequeridos" ) );
-        chosenName.setCellValueFactory( new PropertyValueFactory<>( "nombre" ) );
-        chosenKey.setCellValueFactory( new PropertyValueFactory<>( "idProyecto" ) );
+        availableOrganization.setCellValueFactory( new PropertyValueFactory<>( "nombreOrganizacion" ) );
+        chosenName.setCellValueFactory( new PropertyValueFactory<>( "nombreProyecto" ) );
+        chosenOrganization.setCellValueFactory( new PropertyValueFactory<>( "nombreOrganizacion" ) );
     }
 
     /**
@@ -173,7 +190,9 @@ public class SelectProjectsController implements Initializable {
         listaProyectos = proyectos.ReadAll();
         for( Proyecto proyecto : listaProyectos ) {
             if( IsProjectAvailable( proyecto ) ) {
-                availableProjectsTable.getItems().add( proyecto );
+                ConjuntoProyectoOrganizacion conjunto = new ConjuntoProyectoOrganizacion( proyecto,
+                        organizaciones.Read( responsablesOrganizacion.ReadOrganizacion( proyectosResponsables.ReadResponsable( proyecto.getIdProyecto() ) ) ) );
+                availableProjectsTable.getItems().add( conjunto );
             }
         }
     }
@@ -204,8 +223,8 @@ public class SelectProjectsController implements Initializable {
      */
     private boolean IsProjectSelected( int idProyecto ) {
         boolean isProjectSelected = false;
-        for( Proyecto proyecto : selectedProjectsTable.getItems() ) {
-            if( proyecto.getIdProyecto() == idProyecto ) {
+        for( ConjuntoProyectoOrganizacion conjunto : selectedProjectsTable.getItems() ) {
+            if( conjunto.getIdProyecto() == idProyecto ) {
                 isProjectSelected = true;
             }
         }
@@ -222,6 +241,7 @@ public class SelectProjectsController implements Initializable {
         if( selectedProjectsTable.getItems().size() < maxSelectedProjects ){
             hasSpace = true;
         } else {
+            successText.setText( "" );
             errorText.setText( outputMessages.AlreadySelectedMaxAmountProjects() );
         }
         return hasSpace;
@@ -236,6 +256,7 @@ public class SelectProjectsController implements Initializable {
         if( selectedProjectsTable.getItems().size() == maxSelectedProjects ) {
             selected3Projects = true;
         } else {
+            successText.setText( "" );
             errorText.setText( outputMessages.NotEnoughProjectsSelected() );
         }
         return selected3Projects;
@@ -247,8 +268,8 @@ public class SelectProjectsController implements Initializable {
      */
     private List< Integer > GetSelectedProjects() {
         List< Integer > idProyectos = new ArrayList<>();
-        for( Proyecto proyecto : selectedProjectsTable.getItems() ) {
-            idProyectos.add( proyecto.getIdProyecto() );
+        for( ConjuntoProyectoOrganizacion conjunto : selectedProjectsTable.getItems() ) {
+            idProyectos.add( conjunto.getIdProyecto() );
         }
         return idProyectos;
     }
@@ -260,6 +281,11 @@ public class SelectProjectsController implements Initializable {
      */
     @FXML
     private void ShowProjectDetails( MouseEvent mouseEvent ) {
-        projectDetails.setText( availableProjectsTable.getSelectionModel().getSelectedItem().GetDescripcion() );
+        projectDetails.setText( availableProjectsTable.getSelectionModel().getSelectedItem().getDescripcion() );
+    }
+
+    private void ClearTextFields() {
+        successText.setText( "" );
+        errorText.setText( "" );
     }
 }

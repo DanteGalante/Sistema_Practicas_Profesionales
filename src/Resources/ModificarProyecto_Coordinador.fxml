@@ -42,9 +42,9 @@
                 <Label id="bold" layoutX="203.0" layoutY="183.0" prefHeight="17.0" prefWidth="79.0" style="-fx-font-weight: bold;" text="Descripción:" textFill="#e84545" />
                 <Label id="bold" layoutX="203.0" layoutY="221.0" prefHeight="17.0" prefWidth="135.0" style="-fx-font-weight: bold;" text="Estudiantes Requeridos:" textFill="#e84545" />
                 <TextField fx:id="tfNombre" layoutX="346.0" layoutY="141.0" prefHeight="25.0" prefWidth="174.0" />
-                <TextField fx:id="tfDireccion" layoutX="346.0" layoutY="179.0" prefHeight="25.0" prefWidth="174.0" />
-                <Button fx:id="btnCancelar" layoutX="357.0" layoutY="337.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Cancelar" textFill="#e84545" />
-                <Button fx:id="btnModificar" layoutX="441.0" layoutY="337.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Modificar" textFill="#e84545" />
+                <TextField fx:id="tfDescripcion" layoutX="346.0" layoutY="179.0" prefHeight="25.0" prefWidth="174.0" />
+                <Button fx:id="btnCancelar" layoutX="357.0" layoutY="337.0" mnemonicParsing="false" onMouseClicked="#ClicCancelar" prefHeight="25.0" prefWidth="69.0" text="Cancelar" textFill="#e84545" />
+                <Button fx:id="btnModificar" layoutX="441.0" layoutY="337.0" mnemonicParsing="false" onMouseClicked="#ManejoModificarProyecto" prefHeight="25.0" prefWidth="79.0" text="Modificar" textFill="#e84545" />
                 <TextField fx:id="tfEstudiantesRequeridos" layoutX="346.0" layoutY="217.0" prefHeight="25.0" prefWidth="174.0" />
             </children></AnchorPane>
     </items>

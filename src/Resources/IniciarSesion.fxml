@@ -36,7 +36,6 @@
                </image>
             </ImageView>
             <Text fx:id="register" fill="#e84545" layoutX="139.0" layoutY="426.0" onMouseClicked="#ShowRegistryScreen" strokeType="OUTSIDE" strokeWidth="0.0" text="¿No tienes Cuenta? ¡Regístrate!" />
-            <Text fx:id="recoverPassword" fill="#e84545" layoutX="76.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿Se te olvidó tu contraseña?" />
             <Text fx:id="errorText" fill="#e84545" layoutX="20.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="257.7578125">
                <font>
                   <Font name="System Bold" size="12.0" />

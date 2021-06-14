@@ -17,6 +17,7 @@ public class Expediente {
     private String fechaAsignacion;
     private int horasAcumuladas;
     private int numeroArchivos;
+    private boolean activo;
 
     /**
      * Crea una instancia con valores en 0 y cadenas
@@ -29,6 +30,7 @@ public class Expediente {
         fechaAsignacion = "";
         horasAcumuladas = 0;
         numeroArchivos = 0;
+        activo = false;
     }
 
     /**
@@ -37,7 +39,7 @@ public class Expediente {
      */
     public Expediente( Expediente original ) {
         this( original.claveExpediente, original.idProyecto, original.matricula, original.fechaAsignacion,
-                original.horasAcumuladas, original.numeroArchivos );
+                original.horasAcumuladas, original.numeroArchivos, original.activo );
     }
 
     /**
@@ -48,13 +50,14 @@ public class Expediente {
      * @param numeroArchivosIn el numero de archivos contenidos en el expediente
      */
     public Expediente( int claveIn, int idProyectoIn, String matriculaIn, String fechaAsignacionIn,
-                       int horasAcumuladasIn, int numeroArchivosIn ) {
+                       int horasAcumuladasIn, int numeroArchivosIn, boolean activoIn ) {
         claveExpediente = claveIn;
         idProyecto = idProyectoIn;
         matricula = matriculaIn;
         fechaAsignacion = fechaAsignacionIn;
         horasAcumuladas = horasAcumuladasIn;
         numeroArchivos = numeroArchivosIn;
+        activo = activoIn;
     }
 
     /**
@@ -100,6 +103,12 @@ public class Expediente {
     public int GetNumeroArchivos() {
         return numeroArchivos;
     }
+
+    /**
+     * Regresa un booleano indicando si el expediente esta en uso o no
+     * @return un booleano
+     */
+    public boolean GetActivo() { return activo; }
 
     /**
      * Cambia la fecha de asignación al valor introducido

@@ -3,16 +3,17 @@ package Controllers;
 import Database.OrganizacionVinculadaDAO;
 import Database.ResponsableProyectoDAO;
 import Entities.OrganizacionVinculada;
+import Entities.ResponsableProyecto;
+import Utilities.LoginSession;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
+import Utilities.SelectionContainer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import Utilities.LoginSession;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
     private OrganizacionVinculadaDAO organizacionVinculada = new OrganizacionVinculadaDAO();
     private List< OrganizacionVinculada > listaOrganizaciones = new ArrayList<>();
     private OutputMessages outputMessages = new OutputMessages();
+    private ResponsableProyectoDAO responsableProyecto = new ResponsableProyectoDAO();
 
     @FXML
     private Label lbNombres;
@@ -32,6 +34,9 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
 
     @FXML
     private Label lbNoTrabajador;
+
+    @FXML
+    private Button btnGestionarOrganizaciones;
 
     @FXML
     private Button btnGestionarProyectos;
@@ -66,9 +71,6 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
     @FXML
     private Text errorText;
 
-    @FXML
-    private Text successText;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DatosDeUsuario();
@@ -90,7 +92,6 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
         tbOrganizaciones.getItems().clear();
         listaOrganizaciones = organizacionVinculada.ReadAll();
         for( OrganizacionVinculada organizacion : listaOrganizaciones){
-            organizacion.getNombre();
             tbOrganizaciones.getItems().add( organizacion );
         }
     }
@@ -139,11 +140,30 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
         }
     }
 
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarEstudiante
+     */
+    @FXML
+    public void ClicModificarOrganizacion( MouseEvent mouseEvent ) {
+        SelectionContainer.GetInstance().setOrganizacionElegida( RecuperarOrganizacion() );
+        SelectionContainer.GetInstance().setResponsableElegido( RecuperarResponsable() );
+        screenChanger.MostrarPantallaModificarOrganizacion( mouseEvent, errorText );
+    }
+
     public boolean ExisteSeleccion(){
         boolean Seleccion = false;
         if( tbOrganizaciones.getSelectionModel().getSelectedItem() != null ) {
-           Seleccion = true;
+            Seleccion = true;
         }
         return Seleccion;
+    }
+
+    public OrganizacionVinculada RecuperarOrganizacion(){
+        return tbOrganizaciones.getSelectionModel().getSelectedItem();
+    }
+
+    public ResponsableProyecto RecuperarResponsable() {
+        int id = tbOrganizaciones.getSelectionModel().getSelectedItem().getIdOrganizacion();
+        return responsableProyecto.Read(id);
     }
 }

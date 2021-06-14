@@ -14,7 +14,7 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ValidarInscripcion">
     <children>
-        <SplitPane dividerPositions="0.18481375358166188" layoutX="81.0" layoutY="103.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <SplitPane dividerPositions="0.1903807615230461" layoutX="81.0" layoutY="103.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
@@ -22,26 +22,35 @@
                             <items>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                     <children>
-                                        <VBox layoutX="14.0" layoutY="-43.0" prefHeight="141.0" prefWidth="145.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <VBox layoutX="14.0" layoutY="-43.0" prefHeight="141.0" prefWidth="145.0" style="-fx-background-color: #2b2e4a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <Label text="Nombre">
+                                                <Label text="Nombre" textFill="RED">
                                                     <VBox.margin>
                                                         <Insets />
                                                     </VBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
                                                 </Label>
-                                                <Label fx:id="lbNombre" text="...">
+                                                <Label fx:id="lbNombre" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
                                                 </Label>
-                                                <Label text="Apellidos" />
-                                                <Label fx:id="lbApellidos" text="...">
+                                                <Label text="Apellidos" textFill="RED">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Label>
+                                                <Label fx:id="lbApellidos" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
                                                 </Label>
-                                                <Label text="Cedula profesional" />
-                                                <Label fx:id="lbCedulaProfesional" text="...">
+                                                <Label text="Cedula profesional" textFill="RED">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Label>
+                                                <Label fx:id="lbCedulaProfesional" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
@@ -53,17 +62,20 @@
                                         </VBox>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #2b2e4a;">
                                     <children>
                                         <VBox alignment="BOTTOM_CENTER" layoutX="31.0" layoutY="14.0" prefHeight="249.0" prefWidth="145.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <VBox prefHeight="330.0" prefWidth="179.0">
+                                                <VBox prefHeight="330.0" prefWidth="179.0" VBox.vgrow="ALWAYS">
                                                     <children>
-                                                        <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="174.13671875">
-                                             <VBox.margin>
-                                                <Insets left="5.0" right="5.0" />
-                                             </VBox.margin></Text>
-                                                    </children></VBox>
+                                                        <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="162.13671875">
+                                                            <VBox.margin>
+                                                                <Insets left="10.0" right="10.0" />
+                                                            </VBox.margin></Text>
+                                                    </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin></VBox>
                                                 <Button contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#ClicRegresar" prefHeight="25.0" prefWidth="185.0" text="Regresar" />
                                             </children>
                                         </VBox>
@@ -75,49 +87,52 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <VBox layoutX="111.0" layoutY="127.0" prefHeight="398.0" prefWidth="445.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox layoutX="111.0" layoutY="127.0" prefHeight="398.0" prefWidth="445.0" style="-fx-background-color: #2b2e4a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <VBox alignment="TOP_CENTER" prefHeight="593.0" prefWidth="791.0" spacing="5.0">
                                     <children>
-                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="Validar inscripcion">
+                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="Validar inscripcion" textFill="RED">
                                             <font>
-                                                <Font size="15.0" />
+                                                <Font name="System Bold" size="15.0" />
                                             </font>
                                         </Label>
                                         <HBox prefHeight="24.0" prefWidth="546.0" spacing="10.0">
                                             <VBox.margin>
                                                 <Insets top="5.0" />
                                             </VBox.margin>
-                                 <children>
-                                    <HBox prefHeight="24.0" prefWidth="338.0" spacing="5.0">
-                                       <children>
-                                          <Label prefHeight="17.0" prefWidth="52.0" />
-                                          <Label fx:id="lbPeriodo" />
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="24.0" prefWidth="437.0">
-                                       <children>
-                                          <Label text="Fecha:  " />
-                                          <Label fx:id="lbFecha" text="..." />
-                                       </children>
-                                    </HBox>
-                                 </children>
+                                            <children>
+                                                <HBox prefHeight="24.0" prefWidth="338.0" spacing="5.0">
+                                                    <children>
+                                                        <Label prefHeight="17.0" prefWidth="52.0" textFill="RED" />
+                                                        <Label fx:id="lbPeriodo" textFill="RED" />
+                                                    </children>
+                                                </HBox>
+                                                <HBox prefHeight="24.0" prefWidth="437.0">
+                                                    <children>
+                                                        <Label text="Fecha:  " textFill="RED">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font></Label>
+                                                        <Label fx:id="lbFecha" text="..." textFill="RED" />
+                                                    </children>
+                                                </HBox>
+                                            </children>
                                         </HBox>
-                              <TableView fx:id="tbvEstudiantes" prefHeight="485.0" prefWidth="791.0">
-                                <columns>
-                                  <TableColumn fx:id="tcNombre" prefWidth="354.0" text="Nombre" />
-                                  <TableColumn fx:id="tcMatricula" prefWidth="214.0" text="Matricula" />
-                                    <TableColumn fx:id="tcValidar" prefWidth="110.0" text="Validar" />
-                                    <TableColumn fx:id="tcDepurar" prefWidth="110.0" text="Depurar" />
-                                </columns>
-                              </TableView>
-                              <HBox alignment="CENTER_RIGHT" spacing="10.0">
-                                 <children>
-                                    <Text fx:id="confirmationText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="653.0" />
-                                    <Button mnemonicParsing="false" onMouseClicked="#ClicCancelar" text="Cancelar" />
-                                    <Button mnemonicParsing="false" onMouseClicked="#ClicAceptar" text="Aceptar" />
-                                 </children>
-                              </HBox>
+                                        <TableView fx:id="tbvEstudiantes" prefHeight="485.0" prefWidth="791.0">
+                                            <columns>
+                                                <TableColumn fx:id="tcNombre" prefWidth="354.0" text="Nombre" />
+                                                <TableColumn fx:id="tcMatricula" prefWidth="214.0" text="Matricula" />
+                                                <TableColumn fx:id="tcValidar" prefWidth="110.0" text="Validar" />
+                                                <TableColumn fx:id="tcDepurar" prefWidth="110.0" text="Depurar" />
+                                            </columns>
+                                        </TableView>
+                                        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                            <children>
+                                                <Text fx:id="confirmationText" fill="#09eb09" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                                <Button mnemonicParsing="false" onMouseClicked="#ClicCancelar" prefHeight="25.0" prefWidth="66.0" text="Cancelar" />
+                                                <Button mnemonicParsing="false" onMouseClicked="#ClicAceptar" prefHeight="25.0" prefWidth="115.0" text="Aceptar" />
+                                            </children>
+                                        </HBox>
                                     </children>
                                     <VBox.margin>
                                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />

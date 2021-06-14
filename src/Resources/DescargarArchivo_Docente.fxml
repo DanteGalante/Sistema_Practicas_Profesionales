@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DescargarDocumento_Docente">
+   <children>
+      <SplitPane dividerPositions="0.17935871743486975" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <SplitPane dividerPositions="0.2181208053691275" layoutX="-95.0" layoutY="46.0" orientation="VERTICAL" prefHeight="398.0" prefWidth="149.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="174.0">
+                           <children>
+                              <VBox layoutX="13.0" layoutY="-41.0" prefHeight="171.0" prefWidth="174.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label text="Nombre">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="lbNombre" text="...">
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Apellidos" />
+                                    <Label fx:id="lbApellidos" text="...">
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Cedula profesional" />
+                                    <Label fx:id="lbCedulaProfesional" text="...">
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <VBox alignment="BOTTOM_CENTER" prefHeight="278.0" prefWidth="147.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" prefHeight="443.0" prefWidth="174.0">
+                                       <children>
+                                          <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="146.13671875" />
+                                       </children></VBox>
+                                    <Button mnemonicParsing="false" onMouseClicked="#ClicRegresar" prefHeight="25.0" prefWidth="175.0" text="Regresar" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="398.0" prefWidth="443.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="ARCHIVOS SUBIDOS">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="19.0" prefWidth="423.0" spacing="5.0">
+                           <children>
+                              <Label text="Estudiante:" />
+                              <Label fx:id="lbNombreEstudiante" text="..." />
+                           </children>
+                        </HBox>
+                        <VBox alignment="TOP_RIGHT" prefHeight="319.0" prefWidth="423.0" spacing="10.0">
+                           <children>
+                              <TableView fx:id="tbvArchivosSubidos" prefHeight="171.0" prefWidth="423.0">
+                                <columns>
+                                  <TableColumn fx:id="tcNombreArchivo" prefWidth="296.0" text="Nombre" />
+                                  <TableColumn fx:id="tcDescripcion" minWidth="6.0" prefWidth="499.0" text="Descripcion" />
+                                </columns>
+                              </TableView>
+                              <Button mnemonicParsing="false" text="Descargar archivo" />
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

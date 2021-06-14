@@ -10,7 +10,10 @@ package Controllers;
 
 import Database.EstudianteDAO;
 import Entities.Estudiante;
+import Enumerations.EstadoEstudiante;
 import Utilities.OutputMessages;
+import Utilities.ScreenChanger;
+import Utilities.SelectionContainer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -28,21 +31,16 @@ import java.util.ResourceBundle;
 public class GestionarEstudiantes_Coordinador implements Initializable {
     private EstudianteDAO estudiantes = new EstudianteDAO();
     private OutputMessages outputMessages = new OutputMessages();
+    private ScreenChanger screenChanger = new ScreenChanger();
 
     @FXML
-    private Text nameText;
+    private Label lbNombres;
 
     @FXML
-    private Text lastNameText;
+    private Label lbApellidos;
 
     @FXML
-    private Text numeroTrabajadorText;
-
-    @FXML
-    private Button chooseProjectButton;
-
-    @FXML
-    private Button returnButton;
+    private Label lbNoTrabajador;
 
     @FXML
     private Text errorText;
@@ -57,16 +55,10 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     private TableColumn< Estudiante, String > matriculaColumn;
 
     @FXML
-    private Button consultarBoton;
-
-    @FXML
     private Button modificarBoton;
 
     @FXML
     private Button eliminarBoton;
-
-    @FXML
-    private Button buscarBoton;
 
     /**
      * Configura los componentes de la pantalla GestionarEstudiantes_Coordinador
@@ -85,9 +77,9 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
      * nameText, lastNameText y matriculaText
      */
     private void SetUserInformation() {
-        nameText.setText( LoginSession.GetInstance().GetCoordinador().getNombres() );
-        lastNameText.setText( LoginSession.GetInstance().GetCoordinador().GetApellidos() );
-        numeroTrabajadorText.setText( LoginSession.GetInstance().GetCoordinador().GetNumeroPersonal() );
+        lbNombres.setText( LoginSession.GetInstance().GetCoordinador().getNombres() );
+        lbApellidos.setText( LoginSession.GetInstance().GetCoordinador().GetApellidos() );
+        lbNoTrabajador.setText( LoginSession.GetInstance().GetCoordinador().GetNumeroPersonal() );
     }
 
     /**
@@ -104,8 +96,14 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
      */
     private void ShowStudents() {
         estudiantesTable.getItems().clear();
-        for( Estudiante estudiante : estudiantes.ReadAll() ) {
-            estudiantesTable.getItems().add( estudiante );
+        try {
+            for( Estudiante estudiante : estudiantes.ReadAll() ) {
+                if( estudiante.getEstado() != EstadoEstudiante.Eliminado && estudiante.getEstado() != EstadoEstudiante.RegistroPendiente ) {
+                    estudiantesTable.getItems().add( estudiante );
+                }
+            }
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed2() );
         }
     }
 
@@ -114,25 +112,26 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
      */
     @FXML
     void EliminarEstudiante() {
+        ClearErrorText();
         if( IsStudentSelected() ) {
             Alert deleteAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.DeleteDocumentConfirmation() );
             deleteAlert.showAndWait().ifPresent( response -> {
                 if( response == ButtonType.OK ) {
-                    estudiantes.Delete( estudiantesTable.getSelectionModel().getSelectedItem().getMatricula() );
-                    ShowStudents();
+                    try {
+                        estudiantes.Delete( estudiantesTable.getSelectionModel().getSelectedItem().getMatricula() );
+                        ShowStudents();
+                    } catch( Exception exception ) {
+                        errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+                    }
                 }
             } );
         }
     }
 
     @FXML
-    void Return( MouseEvent event ) {
-
-    }
-
-    @FXML
-    void ShowGestionarReportes( MouseEvent event ) {
-
+    void ClicModificar( MouseEvent event){
+        SelectionContainer.GetInstance().setEstudianteElegido( RecuperarEstudiante() );
+        screenChanger.MostrarPantallaModificarEstudiante( event, errorText );
     }
 
     /**
@@ -146,5 +145,48 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
             isSelected = true;
         }
         return isSelected;
+    }
+
+    private void ClearErrorText() { errorText.setText( "" ); }
+
+    public Estudiante RecuperarEstudiante(){
+        return estudiantesTable.getSelectionModel().getSelectedItem();
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarEstudiante
+     */
+    public void MostrarPantallaGestionarEstudiante( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarEstudianesCoordinador( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarReporte( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarReporteCoordinador( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarOrganizacion( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarOrganizacion( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarProyecto( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarProyecto( mouseEvent, errorText );
+    }
+
+    /**
+     * Cierra la sesión actual y se regresa a la pantalla "IniciarSesión"
+     * @param mouseEvent el evento de mouse que inicio el cambio
+     */
+    public void CerrarSesion( MouseEvent mouseEvent ) {
+        LoginSession.GetInstance().Logout();
+        screenChanger.ShowLoginScreen( mouseEvent, errorText );
     }
 }

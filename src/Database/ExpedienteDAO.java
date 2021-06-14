@@ -34,14 +34,15 @@ public class ExpedienteDAO implements ExpedienteDAOInterface{
         connection.StartConnection();
 
         try {
-            String query = "INSERT INTO Expediente( IDProyecto, Matricula, FechaAsignacion, HorasAcumuladas, NumeroArchivos ) " +
-                    "VALUES ( ?, ?, ?, ?, ? );";
+            String query = "INSERT INTO Expediente( IDProyecto, Matricula, FechaAsignacion, HorasAcumuladas, NumeroArchivos, Activo ) " +
+                    "VALUES ( ?, ?, ?, ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setInt( 1, expediente.GetIDProyecto() );
             statement.setString( 2, expediente.GetMatricula() );
             statement.setString( 3, expediente.GetFechaAsignacion() );
             statement.setInt( 4, expediente.GetHorasAcumuladas() );
             statement.setInt( 5, expediente.GetNumeroArchivos() );
+            statement.setBoolean( 6, expediente.GetActivo() );
             statement.executeUpdate();
             wasCreated = true;
         } catch( Exception exception ) {
@@ -69,7 +70,7 @@ public class ExpedienteDAO implements ExpedienteDAOInterface{
             while( result.next() ) {
                 expediente.add( new Expediente( result.getInt( 1 ), result.getInt( 2 ),
                         result.getString( 3 ), result.getString( 4 ), result.getInt( 5 ),
-                        result.getInt( 6 ) ) );
+                        result.getInt( 6 ), result.getBoolean( 7 ) ) );
             }
 
             result.close();
@@ -103,7 +104,7 @@ public class ExpedienteDAO implements ExpedienteDAOInterface{
             if( result.next() ) {
                 expediente = new Expediente( result.getInt( 1 ), result.getInt( 2 ),
                         result.getString( 3 ), result.getString( 4 ), result.getInt( 5 ),
-                        result.getInt( 6 ) );
+                        result.getInt( 6 ), result.getBoolean( 7 ) );
             }
 
             result.close();
@@ -116,8 +117,13 @@ public class ExpedienteDAO implements ExpedienteDAOInterface{
         return expediente;
     }
 
+    /**
+     * Regresa una instancia de Expediente de la base de datos
+     * @param matricula del estudiante del expediente deseado
+     * @return una instancia del Expediente
+     */
     @Override
-    public Expediente ReadByStudent(String matricula) {
+    public Expediente ReadPorMatricula( String matricula ) {
         Expediente expediente = null;
         MySqlConnection connection = new MySqlConnection();
         connection.StartConnection();
@@ -132,7 +138,7 @@ public class ExpedienteDAO implements ExpedienteDAOInterface{
             if( result.next() ) {
                 expediente = new Expediente( result.getInt( 1 ), result.getInt( 2 ),
                         result.getString( 3 ), result.getString( 4 ), result.getInt( 5 ),
-                        result.getInt( 6 ) );
+                        result.getInt( 6 ), result.getBoolean( 7 ) );
             }
 
             result.close();
@@ -157,7 +163,7 @@ public class ExpedienteDAO implements ExpedienteDAOInterface{
         connection.StartConnection();
 
         try {
-            String query = "UPDATE Expediente SET IDProyecto = ?, Matricula = ?, FechaAsignacion = ?, HorasAcumuladas = ?, NumeroArchivos = ?" +
+            String query = "UPDATE Expediente SET IDProyecto = ?, Matricula = ?, FechaAsignacion = ?, HorasAcumuladas = ?, NumeroArchivos = ?, Activo = ?" +
                     " WHERE ClaveExpediente = ?;";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setInt( 1, expediente.GetIDProyecto() );
@@ -165,7 +171,8 @@ public class ExpedienteDAO implements ExpedienteDAOInterface{
             statement.setString( 3, expediente.GetFechaAsignacion() );
             statement.setInt( 4, expediente.GetHorasAcumuladas() );
             statement.setInt( 5, expediente.GetNumeroArchivos() );
-            statement.setInt( 6, expediente.GetClave() );
+            statement.setBoolean( 6, expediente.GetActivo() );
+            statement.setInt( 7, expediente.GetClave() );
             statement.executeUpdate();
             updated = true;
         } catch( Exception exception ) {

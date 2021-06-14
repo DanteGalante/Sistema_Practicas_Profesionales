@@ -36,12 +36,7 @@ public interface ExpedienteDAOInterface {
      */
     Expediente Read( int claveExpediente );
 
-    /**
-     * Regresa una instancia del Expediente de un estudiante de la base de datos
-     * @param matricula la matricula del estudiante con la que se desea buscar en la base de datos
-     * @return una instancia del Expediente
-     */
-    Expediente ReadByStudent( String matricula );
+    Expediente ReadPorMatricula( String matricula );
 
     /**
      * Actualiza la información de un Expediente en la base de datos
