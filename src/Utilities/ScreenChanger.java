@@ -49,6 +49,7 @@ public class ScreenChanger {
     private String pantallaModificarEstudiante = "../Resources/ModificarEstudiante_Coordinador.fxml";
     private String consultarExpedienteCoordinadorScreen = "../Resources/ConsultarExpediente.fxml";
     private String descargarArchivos_Coordinador = "../Resources/DescargarArchivo_Coordinador.fxml";
+    private String eliminarArchivoConsulta_Docente = "../Resources/EliminarArchivosConsulta_Docente.fxml";
 
     /**
      * Hace el cambio de pantalla a la pantalla de IniciarSesión.
@@ -392,6 +393,15 @@ public class ScreenChanger {
             SetScene( mouseEvent, descargarArchivos_Coordinador);
         } catch( IOException exception ) {
             errorText.setText( outputMessages.DescargarArchivoScreenMissing() );
+            exception.printStackTrace();
+        }
+    }
+
+    public void ShowScreenDeleteArchivosConsulta(MouseEvent mouseEvent, Text errorText) {
+        try {
+            SetScene( mouseEvent, eliminarArchivoConsulta_Docente);
+        } catch( IOException exception ) {
+            errorText.setText( outputMessages.EliminarArchivoScreenMissing() );
             exception.printStackTrace();
         }
     }
