@@ -121,6 +121,13 @@ public class Reportes_Coordinador implements Initializable {
         screenChanger.ShowLoginScreen( mouseEvent, errorText );
     }
 
+    /**
+     * Permite cambiar la pantalla a la pantalla VisualizarReporte_Coordinador
+     */
+    public void MostrarVisualizarReportes(MouseEvent mouseEvent){
+        screenChanger.MostrarPantallaVisualizarReportesCoordinador( mouseEvent, errorText );
+    }
+
     public void ClicGenerarReporte( MouseEvent mouseEvent ) {
         Alert confirmAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.GenerarReporteConfirmation());
         confirmAlert.showAndWait().ifPresent( response -> {
