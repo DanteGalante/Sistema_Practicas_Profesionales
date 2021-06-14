@@ -46,8 +46,8 @@ public class ScreenChanger {
     private String pantallaVisualizarReportes = "../Resources/VisualizarReporte_Coordinador.fxml";
     private String pantallaReporteSeleccionado = "../Resources/ReporteSeleccionado_Coordinador.fxml";
     private String pantallaModificarOrganizacion = "../Resources/ModificarOrganizacion_Coordinador.fxml";
-    private String pantallaModificarEstudiante = "../Resources/ModificarEstudiante_Coordinador.fxml";
     private String pantallaGestionarReporte = "../Resources/Reportes_Coordinador.fxml";
+    private String pantallaModificarEstudiante = "../Resources/ModificarEstudiante_Coordinador.fxml";
 
     /**
      * Hace el cambio de pantalla a la pantalla de IniciarSesión.
