@@ -583,4 +583,21 @@ public class OutputMessages {
      */
     public String ExpedienteCreate() { return "Proyecto asignado con exito"; }
 
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * AsignarProyectoAEstudiante
+     * @return una cadena con el mensaje de error
+     */
+    public String AsignarProyectoScreenMissing() { return "No se encontró el archivo FXML de la pantalla AsignarProyectoAEstudiante"; }
+
+    public String StudentExpedienteNull() { return "No tiene expediente"; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * ConsultarOrganizacion
+     * @return una cadena con el mensaje de error
+     */
+    public String ConsultarOrganizacionScreenMissing() { return "No se encontró el archivo FXML de la pantalla ConsultarOrganizacion"; }
+
+
 }
