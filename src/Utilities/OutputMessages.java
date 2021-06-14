@@ -385,7 +385,7 @@ public class OutputMessages {
      * es inválido
      * @return una cadena con el mensaje de error
      */
-    public String InvalidNRC() { return "El nrc no es vlido."; }
+    public String InvalidNRC() { return "El nrc no es valido."; }
 
     /**
      * Mensaje mostrado cuando el teléfono introducido por el usuario
@@ -526,6 +526,7 @@ public class OutputMessages {
     public String FileNotSelectedToDelete(){return "No se ha seleccionado ningun archivo para eliminar";}
 
     /**
+<<<<<<< Updated upstream
      * Mensaje mostrado en caso de no encontrar el archvio FXML de la pantalla
      * EliminarArchivosConsulta_Docente
      * @return una cadena con el mensaje de error
@@ -533,4 +534,53 @@ public class OutputMessages {
     public String EliminarArchivoScreenMissing() {
         return "No se encontro el archivo FXML de la pantalla eliminar archivo del docente";
     }
+    /**
+     * Mensaje mostrado cuando se registra un nuevo proyecto a la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String RegistroProyectoExitoso() { return "Registro de proyecto Exitoso"; }
+
+    /**
+     * Mensaje mostrado cuando se registra un nuevo proyecto a la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String CamposVacios() { return "Uno o varios campos esta vacios"; }
+
+    /**
+     * Mensaje mostrado cuando el numero de estudiantes introducida por el usuario
+     * es inválida
+     * @return una cadena con el mensaje de error
+     */
+    public String NumeroEstudiantesInvalido() { return "El numero de estudiantes requeridos es inválido"; }
+
+    /**
+     * Mensaje mostrado cuando se seleccion "elimina proyecto" sin haber
+     * seleccionado un proyecto de la lista.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String SelectionProjectNull() { return "Por favor seleccione un proyecto"; }
+
+    /**
+     * Mensaje mostrado cuando se seleccion "Consultar expediente" sin haber
+     * seleccionado un estudiante de la lista.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String SelectionStudentNull() { return "Por favor seleccione un estudiante"; }
+
+    /**
+     * Mensaje mostrado cuando se da clic en "asignar proyecto" y el estudiante
+     * o el proyecto de la lista estan asignados.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ExpedienteAlreadyExist() { return "No se puede asignar"; }
+
+    /**
+     * Mensaje de exito mostrado cuando se da clic en "asignar proyecto" y el estudiante
+     * o el proyecto de la lista han sido asignados con exito al crear un expediente.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ExpedienteCreate() { return "Proyecto asignado con exito"; }
+
 }
