@@ -139,17 +139,22 @@ public class Principal_Docente implements Initializable {
      */
     public void RecuperarGrupo() {
         String nrc = LoginSession.GetInstance().GetDocente().GetNrc();
-        grupo = estudianteDAO.ReadAllWithProjects();
-        List<Estudiante> auxiliar = new ArrayList<>();
 
-        for( Estudiante estudiante : grupo ){
-            if( nrc.equals( estudiante.getNrc() ) ){
-                auxiliar.add( estudiante );
+        try{
+            grupo = estudianteDAO.ReadAllWithProjects();
+            List<Estudiante> auxiliar = new ArrayList<>();
+
+            for( Estudiante estudiante : grupo ){
+                if( nrc.equals( estudiante.getNrc() ) ){
+                    auxiliar.add( estudiante );
+                }
             }
-        }
-        grupo.clear();
-        for ( Estudiante estudiante : auxiliar ) {
-            grupo.add( estudiante );
+            grupo.clear();
+            for ( Estudiante estudiante : auxiliar ) {
+                grupo.add( estudiante );
+            }
+        }catch ( Exception exception ){
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
         }
     }
 
@@ -157,7 +162,11 @@ public class Principal_Docente implements Initializable {
      * Recupera los archivos de consulta existentes en la base de datos.
      */
     public void RecuperarArchivosConsulta() {
-        archivoConsultas = archivoConsultaDAO.ReadFilesByDocente( LoginSession.GetInstance().GetDocente().GetNumeroPersonal() );
+        try{
+            archivoConsultas = archivoConsultaDAO.ReadFilesByDocente( LoginSession.GetInstance().GetDocente().GetNumeroPersonal() );
+        } catch ( Exception exception ){
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
     }
 
     /**
@@ -284,7 +293,11 @@ public class Principal_Docente implements Initializable {
                 ArchivoConsulta nuevoArchivo = GenerarArchivoConsulta( file );
 
                 if( FileNameDoesNotExist( nuevoArchivo ) ){
-                    archivoConsultaDAO.Create( nuevoArchivo );
+                    try {
+                        archivoConsultaDAO.Create( nuevoArchivo );
+                    } catch ( Exception exception) {
+                        errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+                    }
                     successText.setText( outputMessages.UploadSuccesful() );
                 }
 
