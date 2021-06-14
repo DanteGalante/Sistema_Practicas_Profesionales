@@ -256,7 +256,7 @@ public class StudentFormatsController implements Initializable{
         Expediente userExpediente = null;
         for( Expediente expediente : expedienteList ) {
             if( expediente.GetMatricula().equals( LoginSession.GetInstance().GetEstudiante().getMatricula() ) &&
-                    proyectos.Read( expediente.GetIDProyecto() ).GetEstado() == EstadoProyecto.Asignado ) {
+                    expediente.GetActivo() ) {
                 userExpediente = expediente;
             }
         }
