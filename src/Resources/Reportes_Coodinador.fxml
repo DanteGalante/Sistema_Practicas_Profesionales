@@ -76,11 +76,11 @@
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
-                <Button fx:id="btnReporteInscripcion" layoutX="32.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#CerrarSesion" prefHeight="43.0" prefWidth="300.0" text="Generar Reporte Inscripción" textFill="#e84545">
+                <Button fx:id="btnReporteInscripcion" layoutX="32.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#ClicGenerarReporte" prefHeight="43.0" prefWidth="300.0" text="Generar Reporte Inscripción" textFill="#e84545">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font></Button>
-                <Button fx:id="btnVisualizarReportes" layoutX="377.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#CerrarSesion" prefHeight="43.0" prefWidth="300.0" text="Visualizar Reportes Estudiantes" textFill="#e84545">
+                <Button fx:id="btnVisualizarReportes" layoutX="377.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#MostrarVisualizarReportes" prefHeight="43.0" prefWidth="300.0" text="Visualizar Reportes Estudiantes" textFill="#e84545">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font></Button>
