@@ -26,7 +26,7 @@
                                     <children>
                                         <Button fx:id="btnAsignarProyecto" mnemonicParsing="false" prefHeight="25.0" prefWidth="313.0" text="Asignar Proyecto" textFill="#e84545" />
                                         <Button fx:id="btnGenerarOficioAsignacion" mnemonicParsing="false" prefHeight="25.0" prefWidth="343.0" text="Generar Ofició De Asignación" textFill="#e84545" />
-                                        <Button fx:id="btnConsultarExpediente" mnemonicParsing="false" prefHeight="25.0" prefWidth="305.0" text="Consultar Expediente" textFill="#e84545" />
+                                        <Button fx:id="btnConsultarExpediente" mnemonicParsing="false" prefHeight="25.0" prefWidth="305.0" text="Consultar Expediente" textFill="#e84545" onMouseClicked="#MostrarPantallaConsultarExpediente"/>
                                         <Button fx:id="btnValidarInscripcion" mnemonicParsing="false" prefHeight="25.0" prefWidth="333.0" text="Validar Inscripción" textFill="#e84545" onMouseClicked="#ClicValidarInscripcion"/>
                                         <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onMouseClicked="#CerrarSesion" prefHeight="25.0" prefWidth="301.0" text="Cerrar Sesión" textFill="#e84545" />
                                     </children>

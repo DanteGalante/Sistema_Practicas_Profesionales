@@ -12,17 +12,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DescargarDocumento_Docente">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: #2b2e4a;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DescargarArchivo_Coordinador">
     <children>
-        <SplitPane dividerPositions="0.17935871743486975" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <SplitPane dividerPositions="0.17835671342685372" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: #2b2e4a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <SplitPane dividerPositions="0.2181208053691275" layoutX="-95.0" layoutY="46.0" orientation="VERTICAL" prefHeight="398.0" prefWidth="149.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.2181208053691275" layoutX="-95.0" layoutY="46.0" orientation="VERTICAL" prefHeight="398.0" prefWidth="149.0" style="-fx-background-color: #2b2e4a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <items>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="174.0" style="-fx-background-color: #2b2e4a;">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="174.0">
                                     <children>
-                                        <VBox layoutX="13.0" layoutY="-41.0" prefHeight="148.0" prefWidth="174.0" AnchorPane.bottomAnchor="-21.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <VBox layoutX="13.0" layoutY="-41.0" prefHeight="135.0" prefWidth="174.0" AnchorPane.bottomAnchor="-8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
                                                 <Label text="Nombre" textFill="RED">
                                                     <VBox.margin>
@@ -46,11 +46,11 @@
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
                                                 </Label>
-                                                <Label text="Cedula profesional" textFill="RED">
+                                                <Label text="No. Personal" textFill="RED">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font></Label>
-                                                <Label fx:id="lbCedulaProfesional" text="..." textFill="RED">
+                                                <Label fx:id="lbNumPersonal" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
@@ -62,11 +62,11 @@
                                         </VBox>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #2b2e4a;">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                     <children>
                                         <VBox alignment="BOTTOM_CENTER" prefHeight="278.0" prefWidth="147.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <VBox alignment="TOP_CENTER" prefHeight="357.0" prefWidth="174.0" VBox.vgrow="ALWAYS">
+                                                <VBox alignment="TOP_CENTER" prefHeight="443.0" prefWidth="174.0" VBox.vgrow="ALWAYS">
                                                     <children>
                                                         <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="146.13671875">
                                              <VBox.margin>
@@ -89,37 +89,28 @@
                     <children>
                         <VBox alignment="TOP_CENTER" prefHeight="398.0" prefWidth="443.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <Label text="DOCUMENTOS SUBIDOS" textFill="RED">
+                                <Label alignment="CENTER" prefHeight="25.0" prefWidth="791.0" text="DESCARGAR ARCHIVO" textAlignment="CENTER" textFill="RED">
                                     <font>
-                                        <Font name="System Bold" size="16.0" />
+                                        <Font name="System Bold" size="15.0" />
                                     </font>
                                 </Label>
-                                <HBox prefHeight="19.0" prefWidth="423.0" spacing="5.0">
+                                <VBox alignment="TOP_RIGHT" prefHeight="513.0" prefWidth="796.0" spacing="10.0" VBox.vgrow="ALWAYS">
                                     <children>
-                                        <Label text="Estudiante:" textFill="RED">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font></Label>
-                                        <Label fx:id="lbNombreEstudiante" text="..." textFill="RED" />
-                                    </children>
-                                </HBox>
-                                <VBox alignment="TOP_RIGHT" prefHeight="513.0" prefWidth="796.0" spacing="10.0">
-                                    <children>
-                                        <TableView fx:id="tbvDocumentosSubidos" prefHeight="527.0" prefWidth="796.0">
+                                        <TableView fx:id="tbvDocumentosSubidos" prefHeight="483.0" prefWidth="796.0" VBox.vgrow="ALWAYS">
                                             <columns>
                                                 <TableColumn fx:id="tcNombreDocumento" prefWidth="435.0" text="Nombre" />
                                                 <TableColumn fx:id="tcTipo" minWidth="6.0" prefWidth="231.0" text="Tipo" />
                                                 <TableColumn fx:id="tcPeso" minWidth="6.0" prefWidth="129.0" text="Peso" />
                                             </columns>
                                         </TableView>
-                                        <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                                        <HBox alignment="TOP_RIGHT" prefWidth="796.0">
                                             <children>
-                                                <Text fx:id="successText" fill="#09eb09" strokeType="OUTSIDE" strokeWidth="0.0" HBox.hgrow="ALWAYS">
+                                                <Text fx:id="successText" fill="#09eb09" strokeType="OUTSIDE" strokeWidth="0.0">
                                                     <HBox.margin>
                                                         <Insets right="10.0" top="5.0" />
                                                     </HBox.margin>
                                                 </Text>
-                                                <Button mnemonicParsing="false" onMouseClicked="#ClicDescargarDocumento" text="Descargar documento" />
+                                                <Button mnemonicParsing="false" onMouseClicked="#ClicDescargarDocumento" prefHeight="25.0" prefWidth="124.0" text="Descargar" />
                                             </children>
                                         </HBox>
                                     </children>
