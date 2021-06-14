@@ -225,6 +225,19 @@ public class OutputMessages {
     public String ModificacionEstudianteExitoso() { return "Modificación de Estudiante Exitoso"; }
 
     /**
+     * Mensaje mostrado cuando se intenta iniciar sesion, pero
+     * el estado de estudiante sigue en RegistroPendiente
+     * @return una cadena con el mensaje de éxito
+     */
+    public String RegistroEstudiantePendiente() { return "Su registro aún no ha sido validado."; }
+
+    /**
+     * Mensaje mostrado cunado se intenta iniciar sesion, pero
+     * el estado de estudiante es Eliminado
+     * @return una cadena con el mensaje de éxito
+     */
+    public String EstudianteEliminado() { return "Por favor revisar con el coordinador de las prácticas."; }
+    /**
      * Mensaje mostrado cuando se modifica un proyecto de la
      * base de datos de manera exitosa.
      * @return una cadena con el mensaje de éxito
