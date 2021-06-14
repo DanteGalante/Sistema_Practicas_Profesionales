@@ -46,7 +46,7 @@
                             <children>
                                 <VBox alignment="BOTTOM_CENTER" fillWidth="false" layoutY="117.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="292.0" style="-fx-background-color: #2b2e4a;">
                                     <children>
-                                        <Button fx:id="btnReportes" mnemonicParsing="false" prefHeight="41.0" prefWidth="300.0" text="Reportes" textFill="#e84545">
+                                        <Button fx:id="btnReportes" mnemonicParsing="false" onMouseClicked="#MostrarPantallaGestionarReporte" prefHeight="41.0" prefWidth="300.0" text="Reportes" textFill="#e84545">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font></Button>

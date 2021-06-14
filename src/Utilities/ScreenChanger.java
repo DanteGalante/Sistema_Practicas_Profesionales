@@ -46,7 +46,7 @@ public class ScreenChanger {
     private String pantallaVisualizarReportes = "../Resources/VisualizarReporte_Coordinador.fxml";
     private String pantallaReporteSeleccionado = "../Resources/ReporteSeleccionado_Coordinador.fxml";
     private String pantallaModificarOrganizacion = "../Resources/ModificarOrganizacion_Coordinador.fxml";
-    private String pantallaGestionarReporte = "../Resources/Reportes_Coordinador.fxml";
+    private String pantallaGestionarReporte = "../Resources/Reportes_Coodinador.fxml";
     private String pantallaModificarEstudiante = "../Resources/ModificarEstudiante_Coordinador.fxml";
     private String consultarExpedienteCoordinadorScreen = "../Resources/ConsultarExpediente.fxml";
     private String descargarArchivos_Coordinador = "../Resources/DescargarArchivo_Coordinador.fxml";
