@@ -47,6 +47,8 @@ public class ScreenChanger {
     private String pantallaReporteSeleccionado = "../Resources/ReporteSeleccionado_Coordinador.fxml";
     private String pantallaModificarOrganizacion = "../Resources/ModificarOrganizacion_Coordinador.fxml";
     private String pantallaModificarEstudiante = "../Resources/ModificarEstudiante_Coordinador.fxml";
+    private String consultarExpedienteCoordinadorScreen = "../Resources/ConsultarExpediente.fxml";
+    private String descargarArchivos_Coordinador = "../Resources/DescargarArchivo_Coordinador.fxml";
 
     /**
      * Hace el cambio de pantalla a la pantalla de IniciarSesión.
@@ -366,6 +368,30 @@ public class ScreenChanger {
             SetScene( mouseEvent, reportarProblema_DocenteScreen );
         }catch( IOException exception){
             errorText.setText( outputMessages.ReportarProblemaScreenMissing() );
+            exception.printStackTrace();
+        }
+    }
+
+    public void ShowScreenConsultarExpediente_Coordinador(MouseEvent mouseEvent, Text errorText ) {
+        try {
+            SetScene( mouseEvent, consultarExpedienteCoordinadorScreen );
+        }catch( IOException exception){
+            //errorText.setText( outputMessages.ConsultarExpedienteDocenteScreenMissing() );
+            errorText.setText("");
+            //exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Hace el cambio de pantalla a la pantalla de descargar archivos de un estudiante.
+     * @param mouseEvent el evento de mouse que inicio el cambio
+     * @param errorText el campo de texto donde se coloca un mensaje en caso de error
+     */
+    public void ShowScreenDescargarArchivoCoordinador( MouseEvent mouseEvent, Text errorText ) {
+        try {
+            SetScene( mouseEvent, descargarArchivos_Coordinador);
+        } catch( IOException exception ) {
+            errorText.setText( outputMessages.DescargarArchivoScreenMissing() );
             exception.printStackTrace();
         }
     }
