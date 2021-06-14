@@ -27,7 +27,7 @@
                                     </children>
                                 </VBox>
                                 <Text fx:id="errorText" fill="#e84545" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                                <Text fx:id="successText" fill="#e84545" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                <Text fx:id="successText" fill="#09eb09" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                             </children></AnchorPane>
                     </items>
                 </SplitPane>

@@ -63,6 +63,9 @@ public class Reportes_Coordinador implements Initializable {
     private Text errorText;
 
     @FXML
+    private Text successText;
+
+    @FXML
     private Button btnReporteInscripcion;
 
     @FXML

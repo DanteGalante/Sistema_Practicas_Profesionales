@@ -71,6 +71,9 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
     @FXML
     private Text errorText;
 
+    @FXML
+    private Text successText;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DatosDeUsuario();
