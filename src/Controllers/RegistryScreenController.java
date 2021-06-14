@@ -115,6 +115,7 @@ public class RegistryScreenController {
      */
     private void RegisterStudent() {
         if( estudiantes.Create( GetStudent() ) ) {
+            ClearTextFields();
             errorText.setText( "" );
             successText.setText( outputMessages.RegistrationSuccessful() );
         }
@@ -273,5 +274,20 @@ public class RegistryScreenController {
      */
     private int GetRandomNumber() {
         return randomGenerator.nextInt( 10 );
+    }
+
+    /**
+     * Metodo utilizado para vaciar los campos de texto de la pantalla de
+     * registro
+     */
+    private void ClearTextFields() {
+        nameField.clear();
+        lastNameField.clear();
+        matriculaField.clear();
+        phoneField.clear();
+        nrcField.clear();
+        emailField.clear();
+        passwordField.clear();
+        confirmPasswordField.clear();
     }
 }

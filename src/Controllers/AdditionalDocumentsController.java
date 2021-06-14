@@ -174,7 +174,8 @@ public class AdditionalDocumentsController implements Initializable {
         List< Expediente > expedientesUsuarios = expedientes.ReadAll();
         Expediente userExpediente = null;
         for( Expediente expediente : expedientesUsuarios ) {
-            if( expediente.GetMatricula().equals( LoginSession.GetInstance().GetEstudiante().getMatricula() ) ) {
+            if( expediente.GetMatricula().equals( LoginSession.GetInstance().GetEstudiante().getMatricula() ) &&
+                expediente.GetActivo() ) {
                 userExpediente = expediente;
             }
         }

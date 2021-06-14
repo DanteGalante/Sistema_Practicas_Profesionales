@@ -41,7 +41,10 @@
                </font></Text>
             <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="121.0" layoutY="333.0" prefHeight="25.0" prefWidth="168.0" />
             <PasswordField fx:id="confirmPasswordField" alignment="CENTER" layoutX="122.0" layoutY="391.0" prefHeight="25.0" prefWidth="168.0" />
-            <Text fx:id="successText" fill="#0400ff" layoutX="60.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="292.0" />
+            <Text fx:id="successText" fill="#09eb09" layoutX="60.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="292.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Text>
          </children>
       </Pane>
    </children>
