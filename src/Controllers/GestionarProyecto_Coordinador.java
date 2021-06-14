@@ -32,18 +32,6 @@ public class GestionarProyecto_Coordinador implements Initializable {
     private Label lbNoTrabajador;
 
     @FXML
-    private Button btnGestionarOrganizacion;
-
-    @FXML
-    private Button btnRegresar;
-
-    @FXML
-    private TextField tfBuscar;
-
-    @FXML
-    private Button btnBuscar;
-
-    @FXML
     private TableView <Proyecto> tbProyectos;
 
     @FXML
@@ -97,10 +85,6 @@ public class GestionarProyecto_Coordinador implements Initializable {
 
     public void ClicRegresar ( MouseEvent mouseEvent ){
         screenChanger.MostrarPantallaPrincipalCoordinador( mouseEvent, errorText );
-    }
-
-    public void ClicGestionarOrganizacion ( MouseEvent mouseEvent ){
-        screenChanger.MostrarPantallaGestionarOrganizacion( mouseEvent,errorText );
     }
 
     @FXML
