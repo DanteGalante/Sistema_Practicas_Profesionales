@@ -34,19 +34,13 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     private ScreenChanger screenChanger = new ScreenChanger();
 
     @FXML
-    private Text nameText;
+    private Label lbNombres;
 
     @FXML
-    private Text lastNameText;
+    private Label lbApellidos;
 
     @FXML
-    private Text numeroTrabajadorText;
-
-    @FXML
-    private Button chooseProjectButton;
-
-    @FXML
-    private Button returnButton;
+    private Label lbNoTrabajador;
 
     @FXML
     private Text errorText;
@@ -61,16 +55,10 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     private TableColumn< Estudiante, String > matriculaColumn;
 
     @FXML
-    private Button consultarBoton;
-
-    @FXML
     private Button modificarBoton;
 
     @FXML
     private Button eliminarBoton;
-
-    @FXML
-    private Button buscarBoton;
 
     /**
      * Configura los componentes de la pantalla GestionarEstudiantes_Coordinador
@@ -89,9 +77,9 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
      * nameText, lastNameText y matriculaText
      */
     private void SetUserInformation() {
-        nameText.setText( LoginSession.GetInstance().GetCoordinador().getNombres() );
-        lastNameText.setText( LoginSession.GetInstance().GetCoordinador().GetApellidos() );
-        numeroTrabajadorText.setText( LoginSession.GetInstance().GetCoordinador().GetNumeroPersonal() );
+        lbNombres.setText( LoginSession.GetInstance().GetCoordinador().getNombres() );
+        lbApellidos.setText( LoginSession.GetInstance().GetCoordinador().GetApellidos() );
+        lbNoTrabajador.setText( LoginSession.GetInstance().GetCoordinador().GetNumeroPersonal() );
     }
 
     /**
@@ -141,14 +129,6 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     }
 
     @FXML
-    void Return( MouseEvent event ) {
-        screenChanger.MostrarPantallaPrincipalCoordinador( event, errorText );
-    }
-
-    @FXML
-    void ShowGestionarReportes( MouseEvent event ) {}
-
-    @FXML
     void ClicModificar( MouseEvent event){
         SelectionContainer.GetInstance().setEstudianteElegido( RecuperarEstudiante() );
         screenChanger.MostrarPantallaModificarEstudiante( event, errorText );
@@ -171,5 +151,42 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
 
     public Estudiante RecuperarEstudiante(){
         return estudiantesTable.getSelectionModel().getSelectedItem();
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarEstudiante
+     */
+    public void MostrarPantallaGestionarEstudiante( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarEstudianesCoordinador( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarReporte( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarReporteCoordinador( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarOrganizacion( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarOrganizacion( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarProyecto( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarProyecto( mouseEvent, errorText );
+    }
+
+    /**
+     * Cierra la sesión actual y se regresa a la pantalla "IniciarSesión"
+     * @param mouseEvent el evento de mouse que inicio el cambio
+     */
+    public void CerrarSesion( MouseEvent mouseEvent ) {
+        LoginSession.GetInstance().Logout();
+        screenChanger.ShowLoginScreen( mouseEvent, errorText );
     }
 }
