@@ -293,8 +293,9 @@ public class AsignarProyectoAEstudianteController implements Initializable {
         return new Expediente(0, idProyecto, matricula, currentDate.toString(), 0,0, true);
     }
 
+
     public void MostrarPantallaPrincipalCoordinador ( MouseEvent mouseEvent ) {
-        screenChanger.MostrarPantallaPrincipalCoordinador( mouseEvent, TxError );
+        screenChanger.MostrarPantallaGestionarEstudianesCoordinador( mouseEvent, TxError );
     }
 
 }
