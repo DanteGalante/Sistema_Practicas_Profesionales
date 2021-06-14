@@ -15,18 +15,36 @@
                     <items>
                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="289.0" prefWidth="353.0" style="-fx-background-color: #2b2e4a;">
                           <children>
-                             <Label layoutX="14.0" layoutY="14.0" style="-fx-font-weight: #2b2e4a;" text="Nombres:" textFill="#e84545" />
-                             <Label fx:id="lbNombres" layoutX="14.0" layoutY="31.0" text="Label" textFill="#e84545" />
-                             <Label layoutX="14.0" layoutY="57.0" text="Apellidos:" textFill="#e84545" />
-                             <Label fx:id="lbApellidos" layoutX="14.0" layoutY="74.0" text="Label" textFill="#e84545" />
-                             <Label layoutX="14.0" layoutY="98.0" text="No.Trabajador:" textFill="#e84545" />
-                             <Label fx:id="lbNoTrabajador" layoutX="14.0" layoutY="115.0" text="Label" textFill="#e84545" />
+                             <Label layoutX="14.0" layoutY="14.0" style="-fx-font-weight: #2b2e4a;" text="Nombres:" textFill="#e84545">
+                                <font>
+                                   <Font name="System Bold" size="12.0" />
+                                </font></Label>
+                             <Label fx:id="lbNombres" layoutX="14.0" layoutY="31.0" text="Label" textFill="#e84545">
+                                <font>
+                                   <Font name="System Bold" size="12.0" />
+                                </font></Label>
+                             <Label layoutX="14.0" layoutY="57.0" text="Apellidos:" textFill="#e84545">
+                                <font>
+                                   <Font name="System Bold" size="12.0" />
+                                </font></Label>
+                             <Label fx:id="lbApellidos" layoutX="14.0" layoutY="74.0" text="Label" textFill="#e84545">
+                                <font>
+                                   <Font name="System Bold" size="12.0" />
+                                </font></Label>
+                             <Label layoutX="14.0" layoutY="98.0" text="No.Trabajador:" textFill="#e84545">
+                                <font>
+                                   <Font name="System Bold" size="12.0" />
+                                </font></Label>
+                             <Label fx:id="lbNoTrabajador" layoutX="14.0" layoutY="115.0" text="Label" textFill="#e84545">
+                                <font>
+                                   <Font name="System Bold" size="12.0" />
+                                </font></Label>
                           </children></AnchorPane>
                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="295.0" prefWidth="211.0" style="-fx-background-color: #2b2e4a;">
                           <children>
                              <VBox alignment="BOTTOM_CENTER" fillWidth="false" layoutY="117.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="214.0" style="-fx-background-color: #2b2e4a;">
                                 <children>
-                                   <Button fx:id="btnReportes" mnemonicParsing="false" prefHeight="41.0" prefWidth="300.0" text="Reportes" textFill="#e84545">
+                                   <Button fx:id="btnReportes" mnemonicParsing="false" onMouseClicked="#MostrarPantallaGestionarReporte" prefHeight="41.0" prefWidth="300.0" text="Reportes" textFill="#e84545">
                                       <font>
                                          <Font name="System Bold" size="12.0" />
                                       </font></Button>
