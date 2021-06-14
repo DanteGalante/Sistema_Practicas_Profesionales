@@ -46,6 +46,9 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     private Text errorText;
 
     @FXML
+    private Text successText;
+
+    @FXML
     private TableView< Estudiante > estudiantesTable;
 
     @FXML
