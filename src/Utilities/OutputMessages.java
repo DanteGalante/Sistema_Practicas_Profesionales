@@ -127,6 +127,14 @@ public class OutputMessages {
 
     /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * Menu_Coordinador
+     * @return una cadena con el mensaje de error
+     */
+    public String PantallaMenuCoordinadorPerdido() { return "No se encontró el archivo FXML de la pantalla " +
+            "Menu_Coordinador."; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
      * GestionarOrganizacion_Coordinador
      * @return una cadena con el mensaje de error
      */
