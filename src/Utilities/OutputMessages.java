@@ -244,7 +244,7 @@ public class OutputMessages {
      * el estado de estudiante es Eliminado
      * @return una cadena con el mensaje de éxito
      */
-    public String EstudianteEliminado() { return "Por favor revisar con el coordinador de las prácticas."; }
+    public String EstudianteEliminado() { return "Por favor revisar tu estado con el coordinador de las prácticas profesionales."; }
     /**
      * Mensaje mostrado cuando se modifica un proyecto de la
      * base de datos de manera exitosa.
