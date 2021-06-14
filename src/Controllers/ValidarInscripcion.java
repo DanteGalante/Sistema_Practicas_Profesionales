@@ -109,8 +109,11 @@ public class ValidarInscripcion implements Initializable {
      * Recupera los estudiantes con estado de registro pendiente
      */
     public void RecuperarEstudiantes() {
-        estudiantes = estudianteDAO.ReadByState(EstadoEstudiante.RegistroPendiente.ordinal());
-
+        try {
+            estudiantes = estudianteDAO.ReadByState(EstadoEstudiante.RegistroPendiente.ordinal());
+        } catch ( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
     }
 
     /**
@@ -130,9 +133,17 @@ public class ValidarInscripcion implements Initializable {
             for( Estudiante estudiante : tbvEstudiantes.getItems() ){
                 if( estudiante.getValidado().isSelected() ){
                     estudiante.SetEstadoEstudiante(EstadoEstudiante.RegistroAprobado);
-                    estudianteDAO.Update(estudiante);
+                    try {
+                        estudianteDAO.Update(estudiante);
+                    } catch ( Exception exception ) {
+                        errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+                    }
                 }else if( estudiante.getDepurado().isSelected() ){
-                    estudianteDAO.Delete(estudiante.getMatricula());
+                    try {
+                        estudianteDAO.Delete(estudiante.getMatricula());
+                    } catch ( Exception exception ) {
+                        errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+                    }
                 }
             }
             confirmationText.setText( "Se ha realizado la operación con éxito" );
