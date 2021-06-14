@@ -533,4 +533,12 @@ public class OutputMessages {
     public String EliminarArchivoScreenMissing() {
         return "No se encontro el archivo FXML de la pantalla eliminar archivo del docente";
     }
+
+    /**
+     * Mensaje mostrado en caso de que un documento se intente descargar, pero falle en el proceso
+     * @return una cadena con el mensaje de error
+     */
+    public String DeleteDocumentFailed() {
+        return "Se ha producido un error al intentar descargar el archivo";
+    }
 }
