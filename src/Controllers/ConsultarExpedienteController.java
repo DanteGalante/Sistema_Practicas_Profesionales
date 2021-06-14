@@ -127,6 +127,10 @@ public class ConsultarExpedienteController implements Initializable {
     public void MostrarPantallaPrincipalCoordinador( MouseEvent mouseEvent ) {
         screenChanger.MostrarPantallaPrincipalCoordinador( mouseEvent, TxError );
     }
+
+    public void MostrarPantallaDescargarArchivo_Coordinador(MouseEvent mouseEvent) {
+        screenChanger.ShowScreenDescargarArchivoCoordinador(mouseEvent, TxError);
+    }
 }
 
 

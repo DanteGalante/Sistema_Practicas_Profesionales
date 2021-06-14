@@ -7,6 +7,7 @@ import Entities.UsuarioUV;
 import Enumerations.EstadoEstudiante;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
+import Utilities.SelectionContainer;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
@@ -282,5 +283,16 @@ public class Principal_Coordinador implements Initializable {
      */
     public void ClicValidarInscripcion(MouseEvent mouseEvent) {
         screenChanger.ShowScreenValidarInscripcion( mouseEvent, errorText );
+    }
+
+    public void MostrarPantallaConsultarExpediente(MouseEvent mouseEvent) {
+        Estudiante estudianteElegido = (Estudiante) tbEstudianteDocente.getSelectionModel().getSelectedItem();
+
+        if (estudianteElegido != null) {
+            SelectionContainer.GetInstance().setEstudianteElegido(estudianteElegido);
+            screenChanger.ShowScreenConsultarExpediente_Coordinador(mouseEvent, errorText);
+        } else {
+            errorText.setText(outputMessages.EstudianteNoSeleccionado());
+        }
     }
 }
