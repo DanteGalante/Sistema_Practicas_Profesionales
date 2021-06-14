@@ -43,6 +43,12 @@ public class Reportes_Coordinador implements Initializable {
     @FXML
     private Text errorText;
 
+    @FXML
+    private Button btnReporteInscripcion;
+
+    @FXML
+    private Button btnVisualizarReportes;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -166,4 +166,41 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
         int id = tbOrganizaciones.getSelectionModel().getSelectedItem().getIdOrganizacion();
         return responsableProyecto.Read(id);
     }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarEstudiante
+     */
+    public void MostrarPantallaGestionarEstudiante( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarEstudianesCoordinador( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarReporte( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarReporteCoordinador( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarOrganizacion( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarOrganizacion( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarProyecto( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarProyecto( mouseEvent, errorText );
+    }
+
+    /**
+     * Cierra la sesión actual y se regresa a la pantalla "IniciarSesión"
+     * @param mouseEvent el evento de mouse que inicio el cambio
+     */
+    public void CerrarSesion( MouseEvent mouseEvent ) {
+        LoginSession.GetInstance().Logout();
+        screenChanger.ShowLoginScreen( mouseEvent, errorText );
+    }
 }
