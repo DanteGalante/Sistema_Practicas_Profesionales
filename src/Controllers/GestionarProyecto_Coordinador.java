@@ -32,18 +32,6 @@ public class GestionarProyecto_Coordinador implements Initializable {
     private Label lbNoTrabajador;
 
     @FXML
-    private Button btnGestionarOrganizacion;
-
-    @FXML
-    private Button btnRegresar;
-
-    @FXML
-    private TextField tfBuscar;
-
-    @FXML
-    private Button btnBuscar;
-
-    @FXML
     private TableView <Proyecto> tbProyectos;
 
     @FXML
@@ -99,10 +87,6 @@ public class GestionarProyecto_Coordinador implements Initializable {
         screenChanger.MostrarPantallaPrincipalCoordinador( mouseEvent, errorText );
     }
 
-    public void ClicGestionarOrganizacion ( MouseEvent mouseEvent ){
-        screenChanger.MostrarPantallaGestionarOrganizacion( mouseEvent,errorText );
-    }
-
     @FXML
     void ClicModificarProyecto( MouseEvent event){
         SelectionContainer.GetInstance().setProyectoElegido( RecuperarProyecto() );
@@ -111,6 +95,43 @@ public class GestionarProyecto_Coordinador implements Initializable {
 
     public Proyecto RecuperarProyecto(){
         return tbProyectos.getSelectionModel().getSelectedItem();
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarEstudiante
+     */
+    public void MostrarPantallaGestionarEstudiante( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarEstudianesCoordinador( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarReporte( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarReporteCoordinador( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarOrganizacion( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarOrganizacion( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla GestionarReportes
+     */
+    public void MostrarPantallaGestionarProyecto( MouseEvent mouseEvent ) {
+        screenChanger.MostrarPantallaGestionarProyecto( mouseEvent, errorText );
+    }
+
+    /**
+     * Cierra la sesión actual y se regresa a la pantalla "IniciarSesión"
+     * @param mouseEvent el evento de mouse que inicio el cambio
+     */
+    public void CerrarSesion( MouseEvent mouseEvent ) {
+        LoginSession.GetInstance().Logout();
+        screenChanger.ShowLoginScreen( mouseEvent, errorText );
     }
 
 }

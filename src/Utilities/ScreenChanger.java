@@ -46,10 +46,13 @@ public class ScreenChanger {
     private String pantallaVisualizarReportes = "../Resources/VisualizarReporte_Coordinador.fxml";
     private String pantallaReporteSeleccionado = "../Resources/ReporteSeleccionado_Coordinador.fxml";
     private String pantallaModificarOrganizacion = "../Resources/ModificarOrganizacion_Coordinador.fxml";
+    private String pantallaGestionarReporte = "../Resources/Reportes_Coodinador.fxml";
     private String pantallaModificarEstudiante = "../Resources/ModificarEstudiante_Coordinador.fxml";
     private String consultarExpedienteCoordinadorScreen = "../Resources/ConsultarExpediente.fxml";
     private String descargarArchivos_Coordinador = "../Resources/DescargarArchivo_Coordinador.fxml";
     private String eliminarArchivoConsulta_Docente = "../Resources/EliminarArchivosConsulta_Docente.fxml";
+    private String menu_Coordinador = "../Resources/Menu_Coordinador.fxml";
+
 
     /**
      * Hace el cambio de pantalla a la pantalla de IniciarSesión.
@@ -187,6 +190,21 @@ public class ScreenChanger {
     }
 
     /**
+     * Hace el cambio de pantalla a la pantalla Principal_Coordinador
+     *
+     * @param mouseEvent el evento de mouse que inicio el cambio
+     * @param errorText  el campo de texto donde se coloca un mensaje en caso de error
+     */
+    public void MostrarPantallaMenuCoordinador( MouseEvent mouseEvent, Text errorText ) {
+        try {
+            SetScene( mouseEvent, menu_Coordinador );
+        } catch (IOException exception) {
+            errorText.setText( outputMessages.PantallaMenuCoordinadorPerdido() );
+            exception.printStackTrace();
+        }
+    }
+
+    /**
      * Hace el cambio de pantalla a la pantalla GestionarOrganizacion
      * @param mouseEvent el evento de mouse que inicio el cambio
      * @param errorText el campo de texto donde se coloca un mensaje en caso de error
@@ -238,6 +256,20 @@ public class ScreenChanger {
             SetScene( mouseEvent, pantallaGestionarProyecto );
         } catch( IOException exception ) {
             errorText.setText( outputMessages.PantallaGestionarProyectoPerdido() );
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Hace el cambio de pantalla a la pantalla Reportes
+     * @param mouseEvent el evento de mouse que inicio el cambio
+     * @param errorText el campo de texto donde se coloca un mensaje en caso de error
+     */
+    public void MostrarPantallaGestionarReporteCoordinador( MouseEvent mouseEvent, Text errorText ){
+        try {
+            SetScene( mouseEvent, pantallaGestionarReporte );
+        } catch( IOException exception ) {
+            errorText.setText( outputMessages.PantallaReportesPerdido() );
             exception.printStackTrace();
         }
     }

@@ -96,7 +96,7 @@ public class VisualizarReporte_Coordinador implements Initializable {
      * @param mouseEvent el evento de mouse que activo la acción.
      */
     public void ClicRegresar ( MouseEvent mouseEvent ){
-        screenChanger.MostrarPantallaPrincipalCoordinador( mouseEvent, errorText );
+        screenChanger.MostrarPantallaGestionarReporteCoordinador( mouseEvent, errorText );
     }
 
 

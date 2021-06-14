@@ -137,6 +137,7 @@ public class ReportsScreenController implements Initializable {
             }
         } catch( Exception exception ) {
             errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            exception.printStackTrace();
         }
     }
 
@@ -164,6 +165,7 @@ public class ReportsScreenController implements Initializable {
             }
         } catch( Exception exception ) {
             errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            exception.printStackTrace();
         }
     }
 
@@ -204,7 +206,7 @@ public class ReportsScreenController implements Initializable {
         Expediente userExpediente = null;
         for( Expediente expediente : expedienteList ) {
             if( expediente.GetMatricula().equals( LoginSession.GetInstance().GetEstudiante().getMatricula() ) &&
-                proyectos.Read( expediente.GetIDProyecto() ).GetEstado() == EstadoProyecto.Asignado ) {
+                expediente.GetActivo() ) {
                 userExpediente = expediente;
             }
         }

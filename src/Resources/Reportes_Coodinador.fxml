@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GestionarOrganizacion_Coordinador">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #2b2e4a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Reportes_Coordinador">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="122.0">
             <children>
                 <SplitPane dividerPositions="0.5" layoutX="2.0" orientation="VERTICAL" prefHeight="598.0" prefWidth="294.0">
                     <items>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="289.0" prefWidth="353.0" style="-fx-background-color: #2b2e4a;">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="195.0" prefWidth="288.0" style="-fx-background-color: #2b2e4a;">
                             <children>
                                 <Label layoutX="14.0" layoutY="14.0" style="-fx-font-weight: #2b2e4a;" text="Nombres:" textFill="#e84545">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font></Label>
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font></Label>
                                 <Label fx:id="lbNombres" layoutX="14.0" layoutY="31.0" text="Label" textFill="#e84545">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
-                                    </font>
-                                </Label>
+                                    </font></Label>
                                 <Label layoutX="14.0" layoutY="57.0" text="Apellidos:" textFill="#e84545">
-                                <font>
-                                    <Font name="System Bold" size="12.0" />
-                                </font>
-                                </Label>
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font></Label>
                                 <Label fx:id="lbApellidos" layoutX="14.0" layoutY="74.0" text="Label" textFill="#e84545">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
-                                    </font>
-                                </Label>
+                                    </font></Label>
                                 <Label layoutX="14.0" layoutY="98.0" text="No.Trabajador:" textFill="#e84545">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
-                                    </font>
-                                </Label>
+                                    </font></Label>
                                 <Label fx:id="lbNoTrabajador" layoutX="14.0" layoutY="115.0" text="Label" textFill="#e84545">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
-                                    </font>
-                                </Label>
+                                    </font></Label>
                             </children></AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="295.0" prefWidth="211.0" style="-fx-background-color: #2b2e4a;">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="195.0" prefWidth="154.0" style="-fx-background-color: #2b2e4a;">
                             <children>
-                                <VBox alignment="BOTTOM_CENTER" fillWidth="false" layoutY="117.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="292.0" style="-fx-background-color: #2b2e4a;">
+                                <VBox alignment="BOTTOM_CENTER" fillWidth="false" layoutY="118.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="292.0" style="-fx-background-color: #2b2e4a;">
                                     <children>
                                         <Button fx:id="btnReportes" mnemonicParsing="false" onMouseClicked="#MostrarPantallaGestionarReporte" prefHeight="41.0" prefWidth="300.0" text="Reportes" textFill="#e84545">
                                             <font>
@@ -73,41 +69,24 @@
                     </items>
                 </SplitPane>
             </children></AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="724.0" style="-fx-background-color: #2b2e4a;">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
             <children>
-                <Label layoutX="212.0" layoutY="14.0" text="Gestionar Organización Coordiandor" textFill="#e84545">
+                <Label id="bold" layoutX="315.0" layoutY="24.0" style="-fx-font-weight: bold;" text="Reportes" textFill="#e84545">
                     <font>
                         <Font name="System Bold" size="16.0" />
-                    </font></Label>
-                <ScrollPane layoutX="231.0" layoutY="132.0" prefHeight="216.0" prefWidth="237.0">
-                    <content>
-                        <TableView fx:id="tbOrganizaciones" prefHeight="215.0" prefWidth="235.0">
-                            <columns>
-                                <TableColumn fx:id="clnOrganizaciones" prefWidth="234.0" text="Organizaciones" />
-                            </columns>
-                        </TableView>
-                    </content>
-                </ScrollPane>
-                <VBox layoutX="249.0" layoutY="379.0" prefHeight="97.0" prefWidth="200.0">
-                    <children>
-                        <Button fx:id="btnConsultarOrganizacion" mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" text="Consultar Organización" textFill="#e84545">
-                            <font>
-                                <Font name="System Bold" size="12.0" />
-                            </font></Button>
-                        <Button fx:id="btnRegistrarOrganizacion" mnemonicParsing="false" onMouseClicked="#ClicRegistrar" prefHeight="25.0" prefWidth="228.0" text="Registrar Organización" textFill="#e84545">
-                            <font>
-                                <Font name="System Bold" size="12.0" />
-                            </font></Button>
-                        <Button fx:id="btnEliminarOrganizacion" mnemonicParsing="false" onMouseClicked="#ClicEliminarRegistro" prefHeight="25.0" prefWidth="258.0" text="Eliminar Organización" textFill="#e84545">
-                            <font>
-                                <Font name="System Bold" size="12.0" />
-                            </font></Button>
-                        <Button fx:id="btnModificarOrganizacion" mnemonicParsing="false" onMouseClicked="#ClicModificarOrganizacion" prefHeight="25.0" prefWidth="235.0" text="Modificar Organización" textFill="#e84545">
-                            <font>
-                                <Font name="System Bold" size="12.0" />
-                            </font></Button>
-                    </children>
-                </VBox>
-            </children></AnchorPane>
+                    </font>
+                </Label>
+                <Button fx:id="btnReporteInscripcion" layoutX="32.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#ClicGenerarReporte" prefHeight="43.0" prefWidth="300.0" text="Generar Reporte Inscripción" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font></Button>
+                <Button fx:id="btnVisualizarReportes" layoutX="377.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#MostrarVisualizarReportes" prefHeight="43.0" prefWidth="300.0" text="Visualizar Reportes Estudiantes" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font></Button>
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets></AnchorPane>
     </items>
 </SplitPane>

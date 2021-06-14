@@ -127,6 +127,14 @@ public class OutputMessages {
 
     /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * Menu_Coordinador
+     * @return una cadena con el mensaje de error
+     */
+    public String PantallaMenuCoordinadorPerdido() { return "No se encontró el archivo FXML de la pantalla " +
+            "Menu_Coordinador."; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
      * GestionarOrganizacion_Coordinador
      * @return una cadena con el mensaje de error
      */
@@ -164,6 +172,14 @@ public class OutputMessages {
      */
     public String PantallaReporteSeleccionadoPerdido() { return "No se encontró el archivo FXML de la pantalla " +
             "ReporteSeleccionado_Coordinador."; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * Reportes_Coordinador
+     * @return una cadena con el mensaje de error
+     */
+    public String PantallaReportesPerdido() { return "No se encontró el archivo FXML de la pantalla " +
+            "Reportes_Coordinador."; }
 
     /**
      * Mensaje mostrado cuando se registra una nueva Organización a la
@@ -216,6 +232,19 @@ public class OutputMessages {
      */
     public String ModificacionEstudianteExitoso() { return "Modificación de Estudiante Exitoso"; }
 
+    /**
+     * Mensaje mostrado cuando se intenta iniciar sesion, pero
+     * el estado de estudiante sigue en RegistroPendiente
+     * @return una cadena con el mensaje de éxito
+     */
+    public String RegistroEstudiantePendiente() { return "Su registro aún no ha sido validado."; }
+
+    /**
+     * Mensaje mostrado cunado se intenta iniciar sesion, pero
+     * el estado de estudiante es Eliminado
+     * @return una cadena con el mensaje de éxito
+     */
+    public String EstudianteEliminado() { return "Por favor revisar con el coordinador de las prácticas."; }
     /**
      * Mensaje mostrado cuando se modifica un proyecto de la
      * base de datos de manera exitosa.
