@@ -65,22 +65,22 @@ public class ConsultarExpediente_Docente implements Initializable {
      * y su expediente
      */
     private void MostrarInfoEstudiante() {
-        RecuperarExpediente();
         String nombreProyecto = "";
         String nombreEstudiante = "";
 
-        try{
-            nombreProyecto = proyectoDAO.Read( expedienteEstudiante.GetIDProyecto() ).getNombre();
-            nombreEstudiante = estudianteSeleccionado.getNombreCompleto();
-            lbNombreEstudiante.setText( nombreEstudiante );
-            lbNombreProyecto.setText( nombreProyecto );
-            ConfigurarColumnasTabla();
-            RecuperarArchivosExpediente();
-            MostrarArchivosSubidos();
-        }catch (NullPointerException exception) {
-            errorText.setText(outputMessages.NoExpedient());
-        }catch (Exception sqlException) {
-            errorText.setText(outputMessages.DatabaseConnectionFailed3());
+        if ( EstudianteTieneExpediente() ) {
+            RecuperarExpediente();
+            try{
+                nombreProyecto = proyectoDAO.Read( expedienteEstudiante.GetIDProyecto() ).getNombre();
+                nombreEstudiante = estudianteSeleccionado.getNombreCompleto();
+                lbNombreEstudiante.setText( nombreEstudiante );
+                lbNombreProyecto.setText( nombreProyecto );
+                ConfigurarColumnasTabla();
+                RecuperarArchivosExpediente();
+                MostrarArchivosSubidos();
+            }catch (Exception exception) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+            }
         }
     }
 
@@ -93,6 +93,24 @@ public class ConsultarExpediente_Docente implements Initializable {
         } catch ( Exception exception ) {
             errorText.setText( outputMessages.DatabaseConnectionFailed3() );
         }
+    }
+
+    /**
+     * Verifica si el estudiante tiene expediente
+     * @return True si el estudiante tiene expediente, False si no tiene
+     */
+    private boolean EstudianteTieneExpediente() {
+        boolean estudianteTieneExpediente = false;
+        try {
+            if ( expedienteDAO.ReadPorMatricula( estudianteSeleccionado.getMatricula() ) != null ) {
+                estudianteTieneExpediente = true;
+            }
+        } catch (Exception exception) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
+
+
+        return estudianteTieneExpediente;
     }
 
     /**
