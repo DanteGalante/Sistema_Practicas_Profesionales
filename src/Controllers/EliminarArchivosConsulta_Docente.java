@@ -125,11 +125,20 @@ public class EliminarArchivosConsulta_Docente implements Initializable {
     public void ClicAceptar(MouseEvent mouseEvent) {
         if( archivosElegidos.size() > 0 ){
             EliminarArchivosConsulta();
-            Alert mensajeExito = new Alert( Alert.AlertType.CONFIRMATION );
-            mensajeExito.setContentText( outputMessages.DeleteFileSucceded() );
-
+            MostrarMensajeExito();
+            screenChanger.ShowScreenPrincipalDocente(mouseEvent, errorText);
         } else {
             errorText.setText( outputMessages.FileNotSelectedToDelete() );
         }
+    }
+
+    private void MostrarMensajeExito() {
+        Alert mensajeExito = new Alert( Alert.AlertType.CONFIRMATION );
+
+        mensajeExito.setContentText( outputMessages.DeleteFileSucceded() );
+        mensajeExito.setHeaderText(null);
+        mensajeExito.setTitle(null);
+
+        mensajeExito.show();
     }
 }
