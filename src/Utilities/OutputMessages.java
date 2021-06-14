@@ -346,6 +346,13 @@ public class OutputMessages {
             "Esta acción es permanente y no se podrá deshacer."; }
 
     /**
+     * mensaje mostrado cuando se introduce una selección nula
+     * en la tabla de visualizar reportes.
+     * @return una cadena con el mensaje de error
+     */
+    public String SeleccionInvalidaReportes() { return "No se ha seleccionado ningún reporte"; }
+
+    /**
      * mensaje mostrado cuando se introduce información de login que no
      * existe en la base de datos
      * @return una cadena con el mensaje de error

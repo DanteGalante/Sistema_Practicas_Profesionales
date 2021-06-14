@@ -4,6 +4,7 @@ import Database.InformeProblemaDAO;
 import Entities.InformeProblema;
 import Entities.OrganizacionVinculada;
 import Utilities.LoginSession;
+import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import Utilities.SelectionContainer;
 import javafx.fxml.FXML;
@@ -26,6 +27,7 @@ public class VisualizarReporte_Coordinador implements Initializable {
     List<InformeProblema> listaInformesProblemas = new ArrayList<InformeProblema>();
     InformeProblemaDAO informeProblema = new InformeProblemaDAO();
     ScreenChanger screenChanger = new ScreenChanger();
+    OutputMessages outputMessages = new OutputMessages();
 
     @FXML
     private Label lbNombres;
@@ -103,7 +105,12 @@ public class VisualizarReporte_Coordinador implements Initializable {
     @FXML
     public void ClicVisualizarReporte( MouseEvent mouseEvent ) {
         SelectionContainer.GetInstance().setInformeElegido( RecuperarSeleccionReporte() );
-        screenChanger.MostrarPantallaReporteSeleccionado( mouseEvent, errorText );
+        if(!tbReportes.getSelectionModel().isEmpty()){
+            errorText.setText("");
+            screenChanger.MostrarPantallaReporteSeleccionado( mouseEvent, errorText );
+        }else{
+            errorText.setText(outputMessages.SeleccionInvalidaReportes());
+        }
     }
 
     public InformeProblema RecuperarSeleccionReporte(){
