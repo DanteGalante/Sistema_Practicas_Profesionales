@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ConsultarExpediente_Docente">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ConsultarExpediente_Docente">
     <children>
         <SplitPane dividerPositions="0.18481375358166188" layoutX="81.0" layoutY="103.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
@@ -28,19 +28,28 @@
                                                     <VBox.margin>
                                                         <Insets />
                                                     </VBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
                                                 </Label>
                                                 <Label fx:id="lbNombre" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
                                                 </Label>
-                                                <Label text="Apellidos" textFill="RED" />
+                                                <Label text="Apellidos" textFill="RED">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Label>
                                                 <Label fx:id="lbApellidos" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
                                                 </Label>
-                                                <Label text="Cedula profesional" textFill="RED" />
+                                                <Label text="Cedula profesional" textFill="RED">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Label>
                                                 <Label fx:id="lbCedulaProfesional" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
@@ -84,7 +93,7 @@
                                     <children>
                                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="EXPEDIENTE" textFill="RED">
                                             <font>
-                                                <Font size="15.0" />
+                                                <Font name="System Bold" size="15.0" />
                                             </font>
                                         </Label>
                                         <HBox alignment="CENTER" prefHeight="24.0" prefWidth="546.0" spacing="10.0">
@@ -119,7 +128,7 @@
                                         </HBox>
                                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="ARCHIVOS ENTREGADOS" textFill="RED">
                                             <font>
-                                                <Font size="15.0" />
+                                                <Font name="System Bold" size="15.0" />
                                             </font>
                                         </Label>
                                         <TableView fx:id="tbvDocumentosSubidos" prefHeight="453.0" prefWidth="791.0">
@@ -128,6 +137,14 @@
                                                 <TableColumn fx:id="tcDescripcion" prefWidth="411.0" text="Descripcion" />
                                             </columns>
                                         </TableView>
+                              <HBox alignment="TOP_RIGHT" prefWidth="791.0" spacing="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="Calificar" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
                                     </children>
                                     <VBox.margin>
                                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />

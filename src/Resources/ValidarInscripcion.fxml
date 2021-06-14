@@ -28,19 +28,28 @@
                                                     <VBox.margin>
                                                         <Insets />
                                                     </VBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
                                                 </Label>
                                                 <Label fx:id="lbNombre" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
                                                 </Label>
-                                                <Label text="Apellidos" textFill="RED" />
+                                                <Label text="Apellidos" textFill="RED">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Label>
                                                 <Label fx:id="lbApellidos" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
                                                     </VBox.margin>
                                                 </Label>
-                                                <Label text="Cedula profesional" textFill="RED" />
+                                                <Label text="Cedula profesional" textFill="RED">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Label>
                                                 <Label fx:id="lbCedulaProfesional" text="..." textFill="RED">
                                                     <VBox.margin>
                                                         <Insets left="10.0" />
@@ -84,7 +93,7 @@
                                     <children>
                                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="Validar inscripcion" textFill="RED">
                                             <font>
-                                                <Font size="15.0" />
+                                                <Font name="System Bold" size="15.0" />
                                             </font>
                                         </Label>
                                         <HBox prefHeight="24.0" prefWidth="546.0" spacing="10.0">
@@ -100,7 +109,10 @@
                                                 </HBox>
                                                 <HBox prefHeight="24.0" prefWidth="437.0">
                                                     <children>
-                                                        <Label text="Fecha:  " textFill="RED" />
+                                                        <Label text="Fecha:  " textFill="RED">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font></Label>
                                                         <Label fx:id="lbFecha" text="..." textFill="RED" />
                                                     </children>
                                                 </HBox>
@@ -116,9 +128,9 @@
                                         </TableView>
                                         <HBox alignment="CENTER_RIGHT" spacing="10.0">
                                             <children>
-                                                <Text fx:id="confirmationText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="653.0" />
-                                                <Button mnemonicParsing="false" onMouseClicked="#ClicCancelar" text="Cancelar" />
-                                                <Button mnemonicParsing="false" onMouseClicked="#ClicAceptar" text="Aceptar" />
+                                                <Text fx:id="confirmationText" fill="#09eb09" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                                <Button mnemonicParsing="false" onMouseClicked="#ClicCancelar" prefHeight="25.0" prefWidth="66.0" text="Cancelar" />
+                                                <Button mnemonicParsing="false" onMouseClicked="#ClicAceptar" prefHeight="25.0" prefWidth="115.0" text="Aceptar" />
                                             </children>
                                         </HBox>
                                     </children>

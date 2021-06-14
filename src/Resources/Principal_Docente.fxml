@@ -28,19 +28,28 @@
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
                                     </Label>
                                     <Label fx:id="lbNombre" text="..." textFill="RED">
                                        <VBox.margin>
                                           <Insets left="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="Apellidos" textFill="RED" />
+                                    <Label text="Apellidos" textFill="RED">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Label>
                                     <Label fx:id="lbApellidos" text="..." textFill="RED">
                                        <VBox.margin>
                                           <Insets left="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="Cedula profesional" textFill="RED" />
+                                    <Label text="Cedula profesional" textFill="RED">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Label>
                                     <Label fx:id="lbCedulaProfesional" text="..." textFill="RED">
                                        <VBox.margin>
                                           <Insets left="10.0" />
@@ -87,7 +96,7 @@
                            <children>
                               <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="GRUPO" textFill="RED">
                                  <font>
-                                    <Font size="15.0" />
+                                    <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
                               <TableView fx:id="tbvGrupo" prefHeight="245.0" prefWidth="791.0" VBox.vgrow="ALWAYS">
@@ -119,7 +128,7 @@
                            <children>
                               <Label alignment="CENTER" prefHeight="17.0" prefWidth="452.0" text="ARCHIVOS SUBIDOS" textFill="RED">
                                  <font>
-                                    <Font size="15.0" />
+                                    <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
                               <TableView fx:id="tbvArchivosSubidos" prefHeight="248.0" prefWidth="791.0" VBox.vgrow="ALWAYS">
@@ -133,7 +142,7 @@
                                  <children>
                                     <Button mnemonicParsing="false" onMouseClicked="#irPantallaSubirArchivos" text="Subir archivo" />
                                     <Button mnemonicParsing="false" onMouseClicked="#ClicEliminarArchivo" prefHeight="25.0" prefWidth="106.0" text="Eliminar archivo" />
-                                    <Text fx:id="successText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                    <Text fx:id="successText" fill="#09eb09" strokeType="OUTSIDE" strokeWidth="0.0" />
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="5.0" top="5.0" />
