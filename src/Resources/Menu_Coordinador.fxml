@@ -28,19 +28,19 @@
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></Button>
-                                        <Button fx:id="btnEstudiantes" mnemonicParsing="false" prefHeight="44.0" prefWidth="300.0" text="Estudiantes" textFill="#e84545">
+                                        <Button fx:id="btnEstudiantes" mnemonicParsing="false" onMouseClicked="#MostrarPantallaGestionarEstudiante" prefHeight="44.0" prefWidth="300.0" text="Estudiantes" textFill="#e84545">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></Button>
-                                        <Button fx:id="btnOrganizaciones" mnemonicParsing="false" prefHeight="46.0" prefWidth="300.0" text="Organizaciones" textFill="#e84545">
+                                        <Button fx:id="btnOrganizaciones" mnemonicParsing="false" onMouseClicked="#MostrarPantallaGestionarOrganizacion" prefHeight="46.0" prefWidth="300.0" text="Organizaciones" textFill="#e84545">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font></Button>
-                                        <Button fx:id="btnProyectos" mnemonicParsing="false" prefHeight="42.0" prefWidth="300.0" text="Proyectos" textFill="#e84545">
+                                        <Button fx:id="btnProyectos" mnemonicParsing="false" onMouseClicked="#MostrarPantallaGestionarProyecto" prefHeight="42.0" prefWidth="300.0" text="Proyectos" textFill="#e84545">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font></Button>
-                                        <Button fx:id="btnCerrarSesion" mnemonicParsing="false" prefHeight="43.0" prefWidth="300.0" text="Cerrar Sesión" textFill="#e84545">
+                                        <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onMouseClicked="#CerrarSesion" prefHeight="43.0" prefWidth="300.0" text="Cerrar Sesión" textFill="#e84545">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font></Button>
