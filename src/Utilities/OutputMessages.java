@@ -439,11 +439,18 @@ public class OutputMessages {
         return "El archivo a sido subido al sistema de manera exitosa";
     }
 
+
     /**
      * Mensaje mostrado cuando no se ha seleccionado ningun estudiante en una tabla
      * @return una cadena con el mensaje de error
      */
     public String EstudianteNoSeleccionado() { return "No se ha seleccionado ningun estudiante "; }
+
+    /**
+     * Mensaje mostrado cuando no se ha seleccionado todos los estudiante a la ahora de validar
+     * @return una cadena con el mensaje de error
+     */
+    public String EstudiantesNoSeleccionado() { return "No se han seleccionado todos los estudiantes "; }
 
     /**
      * Mensaje mostrado cuando la dirección introducida por el usuario

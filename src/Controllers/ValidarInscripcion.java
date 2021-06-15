@@ -121,7 +121,7 @@ public class ValidarInscripcion implements Initializable {
      * @param mouseEvent evento del mouse que inicia el metodo
      */
     public void ClicRegresar(MouseEvent mouseEvent) {
-        screenChanger.MostrarPantallaPrincipalCoordinador(mouseEvent, errorText);
+        screenChanger.MostrarPantallaGestionarEstudianesCoordinador(mouseEvent, errorText);
     }
 
     /**
@@ -178,7 +178,7 @@ public class ValidarInscripcion implements Initializable {
         }
 
         if( contador != tbvEstudiantes.getItems().size() ){
-            errorText.setText( outputMessages.EstudianteNoSeleccionado() );
+            errorText.setText( outputMessages.EstudiantesNoSeleccionado() );
         }else{
             seleccionesValidas = true;
         }
