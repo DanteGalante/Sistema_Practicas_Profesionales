@@ -2,6 +2,8 @@ package Controllers;
 
 import Database.ProyectoDAO;
 import Entities.Proyecto;
+import Enumerations.EstadoProyecto;
+import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import Utilities.SelectionContainer;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import Utilities.LoginSession;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ public class GestionarProyecto_Coordinador implements Initializable {
     private List< Proyecto > listaProyectos = new ArrayList<>();
     private ProyectoDAO proyecto = new ProyectoDAO();
     private ScreenChanger screenChanger = new ScreenChanger();
+    private OutputMessages outputMessages = new OutputMessages();
 
     @FXML
     private Label lbNombres;
@@ -91,9 +95,58 @@ public class GestionarProyecto_Coordinador implements Initializable {
     }
 
     @FXML
+    void MostrarPantallaConsultarProyecto( MouseEvent event ){
+        if(tbProyectos.getSelectionModel().getSelectedItem() != null){
+            Proyecto proyecto = (Proyecto)tbProyectos.getSelectionModel().getSelectedItem();
+            SelectionContainer.GetInstance().setProyectoElegido(proyecto);
+            screenChanger.ShowConsultarProyecto( event, errorText );
+        }else{
+            errorText.setText("Seleccione un proyecto");
+        }
+    }
+
+    @FXML
+    void MostrarCrearProyecto( MouseEvent event ){
+        screenChanger.ShowCrearProyecto ( event, errorText );
+    }
+
+    @FXML
     void ClicModificarProyecto( MouseEvent event){
         SelectionContainer.GetInstance().setProyectoElegido( RecuperarProyecto() );
         screenChanger.MostrarPantallaModificarProyecto( event, errorText );
+    }
+
+    public void EliminarProyecto( MouseEvent mouseEvent){
+        if (tbProyectos.getSelectionModel().getSelectedItem() != null) {
+
+            Proyecto seleccionProyecto = (Proyecto) tbProyectos.getSelectionModel().getSelectedItem();
+            int idProyecto = seleccionProyecto.getIdProyecto();
+            int estudiantesRequeridos = seleccionProyecto.getNumEstudiantesRequeridos();
+            if (seleccionProyecto.GetEstudiantesAsignados() >= 0){
+                JOptionPane.showMessageDialog(null,"El proyecto está asignado a estudiante(s), por lo que no se puede eliminar");
+
+                /*
+                if (dialogButton == JOptionPane.YES_OPTION) {
+                    EliminarExpediente(idProyecto);
+                    proyecto.Delete(idProyecto);
+                    ActualizarTablaProyectos();
+                    errorText.setText(outputMessages.ProjectDelete());
+                }
+                 */
+
+            } else {
+                seleccionProyecto.SetEstado(EstadoProyecto.Eliminado);
+                ActualizarTablaProyectos();
+                errorText.setText(outputMessages.ProjectDelete());
+            }
+        } else {
+            errorText.setText(outputMessages.SelectionProjectNull());
+        }
+    }
+
+    public void ActualizarTablaProyectos(){
+        tbProyectos.getItems().clear();
+        MostrarProyectosDisponibles();
     }
 
     public Proyecto RecuperarProyecto(){
