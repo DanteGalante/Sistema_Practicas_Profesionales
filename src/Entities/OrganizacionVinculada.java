@@ -25,6 +25,7 @@ public class OrganizacionVinculada {
     private int idOrganizacion;
     private List< Integer > idResponsables;
     private boolean activa;
+    private String key;
 
     /**
      * Constructor sin parámetros de la clase OrganizaciónVinculada.
@@ -39,6 +40,7 @@ public class OrganizacionVinculada {
         idOrganizacion = 0;
         idResponsables = null;
         activa = false;
+        key = "";
     }
 
     /**
@@ -48,7 +50,7 @@ public class OrganizacionVinculada {
      */
     public OrganizacionVinculada( OrganizacionVinculada original ) {
         this( original.nombre, original.direccion, original.sector, original.telefono, original.correoElectronico,
-                original.idOrganizacion, original.idResponsables, original.activa );
+                original.idOrganizacion, original.idResponsables, original.activa, original.key );
     }
 
     /**
@@ -60,8 +62,8 @@ public class OrganizacionVinculada {
      * @param telefonoIn el telefono de la organización
      * @param correoIn el correo electronico de la organización
      */
-    public OrganizacionVinculada( String nombreIn, String direccionIn, TipoSector sectorIn, String telefonoIn,
-                                  String correoIn, int idOrganizacionIn, List< Integer > idResponsablesIn, boolean isActiveIn ) {
+    public OrganizacionVinculada( String nombreIn, String direccionIn, TipoSector sectorIn, String telefonoIn, String correoIn,
+                                  int idOrganizacionIn, List< Integer > idResponsablesIn, boolean isActiveIn, String keyIn ) {
         nombre = nombreIn;
         direccion = direccionIn;
         sector = sectorIn;
@@ -70,6 +72,7 @@ public class OrganizacionVinculada {
         idOrganizacion = idOrganizacionIn;
         idResponsables = idResponsablesIn;
         activa = isActiveIn;
+        key = keyIn;
     }
 
     public int getIdOrganizacion() { return idOrganizacion; }
@@ -126,6 +129,12 @@ public class OrganizacionVinculada {
      * @return booleano, true si la organizacion esta activa, false si no
      */
     public boolean getActiveStatus() { return activa; }
+
+    /**
+     * Regresa la llave identificadora de la organizacion
+     * @return una cadena con la llave de identificacion
+     */
+    public String GetKey() { return key; }
 
     /**
      * Cambia el nombre de la organización al valor introducido
