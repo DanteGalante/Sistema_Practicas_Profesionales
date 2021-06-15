@@ -609,6 +609,69 @@ public class OutputMessages {
     public String StudentExpedienteNull() { return "No tiene expediente"; }
 
     /**
+     * Mensaje mostrado cunado fracasa la validacion del nombre
+     * de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidOrganizationName() { return "El nombre de la organización vinculada no es válida."; }
+
+    /**
+     * Mensaje mostrado cunado fracasa la validacion de la direccion
+     * de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidOrganizationDirection() { return "La dirección de la organizacíon no es válida."; }
+
+    /**
+     * Mensaje mostrado cunado fracasa la validacion del correo
+     * de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidOrganizationEmail() { return "El correo de la organización no es válida."; }
+
+    /**
+     * Mensaje mostrado cunado fracasa la validacion del telefono
+     * de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidOrganizationPhone() { return "El teléfono de la organización no es válida."; }
+
+    /**
+     * Mensaje mostrado cuando fracasa la validacion del nombre
+     * del representante de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidRepresentativeName() { return "El nombre del representante no es válido."; }
+
+    /**
+     * Mensaje mostrado cuando fracasa la validacion de la direccion
+     * del representante de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidRepresentativeLastNames() { return "Los apellidos del representante no son válidos."; }
+
+    /**
+     * Mensaje mostrado cuando fracasa la validacion del correo
+     * del representante de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidRepresentativeEmail() { return "El correo del representante no es válido."; }
+
+    /**
+     * Mensaje mostrado cuando fracasa la validacion del telefono
+     * del representante de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidRepresentativePhone() { return "El teléfono del representante no es válido."; }
+
+    /**
+     * Mensaje mostrado cuando se crea una organizacion vinculada y su
+     * representante de manera exitosa
+     * @return una cadena con el mensaje de exito
+     */
+    public String OrganizacionYRepresentanteCreateSuccess() { return "La organización vinculada y el representante se crearon con éxito."; }
+
+    /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
      * ConsultarOrganizacion
      * @return una cadena con el mensaje de error
