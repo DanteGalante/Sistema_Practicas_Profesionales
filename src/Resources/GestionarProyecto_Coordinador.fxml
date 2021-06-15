@@ -86,15 +86,15 @@
                 </ScrollPane>
                 <VBox layoutX="249.0" layoutY="379.0" prefHeight="97.0" prefWidth="200.0">
                     <children>
-                        <Button fx:id="btnConsultarProyecto" mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" text="Consultar Proyecto" textFill="#e84545">
+                        <Button fx:id="btnConsultarProyecto" mnemonicParsing="false" onMouseClicked="#MostrarPantallaConsultarProyecto" prefHeight="25.0" prefWidth="238.0" text="Consultar Proyecto" textFill="#e84545">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font></Button>
-                        <Button fx:id="btnRegistrarProyecto" mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" text="Registrar Proyecto" textFill="#e84545">
+                        <Button fx:id="btnRegistrarProyecto" mnemonicParsing="false" onMouseClicked="#MostrarCrearProyecto" prefHeight="25.0" prefWidth="228.0" text="Registrar Proyecto" textFill="#e84545">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font></Button>
-                        <Button fx:id="btnEliminarProyecto" mnemonicParsing="false" prefHeight="25.0" prefWidth="258.0" text="Eliminar Proyecto" textFill="#e84545">
+                        <Button fx:id="btnEliminarProyecto" mnemonicParsing="false" onMouseClicked="#EliminarProyecto" prefHeight="25.0" prefWidth="258.0" text="Eliminar Proyecto" textFill="#e84545">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font></Button>
