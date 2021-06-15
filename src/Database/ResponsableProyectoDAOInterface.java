@@ -38,6 +38,13 @@ public interface ResponsableProyectoDAOInterface {
     ResponsableProyecto Read( int idResponsable );
 
     /**
+     * Regresa una instancia de ResponsableProyecto ubicada en la base de datos
+     * @param key la llave identificadora del responsable
+     * @return na instancia de ResponsableProyecto
+     */
+    ResponsableProyecto Read( String key );
+
+    /**
      * Actualiza la información de un ResponsableProyecto en la base de datos.
      * @param responsable el responsable con su información actualizada
      * @return booleano indicando éxito o fracaso

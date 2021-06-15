@@ -39,7 +39,7 @@ public class DescargarArchivo_Coordinador implements Initializable {
     DirectoryChooser directoryChooser = new DirectoryChooser();
 
     List< Documento > documentosSubidos = new ArrayList<>();
-    Expediente expedienteEstudiante = expedienteDAO.ReadPorMatricula( estudianteElegido.getMatricula() );
+    Expediente expedienteEstudiante = new Expediente();
 
     @FXML
     private Label lbNombre;
@@ -83,10 +83,40 @@ public class DescargarArchivo_Coordinador implements Initializable {
      */
     private void RecuperarArchivosExpediente() {
         try{
-            documentosSubidos = documentoDAO.ReadByExpediente( expedienteEstudiante.GetClave() );
-        }catch (NullPointerException exception){
-            errorText.setText(outputMessages.NoExpedient());
+            if ( EstudianteTieneExpediente() ){
+                RecuperarExpediente();
+                documentosSubidos = documentoDAO.ReadByExpediente( expedienteEstudiante.GetClave() );
+            } else {
+                errorText.setText( outputMessages.NoExpedient() );
+            }
+        }catch ( Exception exception ){
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
         }
+    }
+
+    /**
+     * Recupera el expediente de un estudiante
+     */
+    private void RecuperarExpediente() {
+        expedienteEstudiante = expedienteDAO.ReadPorMatricula( estudianteElegido.getMatricula() );
+    }
+
+    /**
+     * Verifica si el estudiante tiene expediente
+     * @return True si el estudiante tiene expediente, False si no tiene
+     */
+    private boolean EstudianteTieneExpediente() {
+        boolean estudianteTieneExpediente = false;
+
+        try {
+            if ( expedienteDAO.ReadPorMatricula( estudianteElegido.getMatricula() ) != null ) {
+                estudianteTieneExpediente = true;
+            }
+        } catch (Exception exception) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
+
+        return estudianteTieneExpediente;
     }
 
     /**
@@ -128,11 +158,12 @@ public class DescargarArchivo_Coordinador implements Initializable {
         if( HayDocumentoSeleccionado() ){
             File file = directoryChooser.showDialog( ( (Node)mouseEvent.getSource() ).getScene().getWindow() );
             try {
-                DescargarDocumento( documentoDAO.Read( tbvDocumentosSubidos.getSelectionModel().getSelectedItem().
-                        getIdDocumento() ).GetDescripcion(), file );
+                File documentoDescargado = documentoDAO.Read( tbvDocumentosSubidos.getSelectionModel().
+                        getSelectedItem().getIdDocumento() ).GetDescripcion();
+                DescargarDocumento( documentoDescargado , file );
                 successText.setText("El documento ha sido descargado");
-            }catch (Exception exception){
-                errorText.setText("Se ha producido un error al intentar descargar el archivo");
+            }catch ( Exception exception ){
+                errorText.setText( outputMessages.DatabaseConnectionFailed3() );
             }
 
         }
@@ -158,6 +189,7 @@ public class DescargarArchivo_Coordinador implements Initializable {
             output.close();
         } catch( IOException exception ) {
             exception.printStackTrace();
+            errorText.setText( outputMessages.DeleteDocumentFailed() );
         }
     }
 

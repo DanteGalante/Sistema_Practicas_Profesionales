@@ -328,7 +328,8 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
 
     private OrganizacionVinculada organizacionModificada(){
         return new OrganizacionVinculada ( tfNombre.getText(), tfDireccion.getText(), TipoSector.Publico,
-                tfTelefono.getText(),tfCorreoElectronico.getText(),RecuperarIdOrganizacion(),ObtenerListaResponsables(), true);
+                tfTelefono.getText(),tfCorreoElectronico.getText(),RecuperarIdOrganizacion(),ObtenerListaResponsables(),
+                true, "");
     }
 
     public List ObtenerListaResponsables(){
@@ -341,7 +342,7 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
 
     private ResponsableProyecto responsableModificado(){
         return new ResponsableProyecto ( RecuperarIdResponsable(), tfNombresRepresentante.getText(), tfApellidosRepresentante.getText(),
-                tfCorreoRepresentante.getText(), tfTelefonoRepresentante.getText(), ObtenerListaProyectos() );
+                tfCorreoRepresentante.getText(), tfTelefonoRepresentante.getText(), ObtenerListaProyectos(), "" );
     }
 
     public int RecuperarIdResponsable(){

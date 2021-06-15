@@ -192,4 +192,12 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
         LoginSession.GetInstance().Logout();
         screenChanger.ShowLoginScreen( mouseEvent, errorText );
     }
+
+    /**
+     * Permite cambiar a la pantalla ValidarInscripcion
+     * @param mouseEvent evento del mouse que inicio el cambio
+     */
+    public void ClicValidarInscripcion(MouseEvent mouseEvent) {
+        screenChanger.ShowScreenValidarInscripcion( mouseEvent, errorText );
+    }
 }

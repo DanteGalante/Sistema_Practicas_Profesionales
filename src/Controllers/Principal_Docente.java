@@ -14,10 +14,12 @@ import Entities.*;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import Utilities.SelectionContainer;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,10 +28,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import Utilities.LoginSession;
+import javafx.stage.Screen;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -77,9 +81,20 @@ public class Principal_Docente implements Initializable {
         SetUsuario();
         RecuperarGrupo();
         RecuperarArchivosConsulta();
+        ConfigurarModoSeleccionTablas();
         ConfigurarColumnasTablas();
         MostrarGrupo();
         MostrarArchivosSubidos();
+    }
+
+    /**
+     * Se configura el modo de seleccion de cada tabla de la pantalla.
+     * La tabla de grupos solo se puede seleccionar un elemento a la vez, mientras que la de
+     * archivos se puede seleccionar varios elementos
+     */
+    private void ConfigurarModoSeleccionTablas() {
+        tbvGrupo.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tbvArchivosSubidos.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     /**
@@ -124,17 +139,22 @@ public class Principal_Docente implements Initializable {
      */
     public void RecuperarGrupo() {
         String nrc = LoginSession.GetInstance().GetDocente().GetNrc();
-        grupo = estudianteDAO.ReadAllWithProjects();
-        List<Estudiante> auxiliar = new ArrayList<>();
 
-        for( Estudiante estudiante : grupo ){
-            if( nrc.equals( estudiante.getNrc() ) ){
-                auxiliar.add( estudiante );
+        try{
+            grupo = estudianteDAO.ReadAllWithProjects();
+            List<Estudiante> auxiliar = new ArrayList<>();
+
+            for( Estudiante estudiante : grupo ){
+                if( nrc.equals( estudiante.getNrc() ) ){
+                    auxiliar.add( estudiante );
+                }
             }
-        }
-        grupo.clear();
-        for ( Estudiante estudiante : auxiliar ) {
-            grupo.add( estudiante );
+            grupo.clear();
+            for ( Estudiante estudiante : auxiliar ) {
+                grupo.add( estudiante );
+            }
+        }catch ( Exception exception ){
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
         }
     }
 
@@ -142,7 +162,11 @@ public class Principal_Docente implements Initializable {
      * Recupera los archivos de consulta existentes en la base de datos.
      */
     public void RecuperarArchivosConsulta() {
-        archivoConsultas = archivoConsultaDAO.ReadFilesByDocente( LoginSession.GetInstance().GetDocente().GetNumeroPersonal() );
+        try{
+            archivoConsultas = archivoConsultaDAO.ReadFilesByDocente( LoginSession.GetInstance().GetDocente().GetNumeroPersonal() );
+        } catch ( Exception exception ){
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
     }
 
     /**
@@ -269,7 +293,11 @@ public class Principal_Docente implements Initializable {
                 ArchivoConsulta nuevoArchivo = GenerarArchivoConsulta( file );
 
                 if( FileNameDoesNotExist( nuevoArchivo ) ){
-                    archivoConsultaDAO.Create( nuevoArchivo );
+                    try {
+                        archivoConsultaDAO.Create( nuevoArchivo );
+                    } catch ( Exception exception) {
+                        errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+                    }
                     successText.setText( outputMessages.UploadSuccesful() );
                 }
 
@@ -288,15 +316,22 @@ public class Principal_Docente implements Initializable {
     public void ClicEliminarArchivo( MouseEvent mouseEvent ) {
         LimpiarMensajesPantalla();
 
-        ArchivoConsulta archivoEliminar = ( ArchivoConsulta ) tbvArchivosSubidos.getSelectionModel().getSelectedItem();
-        if( archivoEliminar != null ){
-            archivoConsultaDAO.Delete( archivoEliminar.GetId() );
-            successText.setText( outputMessages.DeleteFileSucceded() );
+        if( tbvArchivosSubidos.getSelectionModel().getSelectedItems().size() > 0 ) {
+            ArchivoConsulta[] archivosElim =
+                    new ArchivoConsulta[ tbvArchivosSubidos.getSelectionModel().getSelectedItems().size() ];
+            int i = 0;
 
-            RecuperarArchivosConsulta();
-            MostrarArchivosSubidos();
-        }else{
-            errorText.setText(outputMessages.FileNotSelectedToDelete());
+            for ( ArchivoConsulta archivoConsultaElim :
+            tbvArchivosSubidos.getSelectionModel().getSelectedItems() ) {
+                archivosElim[ i ] = archivoConsultaElim;
+                i++;
+            }
+
+            SelectionContainer.GetInstance().setArchivosConsulta( archivosElim );
+
+            screenChanger.ShowScreenDeleteArchivosConsulta( mouseEvent, errorText );
+        } else {
+            errorText.setText( outputMessages.FileNotSelectedToDelete() );
         }
     }
 

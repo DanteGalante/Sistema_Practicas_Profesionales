@@ -38,7 +38,7 @@ public class DescargarDocumento_Docente implements Initializable {
     DirectoryChooser directoryChooser = new DirectoryChooser();
 
     List< Documento > documentosSubidos = new ArrayList<>();
-    Expediente expedienteEstudiante = expedienteDAO.ReadPorMatricula( estudianteElegido.getMatricula() );
+    Expediente expedienteEstudiante = new Expediente();
 
     @FXML
     private Label lbNombre;
@@ -58,6 +58,8 @@ public class DescargarDocumento_Docente implements Initializable {
     private TableColumn< Documento, String > tcPeso;
     @FXML
     private Text errorText;
+    @FXML
+    private Text successText;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,10 +85,40 @@ public class DescargarDocumento_Docente implements Initializable {
      */
     private void RecuperarArchivosExpediente() {
         try{
-            documentosSubidos = documentoDAO.ReadByExpediente( expedienteEstudiante.GetClave() );
-        }catch (NullPointerException exception){
-            errorText.setText(outputMessages.NoExpedient());
+            if ( EstudianteTieneExpediente() ){
+                RecuperarExpediente();
+                documentosSubidos = documentoDAO.ReadByExpediente( expedienteEstudiante.GetClave() );
+            } else {
+                errorText.setText( outputMessages.NoExpedient() );
+            }
+        }catch ( Exception exception ){
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
         }
+    }
+
+    /**
+     * Recupera el expediente de un estudiante
+     */
+    private void RecuperarExpediente() {
+        expedienteEstudiante = expedienteDAO.ReadPorMatricula( estudianteElegido.getMatricula() );
+    }
+
+    /**
+     * Verifica si el estudiante tiene expediente
+     * @return True si el estudiante tiene expediente, False si no tiene
+     */
+    private boolean EstudianteTieneExpediente() {
+        boolean estudianteTieneExpediente = false;
+
+        try {
+            if ( expedienteDAO.ReadPorMatricula( estudianteElegido.getMatricula() ) != null ) {
+                estudianteTieneExpediente = true;
+            }
+        } catch (Exception exception) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
+
+        return estudianteTieneExpediente;
     }
 
     /**
@@ -132,10 +164,18 @@ public class DescargarDocumento_Docente implements Initializable {
      * @param mouseEvent evento del mouse que inicia el método
      */
     public void ClicDescargarDocumento(MouseEvent mouseEvent) {
+        errorText.setText("");
         if( HayDocumentoSeleccionado() ){
             File file = directoryChooser.showDialog( ( (Node)mouseEvent.getSource() ).getScene().getWindow() );
-            DescargarDocumento( documentoDAO.Read( tbvDocumentosSubidos.getSelectionModel().getSelectedItem().
-                    getIdDocumento() ).GetDescripcion(), file );
+            try {
+                File documentoDescargado = documentoDAO.Read( tbvDocumentosSubidos.getSelectionModel().
+                        getSelectedItem().getIdDocumento() ).GetDescripcion();
+                DescargarDocumento( documentoDescargado , file );
+                successText.setText("El documento ha sido descargado");
+            }catch ( Exception exception ){
+                errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+            }
+
         }
     }
     /**
@@ -159,6 +199,7 @@ public class DescargarDocumento_Docente implements Initializable {
             output.close();
         } catch( IOException exception ) {
             exception.printStackTrace();
+            errorText.setText( outputMessages.DeleteDocumentFailed() );
         }
     }
 

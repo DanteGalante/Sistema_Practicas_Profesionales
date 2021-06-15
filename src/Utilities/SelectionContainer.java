@@ -17,10 +17,15 @@ public final class SelectionContainer {
     private OrganizacionVinculada organizacionElegida;
     private ResponsableProyecto responsableElegido;
     private InformeProblema informeElegido;
+    private ArchivoConsulta[] archivosConsulta;
 
     private SelectionContainer() {
         this.estudianteElegido = null;
         this.proyectoElegido = null;
+        this.organizacionElegida = null;
+        this.responsableElegido = null;
+        this.informeElegido = null;
+        this.archivosConsulta = null;
     }
 
     public static SelectionContainer GetInstance() {
@@ -44,6 +49,10 @@ public final class SelectionContainer {
 
     public OrganizacionVinculada getOrganizacionElegida(){
         return organizacionElegida;
+    }
+
+    public ArchivoConsulta[] getArchivosConsulta() {
+        return archivosConsulta;
     }
 
     public void setProyectoElegido(Proyecto proyectoElegido) {
@@ -78,5 +87,9 @@ public final class SelectionContainer {
         if( informeElegido != null ) {
             this.informeElegido = informeElegido;
         }
+    }
+
+    public void setArchivosConsulta(ArchivoConsulta[] archivosConsulta) {
+        this.archivosConsulta = archivosConsulta;
     }
 }

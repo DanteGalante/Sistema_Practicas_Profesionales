@@ -8,6 +8,7 @@
  */
 package Controllers;
 
+import Enumerations.EstadoEstudiante;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -150,7 +151,7 @@ public class LoginScreenController {
         } else if( docente != null ) {
             LoginSession.GetInstance().Login( docente );
             screenChanger.ShowScreenPrincipalDocente( mouseEvent, errorText);
-        } else if( estudiante != null ) {
+        } else if( estudiante != null && RevisarEstadoRegistroPendiente( estudiante ) && RevisarEstadoEliminado( estudiante ) ) {
             LoginSession.GetInstance().Login( estudiante );
             screenChanger.ShowStudentMainMenuScreen( mouseEvent, errorText );
         }
@@ -183,5 +184,25 @@ public class LoginScreenController {
                 !inputValidator.IsNumeroPersonalDocenteValid( usernameField.getText() ) ) {
             errorText.setText( outputMessages.InvalidUsername() );
         }
+    }
+
+    private boolean RevisarEstadoRegistroPendiente( Estudiante estudiante ) {
+        boolean esValido = false;
+        if( estudiante.getEstado() != EstadoEstudiante.RegistroPendiente ) {
+            esValido = true;
+        } else {
+            errorText.setText( outputMessages.RegistroEstudiantePendiente() );
+        }
+        return esValido;
+    }
+
+    private boolean RevisarEstadoEliminado( Estudiante estudiante ) {
+        boolean esValido = false;
+        if( estudiante.getEstado() != EstadoEstudiante.Eliminado ) {
+            esValido = true;
+        } else {
+            errorText.setText( outputMessages.EstudianteEliminado() );
+        }
+        return esValido;
     }
 }

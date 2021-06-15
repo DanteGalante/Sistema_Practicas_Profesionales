@@ -39,6 +39,14 @@ public interface OrganizacionVinculadaDAOInterface {
     OrganizacionVinculada Read( int idProyecto );
 
     /**
+     * Regresa una instancia de organizacion vinculada a partir de su llave
+     * indentificadora
+     * @param key una cadena con la llave identificadora de la organizacion
+     * @return una instancia de organizacion vinculada
+     */
+    OrganizacionVinculada Read( String key );
+
+    /**
      * Actualiza la información de una organizacion vinculada de la base de datos
      * @param organizacion la instancia de OrganizacionVinculada con su información actualizada
      * @return booleano indicando éxito o fracaso
