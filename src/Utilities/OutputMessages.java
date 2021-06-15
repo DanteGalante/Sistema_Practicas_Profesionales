@@ -679,6 +679,26 @@ public class OutputMessages {
     public String OrganizacionYRepresentanteCreateSuccess() { return "La organización vinculada y el representante se crearon con éxito."; }
 
     /**
+     * Mensaje mostrado cuando se modifica una organizacion vinculada y su
+     * representante de manera exitosa
+     * @return una cadena con el mensaje de exito
+     */
+    public String OrganizacionYRepresentanteUpdateSuccess() { return "La organización vinculada y el representante se modificaron con éxito."; }
+
+    /**
+     * Mensaje mostrado cuando se modifica una organizacion vinculada de manera exitosa
+     * @return una cadena con el mensaje de exito
+     */
+    public String OrganizacionUpdateSuccess() { return "La organización vinculada se modificó con éxito."; }
+
+    /**
+     * Mensaje mostrado cuando se modifica una organizacion vinculada y su
+     * representante de manera exitosa
+     * @return una cadena con el mensaje de exito
+     */
+    public String RepresentanteUpdateSuccess() { return "El representante se modificó con éxito."; }
+
+    /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
      * ConsultarOrganizacion
      * @return una cadena con el mensaje de error
