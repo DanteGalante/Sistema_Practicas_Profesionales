@@ -677,4 +677,42 @@ public class OutputMessages {
      * @return una cadena con el mensaje de error
      */
     public String ConsultarOrganizacionScreenMissing() { return "No se encontró el archivo FXML de la pantalla ConsultarOrganizacion"; }
+    
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * ConsultarProyecto
+     * @return una cadena con el mensaje de error
+     */
+    public String ConsultarProyectoScreenMissing() { return "No se encontró el archivo FXML de la pantalla ConsultarProyecto"; }
+
+    /**
+     * Mensaje mostrado cuando se elimina proyecto a la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ProjectDelete() {return "¡Eliminacion de proyecto exitosa!"; }
+
+    public String ExpedienteEliminado() { return "Se ha desasignado el proyecto con exito"; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * GenerarOficioAsignacion
+     * @return una cadena con el mensaje de error
+     */
+    public String GenerarOficioAsignacionScreenMissing() { return "No se encontró el archivo FXML de la pantalla GenerarOficioAsignacion"; }
+
+    /**
+     * Mensaje mostrado cuando se registra un nuevo proyecto a la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String RegistrationProjectSuccessfull() { return "Se ha creado el proyecto con éxito"; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * CrearProyecto
+     * @return una cadena con el mensaje de error
+     */
+    public String CrearProyectoScreenMissing() { return "No se encontró el archivo FXML de la pantalla CrearProyecto"; }
+
 }
