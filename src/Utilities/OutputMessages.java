@@ -278,6 +278,30 @@ public class OutputMessages {
     public String DatabaseConnectionFailed3() { return "No hay conexión con la base de datos"; }
 
     /**
+     * Mensaje mostrado cuando ocurre un error en la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String DatabaseConnectionFailed4() {
+        return "No hay conexion con la base de datos del sistema";
+    }
+
+    /**
+     * Mensaje mostrado cuando ocurre un error en la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String DatabaseConnectionFailed5() {
+        return "No se puede eliminar el proyecto ya que no hay conexión con la base de datos";
+    }
+
+    /**
+     * Mensaje mostrado cuando no se puede crear un proyecto debido a un error en la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String CreateProjectFailed() {
+        return "No se ha podido crear el proyecto";
+    }
+
+    /**
      * Mensaje mostrado cuando ya existe un Estudiante en base de datos
      * @return una cadena con el mensaje de error
      */
