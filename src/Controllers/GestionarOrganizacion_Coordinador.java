@@ -112,6 +112,19 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
     }
 
     /**
+     * Permite cambiar la pantalla a la pantalla ConsultarOrganizacion
+     */
+    public void MostrarPantallaConsultarOrganizacion( MouseEvent mouseEvent ) {
+        if(tbOrganizaciones.getSelectionModel().getSelectedItem() != null){
+            OrganizacionVinculada orgVinculadaElegida = (OrganizacionVinculada)tbOrganizaciones.getSelectionModel().getSelectedItem();
+            SelectionContainer.GetInstance().setOrganizacionElegida(orgVinculadaElegida);
+            screenChanger.ShowConsultarOrganizacion( mouseEvent, errorText );
+        }else{
+            errorText.setText("Seleccione una organizacion");
+        }
+    }
+
+    /**
      * Cambia la pantalla de GestionarOrganizacion_Coordinador a la pantalla GestionarProyecto_Coordinador.
      * @param mouseEvent el evento de mouse que activo la acción.
      */
