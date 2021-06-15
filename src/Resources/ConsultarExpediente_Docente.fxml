@@ -138,9 +138,6 @@
                                             </columns>
                                         </TableView>
                               <HBox alignment="TOP_RIGHT" prefWidth="791.0" spacing="5.0">
-                                 <children>
-                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="Calificar" />
-                                 </children>
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
