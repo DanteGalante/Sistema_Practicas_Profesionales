@@ -19,6 +19,7 @@ public class ResponsableProyecto {
     private String correoElectronico;
     private String telefono;
     private List< Integer > idProyectos;
+    private String key;
 
     /**
      * Constructor sin parametros de ResponsableProyecto. Crea una instancia
@@ -31,6 +32,7 @@ public class ResponsableProyecto {
         correoElectronico = "";
         telefono = "";
         idProyectos = null;
+        key = "";
     }
 
     /**
@@ -40,7 +42,7 @@ public class ResponsableProyecto {
      */
     public ResponsableProyecto( ResponsableProyecto original ) {
         this( original.idResponsableProyecto, original.nombres, original.apellidos, original.correoElectronico,
-                original.telefono, original.idProyectos );
+                original.telefono, original.idProyectos, original.key );
     }
 
     /**
@@ -53,13 +55,14 @@ public class ResponsableProyecto {
      * @param telefonoIn el teléfono del ResponsableProyecto.
      */
     public ResponsableProyecto( int idResponsableIn, String nombresIn, String apellidosIn,
-                                String correoIn, String telefonoIn, List< Integer > idProyectosIn ) {
+                                String correoIn, String telefonoIn, List< Integer > idProyectosIn, String keyIn ) {
         idResponsableProyecto = idResponsableIn;
         nombres = nombresIn;
         apellidos = apellidosIn;
         correoElectronico = correoIn;
         telefono = telefonoIn;
         idProyectos = idProyectosIn;
+        key = keyIn;
     }
 
     /**
@@ -105,6 +108,12 @@ public class ResponsableProyecto {
      * @return una lista de los IDs de los proyectos del responsable
      */
     public List< Integer > getIdProyectos() { return idProyectos; }
+
+    /**
+     * Regresa la llave identificadora del responsable.
+     * @return una cadena con la llace de identificacion
+     */
+    public String GetKey() { return key; }
 
     /**
      * Cambia los nombres del ResponsableProyecto por el valor introducido

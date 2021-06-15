@@ -8,6 +8,7 @@
  */
 package Controllers;
 
+import Database.UsuarioUVDAO;
 import Enumerations.EstadoEstudiante;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,6 +31,7 @@ public class RegistryScreenController {
     private ScreenChanger screenChanger = new ScreenChanger();
     private InputValidator inputValidator = new InputValidator();
     private OutputMessages outputMessages = new OutputMessages();
+    private UsuarioUVDAO usuarios = new UsuarioUVDAO();
     private EstudianteDAO estudiantes = new EstudianteDAO();
     private Random randomGenerator = new Random();
 
@@ -250,7 +252,7 @@ public class RegistryScreenController {
      */
     private boolean DoesKeyExist( String key ) {
         boolean keyExists = false;
-        if( estudiantes.Read( key ) != null ) {
+        if( usuarios.Read( key ) != null ) {
             keyExists = true;
         }
         return keyExists;

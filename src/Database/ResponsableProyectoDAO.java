@@ -36,13 +36,14 @@ public class ResponsableProyectoDAO implements ResponsableProyectoDAOInterface{
         connection.StartConnection();
 
         try {
-            String query = "INSERT INTO ResponsableProyecto( Nombres, Apellidos, CorreoElectronico, Telefono ) " +
-                           "VALUES ( ?, ?, ?, ? );";
+            String query = "INSERT INTO ResponsableProyecto( Nombres, Apellidos, CorreoElectronico, Telefono, KeyIdentifier ) " +
+                           "VALUES ( ?, ?, ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1, responsable.GetNombres() );
             statement.setString( 2, responsable.GetApellidos() );
             statement.setString( 3, responsable.GetCorreo() );
             statement.setString( 4, responsable.GetTelefono() );
+            statement.setString( 5, responsable.GetKey() );
             statement.executeUpdate();
 
             proyectos.Create( responsable.getIdResponsableProyecto(), responsable.getIdProyectos() );
@@ -74,7 +75,7 @@ public class ResponsableProyectoDAO implements ResponsableProyectoDAOInterface{
                 int idResponsable = result.getInt( 1 );
                 responsables.add( new ResponsableProyecto( idResponsable, result.getString( 2 ),
                         result.getString( 3 ), result.getString( 4 ), result.getString( 5 ),
-                        proyectos.ReadProyectos( idResponsable ) ) );
+                        proyectos.ReadProyectos( idResponsable ), result.getString( 6 ) ) );
             }
 
             result.close();
@@ -108,7 +109,42 @@ public class ResponsableProyectoDAO implements ResponsableProyectoDAOInterface{
             if( result.next() ) {
                 responsable = new ResponsableProyecto( idResponsable, result.getString( 2 ),
                         result.getString( 3 ), result.getString( 4 ), result.getString( 5 ),
-                        proyectos.ReadProyectos( idResponsable ) );
+                        proyectos.ReadProyectos( idResponsable ), result.getString( 6 ) );
+            }
+
+            result.close();
+            statement.close();
+        } catch( Exception exception ) {
+            exception.printStackTrace();
+        }
+
+        connection.StopConnection();
+        return responsable;
+    }
+
+    /**
+     * Regresa una instancia de ResponsableProyecto ubicada en la base de datos
+     * @param key la llave identificadora del responsable
+     * @return na instancia de ResponsableProyecto
+     */
+    @Override
+    public ResponsableProyecto Read( String key ) {
+        ResponsableProyecto responsable = null;
+        MySqlConnection connection = new MySqlConnection();
+        connection.StartConnection();
+
+        try {
+            String query = "SELECT * FROM ResponsableProyecto WHERE KeyIdentifier = ?;";
+            PreparedStatement statement = connection.GetConnection().prepareStatement( query );
+            statement.setString( 1, key );
+            statement.executeQuery();
+            ResultSet result = statement.getResultSet();
+
+            if( result.next() ) {
+                int idResponsable = result.getInt( 1 );
+                responsable = new ResponsableProyecto( idResponsable, result.getString( 2 ),
+                        result.getString( 3 ), result.getString( 4 ), result.getString( 5 ),
+                        proyectos.ReadProyectos( idResponsable ), result.getString( 6 ) );
             }
 
             result.close();
@@ -140,7 +176,7 @@ public class ResponsableProyectoDAO implements ResponsableProyectoDAOInterface{
             statement.setString( 2, responsable.GetApellidos() );
             statement.setString( 3, responsable.GetCorreo() );
             statement.setString( 4, responsable.GetTelefono() );
-            statement.setString( 5, responsable.GetCorreo() );
+            statement.setInt( 5, responsable.getIdResponsableProyecto() );
 
             proyectos.Update( responsable.getIdResponsableProyecto(), responsable.getIdProyectos() );
 

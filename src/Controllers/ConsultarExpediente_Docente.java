@@ -3,7 +3,6 @@ package Controllers;
 import Database.DocumentoDAO;
 import Database.ExpedienteDAO;
 import Database.ProyectoDAO;
-import Entities.ArchivoConsulta;
 import Entities.Documento;
 import Entities.Estudiante;
 import Entities.Expediente;
@@ -34,7 +33,7 @@ public class ConsultarExpediente_Docente implements Initializable {
     DocumentoDAO documentoDAO = new DocumentoDAO();
     ProyectoDAO proyectoDAO = new ProyectoDAO();
     List< Documento > documentosSubidos = new ArrayList< Documento >();
-    Expediente expedienteEstudiante = expedienteDAO.ReadPorMatricula( estudianteSeleccionado.getMatricula() );
+    Expediente expedienteEstudiante = new Expediente();
 
     @FXML
     private Label lbNombre;
@@ -66,22 +65,63 @@ public class ConsultarExpediente_Docente implements Initializable {
      * y su expediente
      */
     private void MostrarInfoEstudiante() {
-        try{
-            lbNombreEstudiante.setText( estudianteSeleccionado.getNombreCompleto() );
-            lbNombreProyecto.setText( proyectoDAO.Read( expedienteEstudiante.GetIDProyecto() ).getNombre() );
-            ConfigurarColumnasTabla();
-            RecuperarArchivosExpediente();
-            MostrarArchivosSubidos();
-        }catch(NullPointerException exception){
-            errorText.setText(outputMessages.NoExpedient());
+        String nombreProyecto = "";
+        String nombreEstudiante = "";
+
+        if ( EstudianteTieneExpediente() ) {
+            RecuperarExpediente();
+            try{
+                nombreProyecto = proyectoDAO.Read( expedienteEstudiante.GetIDProyecto() ).getNombre();
+                nombreEstudiante = estudianteSeleccionado.getNombreCompleto();
+                lbNombreEstudiante.setText( nombreEstudiante );
+                lbNombreProyecto.setText( nombreProyecto );
+                ConfigurarColumnasTabla();
+                RecuperarArchivosExpediente();
+                MostrarArchivosSubidos();
+            }catch (Exception exception) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+            }
         }
+    }
+
+    /**
+     * Recupera el expediente de un estudiante
+     */
+    private void RecuperarExpediente() {
+        try {
+            expedienteEstudiante = expedienteDAO.ReadPorMatricula( estudianteSeleccionado.getMatricula() );
+        } catch ( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
+    }
+
+    /**
+     * Verifica si el estudiante tiene expediente
+     * @return True si el estudiante tiene expediente, False si no tiene
+     */
+    private boolean EstudianteTieneExpediente() {
+        boolean estudianteTieneExpediente = false;
+
+        try {
+            if ( expedienteDAO.ReadPorMatricula( estudianteSeleccionado.getMatricula() ) != null ) {
+                estudianteTieneExpediente = true;
+            }
+        } catch (Exception exception) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
+
+        return estudianteTieneExpediente;
     }
 
     /**
      * Recupera los archivos subidos por el estudiante seleccionado a su expediente
      */
     private void RecuperarArchivosExpediente() {
-        documentosSubidos = documentoDAO.ReadByExpediente( expedienteEstudiante.GetClave() );
+        try {
+            documentosSubidos = documentoDAO.ReadByExpediente( expedienteEstudiante.GetClave() );
+        } catch ( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
     }
 
     /**
