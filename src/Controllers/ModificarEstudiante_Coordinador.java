@@ -37,9 +37,6 @@ public class ModificarEstudiante_Coordinador implements Initializable {
     private TextField lastNameField;
 
     @FXML
-    private TextField matriculaField;
-
-    @FXML
     private TextField phoneField;
 
     @FXML
@@ -66,13 +63,17 @@ public class ModificarEstudiante_Coordinador implements Initializable {
     }
 
     /**
-     * Realiza el registro de un nuevo Estudiante en la base de datos.
+     * Realiza la modificación de un Estudiante en la base de datos.
      */
     public void ManejoRegistroEstudiante() {
         ValidarDatos();
         if( inputValidator.IsStudentInformationValid( ObtenerEstudiante(), confirmPasswordField.getText() ) ) {
             if( !DoesStudentExist() ) {
-                ModificarEstudiante();
+                try{
+                    ModificarEstudiante();
+                }catch (Exception exception) {
+                    errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+                }
             }
         }
     }
@@ -88,7 +89,12 @@ public class ModificarEstudiante_Coordinador implements Initializable {
      */
     private boolean DoesStudentExist() {
         boolean doesStudentExist = false;
-        if( estudiantes.Read( ObtenerEstudiante().getMatricula() ) != null ) {
+        Estudiante estudiante = SelectionContainer.GetInstance().getEstudianteElegido();
+
+        if( estudiante.getNombres().equals(ObtenerEstudiante().getNombres()) && estudiante.GetApellidos().equals(ObtenerEstudiante().GetApellidos()) &&
+        estudiante.GetKey().equals(ObtenerEstudiante().GetKey()) && estudiante.GetContrasena().equals(ObtenerEstudiante().GetContrasena()) &&
+        estudiante.GetCorreo().equals(ObtenerEstudiante().GetCorreo()) && estudiante.GetTelefono().equals(ObtenerEstudiante().GetTelefono()) &&
+        estudiante.getEstado() == ObtenerEstudiante().getEstado() && estudiante.getProyecto().equals(ObtenerEstudiante().getProyecto())){
             errorText.setText( outputMessages.StudentAlreadyExists() );
             successText.setText( "" );
             doesStudentExist = true;
@@ -118,7 +124,6 @@ public class ModificarEstudiante_Coordinador implements Initializable {
     private void ValidarDatos() {
         DoPasswordsMatch();
         CheckPassword();
-        CheckMatricula();
         CheckEmail();
         CheckTelephone();
         CheckNRC();
@@ -177,16 +182,6 @@ public class ModificarEstudiante_Coordinador implements Initializable {
     }
 
     /**
-     * Revisa que la matrícula introducida sea valida.
-     */
-    private void CheckMatricula() {
-        if( !inputValidator.IsMatriculaValid( matriculaField.getText() ) ) {
-            errorText.setText( outputMessages.InvalidMatricula() );
-            successText.setText( "" );
-        }
-    }
-
-    /**
      * Revisa que la contraseña introducida sea valida.
      */
     private void CheckPassword() {
@@ -212,9 +207,9 @@ public class ModificarEstudiante_Coordinador implements Initializable {
      * @return una instancia de Estudiante
      */
     private Estudiante ObtenerEstudiante() {
-        return new Estudiante( RecuperarId(), nameField.getText(), lastNameField.getText(), "", passwordField.getText(),
-                emailField.getText(), phoneField.getText(), matriculaField.getText(), nrcField.getText(),
-                EstadoEstudiante.RegistroPendiente, "");
+        return new Estudiante( RecuperarId(), nameField.getText(), lastNameField.getText(), SelectionContainer.GetInstance().getEstudianteElegido().GetKey(), passwordField.getText(),
+                emailField.getText(), phoneField.getText(), SelectionContainer.GetInstance().getEstudianteElegido().getMatricula(), nrcField.getText(),
+                SelectionContainer.GetInstance().getEstudianteElegido().getEstado(), SelectionContainer.GetInstance().getEstudianteElegido().getProyecto());
     }
 
     public void DatosEstudiante(){
@@ -223,7 +218,6 @@ public class ModificarEstudiante_Coordinador implements Initializable {
         nrcField.setText( SelectionContainer.GetInstance().getEstudianteElegido().getNrc() );
         phoneField.setText( SelectionContainer.GetInstance().getEstudianteElegido().GetTelefono() );
         emailField.setText( SelectionContainer.GetInstance().getEstudianteElegido().GetCorreo() );
-        matriculaField.setText( SelectionContainer.GetInstance().getEstudianteElegido().getMatricula() );
     }
 
     public int RecuperarId(){
