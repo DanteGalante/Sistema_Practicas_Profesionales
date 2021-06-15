@@ -99,7 +99,7 @@ public class CrearProyectoController implements Initializable {
      * Configura las columnas de la tabla preferencias proyecto en esta pantalla
      */
     private void ValorColumnasProyectoSeleccionados() {
-        TcNombreOrg.setCellValueFactory( new PropertyValueFactory<>("Nombres") );
+        TcNombreOrg.setCellValueFactory( new PropertyValueFactory<>("Nombre") );
     }
 
     /**
