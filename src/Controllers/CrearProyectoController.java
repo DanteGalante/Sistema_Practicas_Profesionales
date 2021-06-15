@@ -187,7 +187,7 @@ public class CrearProyectoController implements Initializable {
         String numeroEstudiantesRequeridos = TbEstudiantesRequeridos.getText();
         int estudiantesRequeridos = Integer.parseInt(numeroEstudiantesRequeridos);
 
-        if( !inputValidator.NumeroValidoProyecto( estudiantesRequeridos )){
+        if( !inputValidator.EstudiantesRequeridosValidos( estudiantesRequeridos )){
             TxError.setText(outputMessages.NumeroEstudiantesInvalido() );
             TxSuccess.setText( "" );
             resultado = false;

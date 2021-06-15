@@ -37,6 +37,10 @@ public class InputValidator {
     private final int maxDescripcion = 200;
     private final int cantidadMin = 1;
     private final int cantidadMax = 3;
+    private final int minNameProyecto = 10;
+    private final int maxNameProyecto = 60;
+    private final int minDescripcionProyecto = 30;
+    private final int maxDescripcionProyecto = 500;
 
     /**
      * Verifica que la información de una instancia de Estudiante sea valida y que las
@@ -68,7 +72,7 @@ public class InputValidator {
      * @return true si todos los campos de la OrganizacionVinculada son validos, false si no
      */
     public boolean IsResponsableInformationValid(ResponsableProyecto responsableProyecto ) {
-        return AreNamesValid( responsableProyecto.GetNombres() ) && AreLastNamesValid( responsableProyecto.GetApellidos() ) &&
+        return AreNamesValid( responsableProyecto.getNombres() ) && AreLastNamesValid( responsableProyecto.GetApellidos() ) &&
                 IsEmailValid( responsableProyecto.GetCorreo() ) && IsTelephoneValid( responsableProyecto.GetTelefono() );
     }
 
@@ -168,6 +172,14 @@ public class InputValidator {
      */
     public boolean DescripcionValida( String descripcion ) {
         return IsStringValidSize( descripcion, minDescripcion, maxDescripcion );
+    }
+
+    public boolean DescripcionValidaProyecto(String descripcion){
+        return IsStringValidSize( descripcion, minDescripcionProyecto, maxDescripcionProyecto );
+    }
+
+    public boolean NombreValidoProyecto(String nombre){
+        return IsStringValidSize( nombre, minNameProyecto, maxNameProyecto );
     }
 
     /**
@@ -364,4 +376,5 @@ public class InputValidator {
                 !HasInvalidCharacter( informeProblema.getFechaEnviada() ) &&
                 !HasInvalidCharacter( informeProblema.getNumeroPersonal() );
     }
+
 }

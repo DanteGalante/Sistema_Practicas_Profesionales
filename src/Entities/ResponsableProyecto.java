@@ -75,7 +75,7 @@ public class ResponsableProyecto {
      * Regresa los nombres del ResponsableProyecto
      * @return
      */
-    public String GetNombres() {
+    public String getNombres() {
         return nombres;
     }
 

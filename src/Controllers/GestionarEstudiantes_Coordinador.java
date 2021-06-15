@@ -63,6 +63,19 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     @FXML
     private Button eliminarBoton;
 
+    @FXML
+    private Button asignarBoton;
+
+    @FXML
+    private Button desasignarProyecto;
+
+    @FXML
+    private Button consultarExpedienteBoton;
+
+    @FXML
+    private Button generarOficioBoton;
+
+
     /**
      * Configura los componentes de la pantalla GestionarEstudiantes_Coordinador
      * @param url no se utiliza, lo requiere la interfaz
@@ -135,6 +148,47 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     void ClicModificar( MouseEvent event){
         SelectionContainer.GetInstance().setEstudianteElegido( RecuperarEstudiante() );
         screenChanger.MostrarPantallaModificarEstudiante( event, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla AsignarProyectoAEstudiante
+     */
+    @FXML
+    void HandleAsignar( MouseEvent event ){
+        screenChanger.ShowAsignarProyecto ( event, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla consultar al seleccionar un estudiante con expediente
+     */
+    @FXML
+    void HandleConsultarExpediente ( MouseEvent event ) {
+        if (estudiantesTable.getSelectionModel().getSelectedItem() != null) {
+            Estudiante estudiante = (Estudiante) estudiantesTable.getSelectionModel().getSelectedItem();
+            if(estudiante.getEstado().ordinal() == 0 || estudiante.getEstado().ordinal() == 4 || estudiante.getEstado().ordinal() == 5 ){
+                SelectionContainer.GetInstance().setEstudianteElegido(estudiante);
+                screenChanger.ShowScreenConsultarExpediente_Coordinador( event, errorText);
+            }else{
+                errorText.setText(outputMessages.StudentExpedienteNull());
+            }
+        }else{
+            errorText.setText(outputMessages.SelectionStudentNull());
+        }
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla AsignarProyectoAEstudiante
+     */
+    public void MostrarPantallaGenerarOficio( MouseEvent mouseEvent ) {
+        screenChanger.ShowGenerarOficio( mouseEvent, errorText );
+    }
+
+    /**
+     * Permite cambiar la pantalla a la pantalla DesasignarProyectoAEstudiante
+     */
+    @FXML
+    void MostrarPantallaDesasignarProyecto( MouseEvent event ){
+        screenChanger.ShowScreenDesasignarProyecto ( event, errorText );
     }
 
     /**
