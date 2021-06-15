@@ -99,6 +99,7 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
     }
 
     public void ClicCancelar ( MouseEvent mouseEvent ){
+        ClearMessages();
         tfNombre.setText("");
         tfDireccion.setText("");
         tfCorreoElectronico.setText("");
@@ -114,6 +115,7 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
      * en la base de datos
      */
     public void ManejoRegistroOrganizacion() {
+        ClearMessages();
         if( VerificarDatosOrganizacion() && VerificarDatosRepresentante() ) {
             GetOrganizacionYResponsable();
             if( !OrganizacionExistente() && !ResponsableExistente() ) {
@@ -431,5 +433,13 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
             valido = false;
         }
         return valido;
+    }
+
+    /**
+     * Limpia los mensajes de error o exito al usuario
+     */
+    private void ClearMessages() {
+        errorText.setText( "" );
+        successText.setText( "" );
     }
 }
