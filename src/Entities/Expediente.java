@@ -133,4 +133,11 @@ public class Expediente {
     public void SetNumeroArchivos( int cantidad ) {
         numeroArchivos = cantidad;
     }
+    
+     /**
+     * Cambia el estado de expediente
+     * @param activoIn el nuevo estado del expediente
+     */
+    public void SetActivo( boolean activoIn ) { activo = activoIn; }
+
 }
