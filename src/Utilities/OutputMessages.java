@@ -346,11 +346,26 @@ public class OutputMessages {
             "Esta acción es permanente y no se podrá deshacer."; }
 
     /**
+     * Mensaje mostrado cuando se intenta eliminar un estudiante en
+     * la pantalla GestionarEstudiantes_Coordinador
+     * @return una cadena con el mensaje de confirmacion
+     */
+    public String ConfirmacionEliminarProyecto() { return "Esta organización cuenta con proyectos. ¿Estas seguro/a que deseas eliminar los proyectos? " +
+            "Esta acción es permanente y no se podrá deshacer."; }
+
+    /**
      * mensaje mostrado cuando se introduce una selección nula
      * en la tabla de visualizar reportes.
      * @return una cadena con el mensaje de error
      */
     public String SeleccionInvalidaReportes() { return "No se ha seleccionado ningún reporte"; }
+
+    /**
+     * mensaje mostrado cuando se introduce una selección nula
+     * en la tabla de organizaciones.
+     * @return una cadena con el mensaje de error
+     */
+    public String SeleccionInvalidaOrganizacion() { return "No se ha seleccionado ninguna organización"; }
 
     /**
      * mensaje mostrado cuando se introduce información de login que no
