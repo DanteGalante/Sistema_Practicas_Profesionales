@@ -144,7 +144,7 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
         ClearMessages();
         if( VerificarDatosOrganizacion() && VerificarDatosRepresentante() ) {
             GetOrganizacionYResponsable();
-            if( !OrganizacionExistente() && !ResponsableExistente() ) {
+            if( !OrganizacionNoHaCambiado() && !ResponsableNoHaCambiado() ) {
                 try {
                     if( ModificarOrganizacion() && ModificarResponsableProyecto() ) {
                         errorText.setText( "" );
@@ -154,7 +154,7 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
                     errorText.setText( outputMessages.DatabaseConnectionFailed() );
                     successText.setText( "" );
                 }
-            }if (!OrganizacionExistente() && ResponsableExistente() ) {
+            } else if (!OrganizacionNoHaCambiado() && ResponsableNoHaCambiado() ) {
                 try{
                     ModificarOrganizacion();
                     errorText.setText( "" );
@@ -163,7 +163,7 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
                     errorText.setText( outputMessages.DatabaseConnectionFailed() );
                     successText.setText("");
                 }
-            }if ( OrganizacionExistente() && !ResponsableExistente() ) {
+            } else if ( OrganizacionNoHaCambiado() && !ResponsableNoHaCambiado() ) {
                 try{
                     ModificarResponsableProyecto();
                     errorText.setText( "" );
@@ -197,38 +197,31 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
      * la misma información que fue introducida.
      * @return true si se encuentra una instancia con la misma información, false sí no.
      */
-    private boolean ResponsableExistente() {
-        boolean responsableExistente = false;
-        if( responsableProyecto.Read( responsable.getIdResponsableProyecto() ).getIdResponsableProyecto() == ObtenerResponsableProyecto().getIdResponsableProyecto() &&
-        responsableProyecto.Read(responsable.getIdResponsableProyecto() ).getNombres().equals( ObtenerResponsableProyecto().getNombres() ) &&
-        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetApellidos().equals( ObtenerResponsableProyecto().GetApellidos() ) &&
-        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetCorreo().equals( ObtenerResponsableProyecto().GetCorreo() ) &&
-        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetTelefono().equals( ObtenerResponsableProyecto().GetTelefono() ) &&
-        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).getIdProyectos() == ObtenerResponsableProyecto().getIdProyectos() &&
-        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetKey().equals( ObtenerResponsableProyecto().GetKey() ) ) {
+    private boolean ResponsableNoHaCambiado() {
+        boolean responsableNoHaCambiado = false;
+        if( responsableProyecto.Read(responsable.getIdResponsableProyecto() ).getNombres().equals( responsable.getNombres() ) &&
+        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetApellidos().equals( responsable.GetApellidos() ) &&
+        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetCorreo().equals( responsable.GetCorreo() ) &&
+        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetTelefono().equals( responsable.GetTelefono() ) ) {
             errorText.setText( outputMessages.ResponsableExistente() );
             successText.setText( "" );
-            responsableExistente = true;
+            responsableNoHaCambiado = true;
         }
-        return responsableExistente;
+        return responsableNoHaCambiado;
     }
 
-    private boolean OrganizacionExistente() {
-        boolean organizacionExistente = false;
+    private boolean OrganizacionNoHaCambiado() {
+        boolean organizacionNoHaCambiado = false;
 
-        if( organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getIdOrganizacion() == ObtenerOrganizacionVinculada().getIdOrganizacion() &&
-        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getNombre().equals(ObtenerOrganizacionVinculada().getNombre()) &&
-        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getDireccion().equals(ObtenerOrganizacionVinculada().getDireccion()) &&
-        organizacionVinculada.Read(organizacion.getIdOrganizacion() ).getTelefono().equals(ObtenerOrganizacionVinculada().getTelefono() ) &&
-        organizacionVinculada.Read(organizacion.getIdOrganizacion() ).getCorreo().equals(ObtenerOrganizacionVinculada().getCorreo() ) &&
-        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getSector().equals( ObtenerOrganizacionVinculada().getSector() ) &&
-        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getActiveStatus() == ObtenerOrganizacionVinculada().getActiveStatus() &&
-        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).GetKey().equals( ObtenerOrganizacionVinculada().GetKey() ) ) {
+        if(  organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getNombre().equals( organizacion.getNombre() ) &&
+        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getDireccion().equals( organizacion.getDireccion() ) &&
+        organizacionVinculada.Read(organizacion.getIdOrganizacion() ).getTelefono().equals( organizacion.getTelefono() ) &&
+        organizacionVinculada.Read(organizacion.getIdOrganizacion() ).getCorreo().equals( organizacion.getCorreo() ) ) {
             errorText.setText( outputMessages.OrganizacionExistente() );
             successText.setText( "" );
-            organizacionExistente = true;
+            organizacionNoHaCambiado = true;
         }
-        return organizacionExistente;
+        return organizacionNoHaCambiado;
     }
 
     /**

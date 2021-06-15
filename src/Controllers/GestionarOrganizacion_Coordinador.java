@@ -2,6 +2,7 @@ package Controllers;
 
 import Database.OrganizacionVinculadaDAO;
 import Database.ResponsableProyectoDAO;
+import Database.ResponsablesOrganizacionDAO;
 import Entities.OrganizacionVinculada;
 import Entities.ResponsableProyecto;
 import Utilities.LoginSession;
@@ -22,9 +23,10 @@ import java.util.ResourceBundle;
 public class GestionarOrganizacion_Coordinador implements Initializable {
     private ScreenChanger screenChanger = new ScreenChanger();
     private OrganizacionVinculadaDAO organizacionVinculada = new OrganizacionVinculadaDAO();
+    private ResponsableProyectoDAO responsableProyecto = new ResponsableProyectoDAO();
+    private ResponsablesOrganizacionDAO responsablesOrganizacion = new ResponsablesOrganizacionDAO();
     private List< OrganizacionVinculada > listaOrganizaciones = new ArrayList<>();
     private OutputMessages outputMessages = new OutputMessages();
-    private ResponsableProyectoDAO responsableProyecto = new ResponsableProyectoDAO();
 
     @FXML
     private Label lbNombres;
@@ -94,7 +96,7 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
     public void MostrarOrganizaciones(){
         tbOrganizaciones.getItems().clear();
         listaOrganizaciones = organizacionVinculada.ReadAll();
-        for( OrganizacionVinculada organizacion : listaOrganizaciones){
+        for( OrganizacionVinculada organizacion : listaOrganizaciones ){
             tbOrganizaciones.getItems().add( organizacion );
         }
     }
@@ -179,8 +181,9 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
     }
 
     public ResponsableProyecto RecuperarResponsable() {
-        int id = tbOrganizaciones.getSelectionModel().getSelectedItem().getIdOrganizacion();
-        return responsableProyecto.Read(id);
+        List< Integer > idResponsables = responsablesOrganizacion.ReadResponsables(
+                                         tbOrganizaciones.getSelectionModel().getSelectedItem().getIdOrganizacion() );
+        return responsableProyecto.Read( idResponsables.get( 0 ) );
     }
 
     /**
