@@ -107,8 +107,8 @@ public class GenerarOficioAsignacionController implements Initializable {
     }
 
     public void HandleGenerarOficioAsignacion( MouseEvent mouseEvent ){
-        if(TvEstudiante.getSelectionModel().getSelectedItem() != null){
-            Estudiante estudiante = (Estudiante) TvEstudiante.getSelectionModel().getSelectedItem();
+        if( TvEstudiante.getSelectionModel().getSelectedItem() != null ){
+            Estudiante estudiante = ( Estudiante ) TvEstudiante.getSelectionModel().getSelectedItem();
             FileSystem fs = FileSystems.getDefault();//Creamos un File System para poder manejar ficheros
 
             Path home=fs.getPath("");

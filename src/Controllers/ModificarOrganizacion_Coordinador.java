@@ -231,7 +231,7 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
      * nombres, apellidos y No.Trabajador
      */
     public void DatosResponsable(){
-        tfNombresRepresentante.setText( SelectionContainer.GetInstance().getResponsableElegido().GetNombres() );
+        tfNombresRepresentante.setText( SelectionContainer.GetInstance().getResponsableElegido().getNombres() );
         tfApellidosRepresentante.setText( SelectionContainer.GetInstance().getResponsableElegido().GetApellidos() );
         tfCorreoRepresentante.setText( SelectionContainer.GetInstance().getResponsableElegido().GetCorreo() );
         tfTelefonoRepresentante.setText( SelectionContainer.GetInstance().getResponsableElegido().GetTelefono() );

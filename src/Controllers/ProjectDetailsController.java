@@ -146,7 +146,7 @@ public class ProjectDetailsController implements Initializable {
      */
     private void SetResponsableTexts() {
         responsable = responsables.Read( responsablesProyectos.ReadResponsable( proyecto.getIdProyecto() ) );
-        responsableText.setText( responsable.GetNombres() + " " + responsable.GetApellidos() );
+        responsableText.setText( responsable.getNombres() + " " + responsable.GetApellidos() );
         correoText.setText( responsable.GetCorreo() );
         telefonoText.setText( responsable.GetTelefono() );
     }
