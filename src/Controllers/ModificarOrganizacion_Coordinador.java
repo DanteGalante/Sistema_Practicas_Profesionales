@@ -28,6 +28,9 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
     private List<Proyecto> listaProyectos = new ArrayList<>();
     private ProyectoDAO proyecto = new ProyectoDAO();
     private ResponsableProyectoDAO responsableProyecto = new ResponsableProyectoDAO();
+    private ResponsableProyectoDAO responsableProyectoId = new ResponsableProyectoDAO();
+    private ResponsableProyecto responsable = null;
+    private OrganizacionVinculada organizacion = null;
 
     @FXML
     private Label lbNombres;
@@ -101,115 +104,11 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
         DatosResponsable();
     }
 
-    public void ManejoModificarOrganizacion(){
-        ManejoModificarRepresentante();
-        VerificarDatos();
-        //if( inputValidator.IsOrganizationInformationValid( ObtenerOrganizacionVinculada() ) ) {
-        //if ( !OrganizacionExistente() ) {
-        ModificarOrganizacion();
-        //}
-        //}
-    }
-
     /**
-     * Crea una instancia de Organizacion Vinculada utilizando la información
-     * introducida por el usuario en todos los campos de texto.
-     * @return una instancia de OrganizacionVinculada
+     * Coloca la información del usuario actual en los campos de texto
+     * nameText, lastNameText y matriculaText
      */
-    private OrganizacionVinculada ObtenerOrganizacionVinculada() {
-        return SelectionContainer.GetInstance().getOrganizacionElegida();
-    }
-
-    private ResponsableProyecto ObtenerResponsableProyecto() {
-        return SelectionContainer.GetInstance().getResponsableElegido();
-    }
-
-    /**
-     * Intenta crear una Organización en la base de datos y coloca
-     * el mensaje correspondiente en caso de éxito o fracaso.
-     */
-    private void ModificarOrganizacion() {
-        if( organizacionVinculada.Update ( organizacionModificada() ) ) { //Cambiar el metodo a el nuevo
-            errorText.setText( "" );
-            successText.setText( outputMessages.ModificacionOrganizacionExitoso() );
-        }
-        else {
-            errorText.setText( outputMessages.DatabaseConnectionFailed() );
-            successText.setText( "" );
-        }
-    }
-
-    /**
-     * Revisa si ya existe un Estudiante en la base de datos con
-     * la misma información que fue introducida.
-     * @return true si se encuentra una instancia con la misma información, false sí no.
-     */
-    /*private boolean OrganizacionExistente() {
-        boolean organizacionExistente = false;
-        if( organizacionVinculada.ReadNombre( ObtenerOrganizacionVinculada().getIdOrganizacion() ) != null ) { //Cambiar el DAO el READ esta mal
-            errorText.setText( outputMessages.OrganizacionExistente() );
-            successText.setText( "" );
-            organizacionExistente = true;
-        }
-        return organizacionExistente;
-    }*/ //Volver a poner hasta que se revise ES EL -------------READNOMBRE----------------------
-
-    /**
-     * Verifica que la información introducida por el usuario
-     * sea valida.
-     */
-    private void VerificarDatos() {
-        NombreValido();
-        DireccionValida();
-        CorreoValido();
-        TelefonoValido();
-    }
-
-    /**
-     * Revisa que el nombre introducido sea valido.
-     */
-    private void NombreValido() {
-        if ( !inputValidator.AreNamesValid(tfNombre.getText() ) ) {
-            errorText.setText(outputMessages.InvalidNames() );
-            successText.setText( "" );
-        }
-    }
-
-    /**
-     * Revisa que la dirección introducida sea valida.
-     */
-    private void DireccionValida() {
-        if ( !inputValidator.DireccionValida( tfDireccion.getText() ) ) {
-            errorText.setText( outputMessages.DireccionInvalida() );
-            successText.setText( "" );
-        }
-    }
-
-    /**
-     * Revisa que el correo eléctronico introducido sea valido.
-     */
-    private void CorreoValido() {
-        if ( !inputValidator.IsEmailValid( tfCorreoElectronico.getText() ) ) {
-            errorText.setText( outputMessages.InvalidEmail() );
-            successText.setText( "" );
-        }
-    }
-
-    /**
-     * Revisa que el télefono introducido sea valido.
-     */
-    private void TelefonoValido() {
-        if ( !inputValidator.IsTelephoneValid( tfTelefono.getText() ) ) {
-            errorText.setText( outputMessages.InvalidTelephone() );
-            successText.setText( "" );
-        }
-    }
-
-    /**
-     * Coloca la información del usuario actual en los campos de texto de
-     * nombres, apellidos y No.Trabajador
-     */
-    public void DatosDeUsuario(){
+    private void DatosDeUsuario() {
         lbNombres.setText( LoginSession.GetInstance().GetCoordinador().getNombres() );
         lbApellidos.setText( LoginSession.GetInstance().GetCoordinador().GetApellidos() );
         lbNoTrabajador.setText( LoginSession.GetInstance().GetCoordinador().GetNumeroPersonal() );
@@ -237,8 +136,61 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
         tfTelefonoRepresentante.setText( SelectionContainer.GetInstance().getResponsableElegido().GetTelefono() );
     }
 
+    /**
+     * Se encarga de modificar la organizacion vinculada y el representante de proyecto
+     * en la base de datos
+     */
+    public void ManejoModificarOrganizacion() {
+        ClearMessages();
+        if( VerificarDatosOrganizacion() && VerificarDatosRepresentante() ) {
+            GetOrganizacionYResponsable();
+            if( !OrganizacionExistente() && !ResponsableExistente() ) {
+                try {
+                    if( ModificarOrganizacion() && ModificarResponsableProyecto() ) {
+                        errorText.setText( "" );
+                        successText.setText( outputMessages.OrganizacionYRepresentanteUpdateSuccess() );
+                    }
+                } catch( Exception exception ) {
+                    errorText.setText( outputMessages.DatabaseConnectionFailed() );
+                    successText.setText( "" );
+                }
+            }if (!OrganizacionExistente() && ResponsableExistente() ) {
+                try{
+                    ModificarOrganizacion();
+                    errorText.setText( "" );
+                    successText.setText( outputMessages.OrganizacionUpdateSuccess() );
+                }catch ( Exception exception ) {
+                    errorText.setText( outputMessages.DatabaseConnectionFailed() );
+                    successText.setText("");
+                }
+            }if ( OrganizacionExistente() && !ResponsableExistente() ) {
+                try{
+                    ModificarResponsableProyecto();
+                    errorText.setText( "" );
+                    successText.setText( outputMessages.RepresentanteUpdateSuccess() );
+                }catch ( Exception exception) {
+                    errorText.setText( outputMessages.DatabaseConnectionFailed() );
+                    successText.setText("");
+                }
+            }
+        }
+    }
 
+    /**
+     * Intenta crear una Organización en la base de datos y coloca
+     * el mensaje correspondiente en caso de éxito o fracaso.
+     */
+    private boolean ModificarOrganizacion() {
+        return organizacionVinculada.Update ( organizacion );
+    }
 
+    /**
+     * Intenta crear un ResponsableProyecto en la base de datos y coloca
+     * el mensaje correspondiente en caso de éxito o fracaso.
+     */
+    private boolean ModificarResponsableProyecto() {
+        return responsableProyecto.Update ( responsable );
+    }
 
     /**
      * Revisa si ya existe un Estudiante en la base de datos con
@@ -247,7 +199,13 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
      */
     private boolean ResponsableExistente() {
         boolean responsableExistente = false;
-        if( responsableProyecto.Read( ObtenerResponsableProyecto().getIdResponsableProyecto() ) != null ) { //Cambiar el DAO el READ esta mal
+        if( responsableProyecto.Read( responsable.getIdResponsableProyecto() ).getIdResponsableProyecto() == ObtenerResponsableProyecto().getIdResponsableProyecto() &&
+        responsableProyecto.Read(responsable.getIdResponsableProyecto() ).getNombres().equals( ObtenerResponsableProyecto().getNombres() ) &&
+        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetApellidos().equals( ObtenerResponsableProyecto().GetApellidos() ) &&
+        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetCorreo().equals( ObtenerResponsableProyecto().GetCorreo() ) &&
+        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetTelefono().equals( ObtenerResponsableProyecto().GetTelefono() ) &&
+        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).getIdProyectos() == ObtenerResponsableProyecto().getIdProyectos() &&
+        responsableProyecto.Read( responsable.getIdResponsableProyecto() ).GetKey().equals( ObtenerResponsableProyecto().GetKey() ) ) {
             errorText.setText( outputMessages.ResponsableExistente() );
             successText.setText( "" );
             responsableExistente = true;
@@ -255,109 +213,195 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
         return responsableExistente;
     }
 
-    /**
-     * Intenta crear un ResponsableProyecto en la base de datos y coloca
-     * el mensaje correspondiente en caso de éxito o fracaso.
-     */
-    private void ModificarResponsableProyecto() {
-        if( responsableProyecto.Update ( responsableModificado() ) ) {
-            errorText.setText( "" );
-            successText.setText( outputMessages.ModificacionResponsableExitoso() );
-        }
-        else {
-            errorText.setText( outputMessages.DatabaseConnectionFailed() );
+    private boolean OrganizacionExistente() {
+        boolean organizacionExistente = false;
+
+        if( organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getIdOrganizacion() == ObtenerOrganizacionVinculada().getIdOrganizacion() &&
+        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getNombre().equals(ObtenerOrganizacionVinculada().getNombre()) &&
+        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getDireccion().equals(ObtenerOrganizacionVinculada().getDireccion()) &&
+        organizacionVinculada.Read(organizacion.getIdOrganizacion() ).getTelefono().equals(ObtenerOrganizacionVinculada().getTelefono() ) &&
+        organizacionVinculada.Read(organizacion.getIdOrganizacion() ).getCorreo().equals(ObtenerOrganizacionVinculada().getCorreo() ) &&
+        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getSector().equals( ObtenerOrganizacionVinculada().getSector() ) &&
+        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).getActiveStatus() == ObtenerOrganizacionVinculada().getActiveStatus() &&
+        organizacionVinculada.Read( organizacion.getIdOrganizacion() ).GetKey().equals( ObtenerOrganizacionVinculada().GetKey() ) ) {
+            errorText.setText( outputMessages.OrganizacionExistente() );
             successText.setText( "" );
+            organizacionExistente = true;
         }
+        return organizacionExistente;
     }
 
-    public void ManejoModificarRepresentante(){
-        VerificarDatosResponsable();
-        //if( inputValidator.IsResponsableInformationValid( ObtenerResponsableProyecto() ) ) {
-        //if ( !ResponsableExistente() ) {
-        ModificarResponsableProyecto();
-        //}
-        //}
+    /**
+     * Crea una oraganizacion vinculada y representante de proyecto y los
+     * guarda en sus variables correspondientes.
+     */
+    private void GetOrganizacionYResponsable() {
+        organizacion = ObtenerOrganizacionVinculada();
+        responsable = ObtenerResponsableProyecto();
     }
 
-    private void VerificarDatosResponsable() {
-        NombresResponsableValido();
-        ApellidosResponsableValido();
-        CorreoResponsableValido();
-        TelefonoResponsableValido();
+    /**
+     * Crea una instancia de Organizacion Vinculada utilizando la información
+     * introducida por el usuario en todos los campos de texto.
+     * @return una instancia de OrganizacionVinculada
+     */
+    private OrganizacionVinculada ObtenerOrganizacionVinculada() {
+        return new OrganizacionVinculada ( tfNombre.getText(), tfDireccion.getText(),
+                SelectionContainer.GetInstance().getOrganizacionElegida().getSector(),
+                tfTelefono.getText(),tfCorreoElectronico.getText(),
+                SelectionContainer.GetInstance().getOrganizacionElegida().getIdOrganizacion(),
+                SelectionContainer.GetInstance().getOrganizacionElegida().getResponsables(),
+                SelectionContainer.GetInstance().getOrganizacionElegida().getActiveStatus(),
+                SelectionContainer.GetInstance().getOrganizacionElegida().GetKey() );
+    }
+
+    /**
+     * Crea una instancia de Organizacion Vinculada utilizando la información
+     * introducida por el usuario en todos los campos de texto.
+     * @return una instancia de ResponsableProyecto
+     */
+    private ResponsableProyecto ObtenerResponsableProyecto() {
+        ResponsableProyecto responsableProyectoAux;
+        responsableProyectoAux = RecuperarReposnsable();
+        return new ResponsableProyecto ( responsableProyectoAux.getIdResponsableProyecto(),
+                tfNombresRepresentante.getText(), tfApellidosRepresentante.getText(),
+                tfCorreoRepresentante.getText(), tfTelefonoRepresentante.getText(),
+                responsableProyectoAux.getIdProyectos(),
+                responsableProyectoAux.GetKey());
+    }
+
+    private ResponsableProyecto RecuperarReposnsable(){
+        return responsableProyectoId.Read( SelectionContainer.GetInstance().getResponsableElegido().getIdResponsableProyecto());
+    }
+
+    /**
+     * Verifica que la información introducida por el usuario
+     * sea valida.
+     */
+    private boolean VerificarDatosOrganizacion() {
+        return IsNombreOrganizacionValid() && IsDireccionOrganizacionValida() && IsCorreoOrganizacionValid() &&
+                IsTelefonoOrganizacionValid();
+    }
+
+    /**
+     * Verifica que la informacionn introducida del representante
+     * sea valida
+     * @return
+     */
+    private boolean VerificarDatosRepresentante() {
+        return AreNombresRepresentanteValid() && AreApellidosRepresentanteValid() && IsCorreoRepresentanteValid() &&
+                IsTelefonoRepresentanteValid();
     }
 
     /**
      * Revisa que el nombre introducido sea valido.
      */
-    private void NombresResponsableValido() {
-        if ( !inputValidator.AreNamesValid(tfNombresRepresentante.getText() ) ) {
-            errorText.setText(outputMessages.InvalidNames() );
+    private boolean IsNombreOrganizacionValid() {
+        boolean valido = true;
+        if ( !inputValidator.AreNamesValid( tfNombre.getText() ) ) {
+            errorText.setText( outputMessages.InvalidOrganizationName() );
             successText.setText( "" );
+            valido = false;
         }
+        return valido;
     }
 
     /**
      * Revisa que la dirección introducida sea valida.
      */
-    private void ApellidosResponsableValido() {
-        if ( !inputValidator.DireccionValida( tfApellidosRepresentante.getText() ) ) {
-            errorText.setText( outputMessages.DireccionInvalida() );
+    private boolean IsDireccionOrganizacionValida() {
+        boolean valido = true;
+        if ( !inputValidator.DireccionValida( tfDireccion.getText() ) ) {
+            errorText.setText( outputMessages.InvalidOrganizationDirection() );
             successText.setText( "" );
+            valido = false;
         }
+        return valido;
     }
 
     /**
      * Revisa que el correo eléctronico introducido sea valido.
      */
-    private void CorreoResponsableValido() {
-        if ( !inputValidator.IsEmailValid( tfCorreoRepresentante.getText() ) ) {
-            errorText.setText( outputMessages.InvalidEmail() );
+    private boolean IsCorreoOrganizacionValid() {
+        boolean valido = true;
+        if ( !inputValidator.IsEmailValid( tfCorreoElectronico.getText() ) ) {
+            errorText.setText( outputMessages.InvalidOrganizationEmail() );
             successText.setText( "" );
+            valido = false;
         }
+        return valido;
     }
 
     /**
      * Revisa que el télefono introducido sea valido.
      */
-    private void TelefonoResponsableValido() {
-        if ( !inputValidator.IsTelephoneValid( tfTelefonoRepresentante.getText() ) ) {
-            errorText.setText( outputMessages.InvalidTelephone() );
+    private boolean IsTelefonoOrganizacionValid() {
+        boolean valido = true;
+        if ( !inputValidator.IsTelephoneValid( tfTelefono.getText() ) ) {
+            errorText.setText( outputMessages.InvalidOrganizationPhone() );
             successText.setText( "" );
+            valido = false;
         }
+        return valido;
     }
 
-    private OrganizacionVinculada organizacionModificada(){
-        return new OrganizacionVinculada ( tfNombre.getText(), tfDireccion.getText(), TipoSector.Publico,
-                tfTelefono.getText(),tfCorreoElectronico.getText(),RecuperarIdOrganizacion(),ObtenerListaResponsables(),
-                true, "");
-    }
-
-    public List ObtenerListaResponsables(){
-        listaResponsables = responsableProyecto.ReadAll();
-        for( ResponsableProyecto responsableProyecto : listaResponsables) {
-            responsableProyecto.getIdResponsableProyecto();
+    /**
+     * Revisa que el nombre introducido sea valido.
+     */
+    private boolean AreNombresRepresentanteValid() {
+        boolean valido = true;
+        if ( !inputValidator.AreNamesValid( tfNombresRepresentante.getText() ) ) {
+            errorText.setText( outputMessages.InvalidRepresentativeName() );
+            successText.setText( "" );
+            valido = false;
         }
-        return listaResponsables;
+        return valido;
     }
 
-    private ResponsableProyecto responsableModificado(){
-        return new ResponsableProyecto ( RecuperarIdResponsable(), tfNombresRepresentante.getText(), tfApellidosRepresentante.getText(),
-                tfCorreoRepresentante.getText(), tfTelefonoRepresentante.getText(), ObtenerListaProyectos(), "" );
+    /**
+     * Revisa que la dirección introducida sea valida.
+     */
+    private boolean AreApellidosRepresentanteValid() {
+        boolean valido = true;
+        if ( !inputValidator.AreLastNamesValid( tfApellidosRepresentante.getText() ) ) {
+            errorText.setText( outputMessages.InvalidRepresentativeLastNames() );
+            successText.setText( "" );
+            valido = false;
+        }
+        return valido;
     }
 
-    public int RecuperarIdResponsable(){
-        int idProyecto = SelectionContainer.GetInstance().getResponsableElegido().getIdResponsableProyecto();
-        return idProyecto;
+    /**
+     * Revisa que el correo eléctronico introducido sea valido.
+     */
+    private boolean IsCorreoRepresentanteValid() {
+        boolean valido = true;
+        if ( !inputValidator.IsEmailValid( tfCorreoRepresentante.getText() ) ) {
+            errorText.setText( outputMessages.InvalidRepresentativeEmail() );
+            successText.setText( "" );
+            valido = false;
+        }
+        return valido;
     }
 
-    public List ObtenerListaProyectos(){
-        listaProyectos = proyecto.ReadAll();
-        System.out.println("Proyectos:"+ listaProyectos);
-        return listaResponsables;
+    /**
+     * Revisa que el télefono introducido sea valido.
+     */
+    private boolean IsTelefonoRepresentanteValid() {
+        boolean valido = true;
+        if ( !inputValidator.IsTelephoneValid( tfTelefonoRepresentante.getText() ) ) {
+            errorText.setText( outputMessages.InvalidRepresentativePhone() );
+            successText.setText( "" );
+            valido = false;
+        }
+        return valido;
     }
 
-    public int RecuperarIdOrganizacion(){
-        int idOrganizacion = SelectionContainer.GetInstance().getOrganizacionElegida().getIdOrganizacion();
-        return idOrganizacion;
+    /**
+     * Limpia los mensajes de error o exito al usuario
+     */
+    private void ClearMessages() {
+        errorText.setText( "" );
+        successText.setText( "" );
     }
 }
