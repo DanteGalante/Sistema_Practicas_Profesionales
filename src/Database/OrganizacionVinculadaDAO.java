@@ -38,14 +38,15 @@ public class OrganizacionVinculadaDAO implements OrganizacionVinculadaDAOInterfa
 
         try {
             String query = "INSERT INTO OrganizacionVinculada( Nombre, Direccion, " +
-                    "Sector, Telefono, CorreoElectronico, Activa ) VALUES ( ?, ?, ?, ?, ?, ? );";
+                    "Sector, Telefono, CorreoElectronico, Activa, KeyIdentifier ) VALUES ( ?, ?, ?, ?, ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1, organizacion.getNombre() );
             statement.setString( 2, organizacion.getDireccion() );
             statement.setInt( 3, organizacion.getSector().ordinal() );
             statement.setString( 4, organizacion.getTelefono() );
             statement.setString( 5, organizacion.getCorreo() );
-            statement.setBoolean(6, organizacion.getActiveStatus());
+            statement.setBoolean(6, organizacion.getActiveStatus() );
+            statement.setString( 7, organizacion.GetKey() );
             statement.executeUpdate();
 
             responsables.Create( organizacion.getIdOrganizacion(), organizacion.getResponsables() );
@@ -79,7 +80,8 @@ public class OrganizacionVinculadaDAO implements OrganizacionVinculadaDAOInterfa
                 organizaciones.add( new OrganizacionVinculada( result.getString( 2 ),
                         result.getString( 3 ), TipoSector.values()[ result.getInt( 4 ) ],
                         result.getString( 5 ), result.getString( 6 ),
-                        idOrganizacion, responsables.ReadResponsables( idOrganizacion ), result.getBoolean( 7 ) ) );
+                        idOrganizacion, responsables.ReadResponsables( idOrganizacion ), result.getBoolean( 7 ),
+                        result.getString( 8 ) ) );
             }
 
             result.close();
@@ -114,7 +116,43 @@ public class OrganizacionVinculadaDAO implements OrganizacionVinculadaDAOInterfa
                 organizacion = new OrganizacionVinculada( result.getString( 2 ),
                         result.getString( 3 ), TipoSector.values()[ result.getInt( 4 ) ],
                         result.getString( 5 ), result.getString( 6 ),
-                        idOrganizacion, responsables.ReadResponsables( idOrganizacion ), result.getBoolean( 7 ) );
+                        idOrganizacion, responsables.ReadResponsables( idOrganizacion ), result.getBoolean( 7 ),
+                        result.getString( 8 ) );
+            }
+        } catch( Exception exception ) {
+            exception.printStackTrace();
+        }
+
+        connection.StopConnection();
+        return organizacion;
+    }
+
+    /**
+     * Regresa una instancia de organizacion vinculada a partir de su llave
+     * indentificadora
+     * @param key una cadena con la llave identificadora de la organizacion
+     * @return una instancia de organizacion vinculada
+     */
+    @Override
+    public OrganizacionVinculada Read( String key ) {
+        OrganizacionVinculada organizacion = null;
+        MySqlConnection connection = new MySqlConnection();
+        connection.StartConnection();
+
+        try {
+            String query = "SELECT * FROM OrganizacionVinculada WHERE KeyIdentifier = ?;";
+            PreparedStatement statement = connection.GetConnection().prepareStatement( query );
+            statement.setString( 1,  key );
+            statement.executeQuery();
+            ResultSet result = statement.getResultSet();
+
+            if( result.next() ) {
+                int idOrganizacion = result.getInt( 1 );
+                organizacion = new OrganizacionVinculada( result.getString( 2 ),
+                        result.getString( 3 ), TipoSector.values()[ result.getInt( 4 ) ],
+                        result.getString( 5 ), result.getString( 6 ),
+                        idOrganizacion, responsables.ReadResponsables( idOrganizacion ), result.getBoolean( 7 ),
+                        result.getString( 8 ) );
             }
         } catch( Exception exception ) {
             exception.printStackTrace();

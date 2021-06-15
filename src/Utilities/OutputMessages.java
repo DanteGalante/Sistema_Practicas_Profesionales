@@ -244,7 +244,7 @@ public class OutputMessages {
      * el estado de estudiante es Eliminado
      * @return una cadena con el mensaje de éxito
      */
-    public String EstudianteEliminado() { return "Por favor revisar con el coordinador de las prácticas."; }
+    public String EstudianteEliminado() { return "Por favor revisar tu estado con el coordinador de las prácticas profesionales."; }
     /**
      * Mensaje mostrado cuando se modifica un proyecto de la
      * base de datos de manera exitosa.
@@ -346,6 +346,13 @@ public class OutputMessages {
             "Esta acción es permanente y no se podrá deshacer."; }
 
     /**
+     * mensaje mostrado cuando se introduce una selección nula
+     * en la tabla de visualizar reportes.
+     * @return una cadena con el mensaje de error
+     */
+    public String SeleccionInvalidaReportes() { return "No se ha seleccionado ningún reporte"; }
+
+    /**
      * mensaje mostrado cuando se introduce información de login que no
      * existe en la base de datos
      * @return una cadena con el mensaje de error
@@ -432,11 +439,18 @@ public class OutputMessages {
         return "El archivo a sido subido al sistema de manera exitosa";
     }
 
+
     /**
      * Mensaje mostrado cuando no se ha seleccionado ningun estudiante en una tabla
      * @return una cadena con el mensaje de error
      */
     public String EstudianteNoSeleccionado() { return "No se ha seleccionado ningun estudiante "; }
+
+    /**
+     * Mensaje mostrado cuando no se ha seleccionado todos los estudiante a la ahora de validar
+     * @return una cadena con el mensaje de error
+     */
+    public String EstudiantesNoSeleccionado() { return "No se han seleccionado todos los estudiantes "; }
 
     /**
      * Mensaje mostrado cuando la dirección introducida por el usuario
@@ -526,7 +540,7 @@ public class OutputMessages {
     public String FileNotSelectedToDelete(){return "No se ha seleccionado ningun archivo para eliminar";}
 
     /**
-<<<<<<< Updated upstream
+
      * Mensaje mostrado en caso de no encontrar el archvio FXML de la pantalla
      * EliminarArchivosConsulta_Docente
      * @return una cadena con el mensaje de error
@@ -534,6 +548,15 @@ public class OutputMessages {
     public String EliminarArchivoScreenMissing() {
         return "No se encontro el archivo FXML de la pantalla eliminar archivo del docente";
     }
+
+    /**
+     * Mensaje mostrado en caso de que un documento se intente descargar, pero falle en el proceso
+     * @return una cadena con el mensaje de error
+     */
+    public String DeleteDocumentFailed() {
+        return "Se ha producido un error al intentar descargar el archivo";
+    }
+
     /**
      * Mensaje mostrado cuando se registra un nuevo proyecto a la
      * base de datos de manera exitosa.
@@ -593,11 +616,110 @@ public class OutputMessages {
     public String StudentExpedienteNull() { return "No tiene expediente"; }
 
     /**
+     * Mensaje mostrado cunado fracasa la validacion del nombre
+     * de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidOrganizationName() { return "El nombre de la organización vinculada no es válida."; }
+
+    /**
+     * Mensaje mostrado cunado fracasa la validacion de la direccion
+     * de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidOrganizationDirection() { return "La dirección de la organizacíon no es válida."; }
+
+    /**
+     * Mensaje mostrado cunado fracasa la validacion del correo
+     * de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidOrganizationEmail() { return "El correo de la organización no es válida."; }
+
+    /**
+     * Mensaje mostrado cunado fracasa la validacion del telefono
+     * de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidOrganizationPhone() { return "El teléfono de la organización no es válida."; }
+
+    /**
+     * Mensaje mostrado cuando fracasa la validacion del nombre
+     * del representante de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidRepresentativeName() { return "El nombre del representante no es válido."; }
+
+    /**
+     * Mensaje mostrado cuando fracasa la validacion de la direccion
+     * del representante de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidRepresentativeLastNames() { return "Los apellidos del representante no son válidos."; }
+
+    /**
+     * Mensaje mostrado cuando fracasa la validacion del correo
+     * del representante de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidRepresentativeEmail() { return "El correo del representante no es válido."; }
+
+    /**
+     * Mensaje mostrado cuando fracasa la validacion del telefono
+     * del representante de la organizacion vinculada
+     * @return una cadena con el mensaje de error
+     */
+    public String InvalidRepresentativePhone() { return "El teléfono del representante no es válido."; }
+
+    /**
+     * Mensaje mostrado cuando se crea una organizacion vinculada y su
+     * representante de manera exitosa
+     * @return una cadena con el mensaje de exito
+     */
+    public String OrganizacionYRepresentanteCreateSuccess() { return "La organización vinculada y el representante se crearon con éxito."; }
+
+    /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
      * ConsultarOrganizacion
      * @return una cadena con el mensaje de error
      */
     public String ConsultarOrganizacionScreenMissing() { return "No se encontró el archivo FXML de la pantalla ConsultarOrganizacion"; }
+    
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * ConsultarProyecto
+     * @return una cadena con el mensaje de error
+     */
+    public String ConsultarProyectoScreenMissing() { return "No se encontró el archivo FXML de la pantalla ConsultarProyecto"; }
 
+    /**
+     * Mensaje mostrado cuando se elimina proyecto a la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String ProjectDelete() {return "¡Eliminacion de proyecto exitosa!"; }
+
+    public String ExpedienteEliminado() { return "Se ha desasignado el proyecto con exito"; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * GenerarOficioAsignacion
+     * @return una cadena con el mensaje de error
+     */
+    public String GenerarOficioAsignacionScreenMissing() { return "No se encontró el archivo FXML de la pantalla GenerarOficioAsignacion"; }
+
+    /**
+     * Mensaje mostrado cuando se registra un nuevo proyecto a la
+     * base de datos de manera exitosa.
+     * @return una cadena con el mensaje de éxito
+     */
+    public String RegistrationProjectSuccessfull() { return "Se ha creado el proyecto con éxito"; }
+
+    /**
+     * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
+     * CrearProyecto
+     * @return una cadena con el mensaje de error
+     */
+    public String CrearProyectoScreenMissing() { return "No se encontró el archivo FXML de la pantalla CrearProyecto"; }
 
 }
