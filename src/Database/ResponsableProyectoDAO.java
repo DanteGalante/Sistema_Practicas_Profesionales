@@ -39,7 +39,7 @@ public class ResponsableProyectoDAO implements ResponsableProyectoDAOInterface{
             String query = "INSERT INTO ResponsableProyecto( Nombres, Apellidos, CorreoElectronico, Telefono, KeyIdentifier ) " +
                            "VALUES ( ?, ?, ?, ?, ? );";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
-            statement.setString( 1, responsable.GetNombres() );
+            statement.setString( 1, responsable.getNombres() );
             statement.setString( 2, responsable.GetApellidos() );
             statement.setString( 3, responsable.GetCorreo() );
             statement.setString( 4, responsable.GetTelefono() );
@@ -172,7 +172,7 @@ public class ResponsableProyectoDAO implements ResponsableProyectoDAOInterface{
             String query = "UPDATE ResponsableProyecto SET Nombres = ?, Apellidos = ?, CorreoElectronico = ?, Telefono = ?" +
                            " WHERE IDResponsableProyecto = ?;";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
-            statement.setString( 1, responsable.GetNombres() );
+            statement.setString( 1, responsable.getNombres() );
             statement.setString( 2, responsable.GetApellidos() );
             statement.setString( 3, responsable.GetCorreo() );
             statement.setString( 4, responsable.GetTelefono() );
