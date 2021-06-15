@@ -3,7 +3,6 @@ package Controllers;
 import Database.*;
 import Entities.Estudiante;
 import Entities.Expediente;
-import Entities.Proyecto;
 import javafx.stage.DirectoryChooser;
 import Entities.ResponsableProyecto;
 import Enumerations.EstadoEstudiante;
@@ -25,7 +24,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
