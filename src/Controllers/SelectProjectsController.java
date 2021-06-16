@@ -133,9 +133,14 @@ public class SelectProjectsController implements Initializable {
         for( Proyecto proyecto : listaProyectos ) {
             if( DoesSelectedProjectTableHaveSpace() && idProyecto == proyecto.getIdProyecto() &&
                     !IsProjectSelected( idProyecto ) ) {
-                ConjuntoProyectoOrganizacion conjunto = new ConjuntoProyectoOrganizacion( proyecto,
-                        organizaciones.Read( responsablesOrganizacion.ReadOrganizacion( proyectosResponsables.ReadResponsable( proyecto.getIdProyecto() ) ) ) );
-                selectedProjectsTable.getItems().add( conjunto );
+                try {
+                    ConjuntoProyectoOrganizacion conjunto = new ConjuntoProyectoOrganizacion( proyecto,
+                            organizaciones.Read( responsablesOrganizacion.ReadOrganizacion( proyectosResponsables.ReadResponsable( proyecto.getIdProyecto() ) ) ) );
+                    selectedProjectsTable.getItems().add( conjunto );
+                } catch( Exception exception ) {
+                    errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+                    successText.setText( "" );
+                }
             }
         }
     }
