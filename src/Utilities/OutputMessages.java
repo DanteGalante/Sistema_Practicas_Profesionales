@@ -392,6 +392,13 @@ public class OutputMessages {
     public String SeleccionInvalidaOrganizacion() { return "No se ha seleccionado ninguna organización"; }
 
     /**
+     * mensaje mostrado cuando se introduce una selección nula
+     * en la tabla de proyectos.
+     * @return una cadena con el mensaje de error
+     */
+    public String SeleccionInvalidaProyecto() { return "No se ha seleccionado ningún proyecto"; }
+
+    /**
      * mensaje mostrado cuando se introduce información de login que no
      * existe en la base de datos
      * @return una cadena con el mensaje de error
