@@ -66,6 +66,11 @@
                   </Text>
                   <Button fx:id="deleteDocument" layoutX="61.0" layoutY="535.0" mnemonicParsing="false" onMouseClicked="#DeleteDocument" text="Eliminar Documento" />
                   <Button fx:id="downloadDocumento" layoutX="446.0" layoutY="535.0" mnemonicParsing="false" onMouseClicked="#DownloadDocument" text="Descargar Documento" />
+                  <Text fx:id="successText" fill="#09eb09" layoutX="138.0" layoutY="579.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="500.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
         </items>

@@ -210,6 +210,27 @@ public class OutputMessages {
     public String ModificacionResponsableExitoso() { return "Modificación de Organizacion Exitoso"; }
 
     /**
+     * Mensaje mostrado cuando se descarga un archivo adicional del estudiante
+     * a la maquina local
+     * @return una cadena con el mensaje de exito
+     */
+    public String DescargaDocumentoAdicionalExitoso() { return "Se ha desargado el archivo de manera exitosa"; }
+
+    /**
+     * Mensaje mostrado cuando se sube un archivo adicional del estudiante a
+     * la base de datos
+     * @return una cadena con el mensaje de exito
+     */
+    public String SubirDocumentoAdicionalExitoso() { return "Se ha almacenado el archivo de manera exitosa"; }
+
+    /**
+     * Mensaje mostrado cuando se elimina un archivo adicional
+     * del estudiante de la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String EliminacionDocumentoAdicionalExitoso() { return "Se ha eliminado el archivo de manera exitosa"; }
+
+    /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
      * ModificarProyecto_Coordinador
      * @return una cadena con el mensaje de error
