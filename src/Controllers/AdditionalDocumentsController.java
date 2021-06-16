@@ -128,7 +128,13 @@ public class AdditionalDocumentsController implements Initializable {
     /**
      * COnfigura el seleccionador de archivos con un título personalizado.
      */
-    private void ConfigureFileChoosers() { fileChooser.setTitle( "Buscar Documento..." ); }
+    private void ConfigureFileChoosers() {
+        fileChooser.setTitle( "Buscar Documento..." );
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "PDF Files", "*.pdf" ) );
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "Word Files", "*.docx" ) );
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "PowerPoint Files", "*.pptx" ) );
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "Excel Files", "*.xlsx" ) );
+    }
 
     /**
      * Muestra todos los documentos que se ubican dentro del expediente del estudiante
@@ -198,6 +204,7 @@ public class AdditionalDocumentsController implements Initializable {
                 if( response == ButtonType.OK ) {
                     try {
                         documentos.Delete( studentDocumentsTable.getSelectionModel().getSelectedItem().getIdDocumento() );
+                        expedientes.Update( GetNewDeleteDocumentExpediente( GetUserExpediente() ) );
                         ShowDocuments();
                         successText.setText( outputMessages.EliminacionDocumentoAdicionalExitoso() );
                         errorText.setText( "" );
@@ -250,6 +257,7 @@ public class AdditionalDocumentsController implements Initializable {
         try {
             if( document != null && DocumentNameDoesNotExist( GetDocument( document ) ) ) {
                 documentos.Create( GetDocument( document ) );
+                expedientes.Update( GetNewUploadDocumentExpediente( GetUserExpediente() ) );
                 successText.setText( outputMessages.SubirDocumentoAdicionalExitoso() );
                 errorText.setText( "" );
                 ShowDocuments();
@@ -382,5 +390,17 @@ public class AdditionalDocumentsController implements Initializable {
     private void ClearText() {
         errorText.setText( "" );
         successText.setText( "" );
+    }
+
+    private Expediente GetNewUploadDocumentExpediente( Expediente currentExpediente ) {
+        return new Expediente( currentExpediente.GetClave(), currentExpediente.GetIDProyecto(), currentExpediente.GetMatricula(),
+                               currentExpediente.GetFechaAsignacion(), currentExpediente.GetHorasAcumuladas(),
+                               currentExpediente.GetNumeroArchivos() + 1 , currentExpediente.GetActivo() );
+    }
+
+    private Expediente GetNewDeleteDocumentExpediente( Expediente currentExpediente ) {
+        return new Expediente( currentExpediente.GetClave(), currentExpediente.GetIDProyecto(), currentExpediente.GetMatricula(),
+                currentExpediente.GetFechaAsignacion(), currentExpediente.GetHorasAcumuladas(),
+                currentExpediente.GetNumeroArchivos() - 1 , currentExpediente.GetActivo() );
     }
 }
