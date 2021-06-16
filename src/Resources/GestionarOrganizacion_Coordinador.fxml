@@ -12,7 +12,7 @@
                     <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="289.0" prefWidth="353.0" style="-fx-background-color: #2b2e4a;">
                             <children>
-                                <Label layoutX="14.0" layoutY="14.0" style="-fx-font-weight: #2b2e4a;" text="Nombres:" textFill="#e84545">
+                                <Label layoutX="14.0" layoutY="14.0" text="Nombres:" textFill="#e84545">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Label>

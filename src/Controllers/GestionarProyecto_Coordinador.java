@@ -162,7 +162,7 @@ public class GestionarProyecto_Coordinador implements Initializable {
                 errorText.setText(outputMessages.SelectionProjectNull());
             }
         } catch ( Exception exception ) {
-
+            errorText.setText( outputMessages.DeleteProjectFailedBD() );
         }
     }
 

@@ -35,7 +35,7 @@ public class ConsultarExpedienteController implements Initializable {
     private Expediente expedienteInstancia = new Expediente();
     private EstudianteDAO estudiante = new EstudianteDAO();
     private Estudiante estudianteElegido= SelectionContainer.GetInstance().getEstudianteElegido();
-
+    private OutputMessages outputMessages = new OutputMessages();
 
     @FXML
     private Text TxNombres;
@@ -88,7 +88,12 @@ public class ConsultarExpedienteController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DatosUsuario();
-        DatosExpediente();
+        try {
+            DatosExpediente();
+        } catch ( Exception exception ) {
+            TxError.setText( outputMessages.DatabaseConnectionFailed4() );
+        }
+
     }
 
     /**

@@ -13,7 +13,7 @@
                     <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="195.0" prefWidth="288.0" style="-fx-background-color: #2b2e4a;">
                             <children>
-                                <Label layoutX="14.0" layoutY="14.0" style="-fx-font-weight: #2b2e4a;" text="Nombres:" textFill="#e84545" />
+                                <Label layoutX="14.0" layoutY="14.0" text="Nombres:" textFill="#e84545" />
                                 <Label fx:id="lbNombres" layoutX="14.0" layoutY="31.0" text="Label" textFill="#e84545" />
                                 <Label layoutX="14.0" layoutY="57.0" text="Apellidos:" textFill="#e84545" />
                                 <Label fx:id="lbApellidos" layoutX="14.0" layoutY="74.0" text="Label" textFill="#e84545" />
