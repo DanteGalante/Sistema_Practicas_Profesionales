@@ -426,6 +426,13 @@ public class OutputMessages {
     public String EliminacionExitosa() { return "Se ha eliminado la organización exitosamente"; }
 
     /**
+     * Mensaje mostrado cuando se intente eliminar une estudiante de
+     * la base de datos
+     * @return una cadena con el mensaje de confirmacion
+     */
+    public String EliminarEstudianteConfirmation() { return "¿Estas seguro que deseas eliminar el estudiante?"; }
+
+    /**
      * mensaje mostrado cuando se introduce una selección nula
      * en la tabla de visualizar reportes.
      * @return una cadena con el mensaje de error
