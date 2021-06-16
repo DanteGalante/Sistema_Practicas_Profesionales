@@ -210,7 +210,10 @@ public class Reportes_Coordinador implements Initializable {
             listaAuxiliar.add( expediente.GetMatricula() );
         }
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado){
+            if(estudiante.getEstado() == EstadoEstudiante.Evaluado ||
+                    estudiante.getEstado() == EstadoEstudiante.RegistroAprobado ||
+                    estudiante.getEstado() == EstadoEstudiante.AsignacionPendiente ||
+                    estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado){
                 cont ++;
             }
         }
@@ -224,7 +227,7 @@ public class Reportes_Coordinador implements Initializable {
             listaAuxiliar.add( expediente.GetMatricula() );
         }
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.getEstado() == EstadoEstudiante.Eliminado ){
+            if(estudiante.getEstado() == EstadoEstudiante.Eliminado || estudiante.getEstado() == EstadoEstudiante.RegistroPendiente ){
                 cont ++;
             }
         }
