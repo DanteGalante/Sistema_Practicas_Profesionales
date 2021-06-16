@@ -123,6 +123,7 @@ public class AsignarProyectoAEstudianteController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Estudiante> observableValue, Estudiante estudiante, Estudiante t1) {
                 if (t1 != null) {
+                    listaProyectosSeleccionados.clear();
                     String matricula = t1.getMatricula();
                     listaProyectosSeleccionados = proyectosSeleccionados.Read(matricula);
                     ActualizarTablaPreferenciaProyectos();
@@ -184,13 +185,13 @@ public class AsignarProyectoAEstudianteController implements Initializable {
     */
 
     public void MostrarPreferenciasProyecto(){
+        listaProyectoEstudiante.clear();
         for( int id : listaProyectosSeleccionados) {
             Proyecto proyectoSeleccionado = proyectos.Read(id);
             listaProyectoEstudiante.add(proyectoSeleccionado);
         }
         for (Proyecto proyecto : listaProyectoEstudiante) {
             if (proyecto.GetEstado() == EstadoProyecto.Disponible) {
-                proyecto.getNombre();
                 TvPreferenciaProyecto.getItems().add(proyecto);
             }
         }

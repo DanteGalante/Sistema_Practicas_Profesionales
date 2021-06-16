@@ -66,8 +66,12 @@ public class DescargarDocumento_Docente implements Initializable {
         SetUsuario();
         MostrarEstudianteElegido();
         ConfigurarColumna();
-        RecuperarArchivosExpediente();
-        MostrarArchivosSubidos();
+        try {
+            RecuperarArchivosExpediente();
+            MostrarArchivosSubidos();
+        } catch ( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
     }
 
     /**
@@ -84,15 +88,11 @@ public class DescargarDocumento_Docente implements Initializable {
      * Recupera los archivos subidos por el estudiante seleccionado a su expediente
      */
     private void RecuperarArchivosExpediente() {
-        try{
-            if ( EstudianteTieneExpediente() ){
-                RecuperarExpediente();
-                documentosSubidos = documentoDAO.ReadByExpediente( expedienteEstudiante.GetClave() );
-            } else {
-                errorText.setText( outputMessages.NoExpedient() );
-            }
-        }catch ( Exception exception ){
-            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        if ( EstudianteTieneExpediente() ){
+            RecuperarExpediente();
+            documentosSubidos = documentoDAO.ReadByExpediente( expedienteEstudiante.GetClave() );
+        } else {
+            errorText.setText( outputMessages.NoExpedient() );
         }
     }
 
@@ -110,12 +110,8 @@ public class DescargarDocumento_Docente implements Initializable {
     private boolean EstudianteTieneExpediente() {
         boolean estudianteTieneExpediente = false;
 
-        try {
-            if ( expedienteDAO.ReadPorMatricula( estudianteElegido.getMatricula() ) != null ) {
-                estudianteTieneExpediente = true;
-            }
-        } catch (Exception exception) {
-            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        if ( expedienteDAO.ReadPorMatricula( estudianteElegido.getMatricula() ) != null ) {
+            estudianteTieneExpediente = true;
         }
 
         return estudianteTieneExpediente;

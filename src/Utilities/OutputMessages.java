@@ -868,4 +868,12 @@ public class OutputMessages {
     public String DeleteProjectFailedBD() {
         return "No se puede eliminar el proyecto ya que no hay conexión con base de datos";
     }
+
+    /**
+     * Mensaje mostrado cuando se ha encontrado repetido un proyecto en la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String ProyectoRepetido() {
+        return "El proyecto ya se encuentra registrado en el sistema";
+    }
 }
