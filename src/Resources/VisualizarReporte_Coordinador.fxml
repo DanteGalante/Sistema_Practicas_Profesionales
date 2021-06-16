@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.VisualizarReporte_Coordinador">
+<SplitPane dividerPositions="0.1843687374749499" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.VisualizarReporte_Coordinador">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
             <children>
-                <SplitPane dividerPositions="0.5" layoutX="-2.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="300.0">
+                <SplitPane dividerPositions="0.5" layoutX="-2.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="188.0">
                     <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #2b2e4a;">
                             <children>
@@ -21,7 +21,7 @@
                             </children></AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #2b2e4a;">
                             <children>
-                                <VBox alignment="BOTTOM_CENTER" layoutY="244.0" prefHeight="52.0" prefWidth="298.0" style="-fx-background-color: #2b2e4a;">
+                                <VBox alignment="BOTTOM_CENTER" layoutY="244.0" prefHeight="52.0" prefWidth="186.0" style="-fx-background-color: #2b2e4a;">
                                     <children>
                                         <Button fx:id="btnRegresar" mnemonicParsing="false" onMouseClicked="#ClicRegresar" prefHeight="25.0" prefWidth="386.0" text="Regresar" textFill="#e84545" />
                                     </children>
@@ -32,20 +32,21 @@
                     </items>
                 </SplitPane>
             </children></AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #2b2e4a;">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="724.0" style="-fx-background-color: #2b2e4a;">
             <children>
                 <Label layoutX="231.0" layoutY="14.0" text="Visualizar Reporte Coordinador" textFill="#e84545">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font></Label>
-                <ScrollPane layoutX="52.0" layoutY="84.0" prefHeight="402.0" prefWidth="604.0">
+                <ScrollPane layoutX="53.0" layoutY="86.0" prefHeight="427.0" prefWidth="730.0">
                     <content>
-                        <TableView fx:id="tbReportes" prefHeight="401.0" prefWidth="604.0">
+                        <TableView fx:id="tbReportes" prefHeight="422.0" prefWidth="754.0">
                             <columns>
-                                <TableColumn fx:id="clnDocente" prefWidth="161.0" text="Docente" />
-                                <TableColumn fx:id="clnAsunto" prefWidth="186.0" text="Asunto" />
-                                <TableColumn fx:id="clnFechaEntrega" prefWidth="91.0" text="Fecha Entrega" />
-                                <TableColumn fx:id="clnCausante" prefWidth="154.0" text="Causante" />
+                                <TableColumn fx:id="clnDocente" prefWidth="148.0" text="Docente" />
+                        <TableColumn fx:id="clnNombre" prefWidth="162.0" text="Nombre Completo" />
+                                <TableColumn fx:id="clnAsunto" prefWidth="127.0" text="Asunto" />
+                                <TableColumn fx:id="clnFechaEntrega" prefWidth="115.0" text="Fecha Entrega" />
+                                <TableColumn fx:id="clnCausante" prefWidth="160.0" text="Causante" />
                             </columns>
                         </TableView>
                     </content>
@@ -54,5 +55,3 @@
             </children></AnchorPane>
     </items>
 </SplitPane>
-
-

@@ -43,6 +43,9 @@ public class ReporteSeleccionado_Coordinador implements Initializable {
     private Text causanteText;
 
     @FXML
+    private Text nombreDocente;
+
+    @FXML
     private TextArea taContenido;
 
     @FXML
@@ -78,6 +81,7 @@ public class ReporteSeleccionado_Coordinador implements Initializable {
         fechaEntregaText.setText( SelectionContainer.GetInstance().getInformeElegido().getFechaEnviada() );
         causanteText.setText( SelectionContainer.GetInstance().getInformeElegido().getEstudiante() );
         taContenido.setText( SelectionContainer.GetInstance().getInformeElegido().GetContenido() );
+        nombreDocente.setText( SelectionContainer.GetInstance().getConjuntoDocenteInforme().getNombreDocente());
     }
 
     @FXML

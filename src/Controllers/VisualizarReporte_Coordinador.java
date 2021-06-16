@@ -1,6 +1,8 @@
 package Controllers;
 
+import Database.DocenteDAO;
 import Database.InformeProblemaDAO;
+import Entities.ConjuntoDocenteInforme;
 import Entities.InformeProblema;
 import Entities.OrganizacionVinculada;
 import Utilities.LoginSession;
@@ -28,6 +30,7 @@ public class VisualizarReporte_Coordinador implements Initializable {
     InformeProblemaDAO informeProblema = new InformeProblemaDAO();
     ScreenChanger screenChanger = new ScreenChanger();
     OutputMessages outputMessages = new OutputMessages();
+    DocenteDAO docenteDAO = new DocenteDAO();
 
     @FXML
     private Label lbNombres;
@@ -42,19 +45,22 @@ public class VisualizarReporte_Coordinador implements Initializable {
     private Button btnRegresar;
 
     @FXML
-    private TableView<InformeProblema> tbReportes;
+    private TableView<ConjuntoDocenteInforme> tbReportes;
 
     @FXML
-    private TableColumn<InformeProblema, String> clnDocente;
+    private TableColumn<ConjuntoDocenteInforme, String> clnDocente;
 
     @FXML
-    private TableColumn<InformeProblema, String> clnAsunto;
+    private TableColumn<ConjuntoDocenteInforme, String> clnAsunto;
 
     @FXML
-    private TableColumn<InformeProblema, Date> clnFechaEntrega;
+    private TableColumn<ConjuntoDocenteInforme, Date> clnFechaEntrega;
 
     @FXML
-    private TableColumn<InformeProblema, String> clnCausante;
+    private TableColumn<ConjuntoDocenteInforme, String> clnCausante;
+
+    @FXML
+    private TableColumn<ConjuntoDocenteInforme, Date> clnNombre;
 
     @FXML
     private Button btnVisualizar;
@@ -86,7 +92,7 @@ public class VisualizarReporte_Coordinador implements Initializable {
         tbReportes.getItems().clear();
         listaInformesProblemas = informeProblema.ReadAll();
         for( InformeProblema informeAsunto : listaInformesProblemas){
-            tbReportes.getItems().add( informeAsunto );
+            tbReportes.getItems().add( new ConjuntoDocenteInforme(docenteDAO.Read(informeAsunto.getNumeroPersonal() ), informeAsunto )  );
         }
     }
 
@@ -95,6 +101,7 @@ public class VisualizarReporte_Coordinador implements Initializable {
         clnCausante.setCellValueFactory( new PropertyValueFactory<>( "estudiante" ) );
         clnDocente.setCellValueFactory( new PropertyValueFactory<>( "numeroPersonal" ) );
         clnFechaEntrega.setCellValueFactory( new PropertyValueFactory<>( "fechaEnviada" ) );
+        clnNombre.setCellValueFactory( new PropertyValueFactory<>( "nombreDocente" ) );
     }
 
     /**
@@ -111,6 +118,7 @@ public class VisualizarReporte_Coordinador implements Initializable {
         SelectionContainer.GetInstance().setInformeElegido( RecuperarSeleccionReporte() );
         if(!tbReportes.getSelectionModel().isEmpty()){
             errorText.setText("");
+            SelectionContainer.GetInstance().setConjuntoDocenteInforme( tbReportes.getSelectionModel().getSelectedItem() );
             screenChanger.MostrarPantallaReporteSeleccionado( mouseEvent, errorText );
         }else{
             errorText.setText(outputMessages.SeleccionInvalidaReportes());
@@ -118,6 +126,6 @@ public class VisualizarReporte_Coordinador implements Initializable {
     }
 
     public InformeProblema RecuperarSeleccionReporte(){
-        return tbReportes.getSelectionModel().getSelectedItem();
+        return tbReportes.getSelectionModel().getSelectedItem().getInforme();
     }
 }
