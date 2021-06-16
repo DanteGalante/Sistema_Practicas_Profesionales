@@ -138,7 +138,7 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
     void EliminarEstudiante() {
         ClearText();
         if( IsStudentSelected() ) {
-            Alert deleteAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.DeleteDocumentConfirmation() );
+            Alert deleteAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.EliminarEstudianteConfirmation() );
             deleteAlert.showAndWait().ifPresent( response -> {
                 if( response == ButtonType.OK ) {
                     try {
@@ -157,6 +157,10 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
         }
     }
 
+    /**
+     * Metodo llamado al hacer clic en el boton modificar de la pantalla
+     * @param event el evento de mouse que inicia el metodo
+     */
     @FXML
     void ClicModificar( MouseEvent event){
         if ( estudiantesTable.getSelectionModel().getSelectedItem() != null ) {

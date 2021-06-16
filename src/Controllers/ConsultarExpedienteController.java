@@ -111,7 +111,6 @@ public class ConsultarExpedienteController implements Initializable {
      * nombres, apellidos y No.Trabajador
      */
     public void DatosExpediente() {
-        int idEstudiante = estudianteElegido.GetID();
         String matricula = estudianteElegido.getMatricula();
         TxNombreEstudiante.setText(estudianteElegido.getNombreCompleto());
         TxMatriculaEstudiante.setText(estudianteElegido.getMatricula());
