@@ -1,10 +1,8 @@
 package Controllers;
 
 import Database.*;
-import Entities.Expediente;
-import Entities.OrganizacionVinculada;
-import Entities.Proyecto;
-import Entities.ResponsableProyecto;
+import Entities.*;
+import Enumerations.EstadoEstudiante;
 import Enumerations.EstadoProyecto;
 import Utilities.LoginSession;
 import Utilities.OutputMessages;
@@ -33,6 +31,8 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
     private ProyectoDAO proyectoCiclo = new ProyectoDAO();
     private ProyectoDAO proyectoAux = new ProyectoDAO();
     private ExpedienteDAO expedientes = new ExpedienteDAO();
+    private EstudianteDAO estudiante = new EstudianteDAO();
+    ProyectosDeResponsablesDAO proyectosDeResponsablesDAO = new ProyectosDeResponsablesDAO();
 
     @FXML
     private Label lbNombres;
@@ -167,6 +167,7 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
         if(!ExistenProyectosRelacionados(seleccionOrganizacion)){
             try {
                 organizacionVinculada.Update(ObtenerOrganizacionEliminada(seleccionOrganizacion));
+                successText.setText(outputMessages.EliminacionExitosa());
             }catch (Exception exception){
                 errorText.setText( outputMessages.DatabaseConnectionFailed2() );
             }
@@ -186,11 +187,48 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
         //int proyectoCiclo;
         if(!ExistenEstudiantesAsignados(seleccionOrganizacion)){
             for ( int i = 0; i< RecuperarListaProyectos(seleccionOrganizacion).size() ; i++) {
+                organizacionVinculada.Update(ObtenerOrganizacionEliminada(seleccionOrganizacion));
                 ModificarProyecto(proyectoCiclo.Read(listaProyectos.get(i).getIdProyecto()));
+                successText.setText(outputMessages.EliminacionExitosa());
             }
         }else{
-            //Falta el eliminar expediente
+            EliminarExpedienteLogico(seleccionOrganizacion);
         }
+    }
+
+    public void EliminarExpedienteLogico(OrganizacionVinculada seleccionOrganizacion){
+        ResponsableProyecto responsableActual;
+        List<Expediente> listaExpedientes = new ArrayList<>();
+        Proyecto proyectoCicloAux;
+        Expediente expediente;
+        listaExpedientes.clear();
+        listaExpedientes = expedientes.ReadAll();
+        EstudianteDAO estudianteDAO = new EstudianteDAO();
+        int proyectoId;
+
+        for( int i = 0; i< seleccionOrganizacion.getResponsables().size(); i++){
+            responsableActual = responsableProyecto.Read( seleccionOrganizacion.getResponsables().get(i) );
+            for (int i1 = 0; i1 < proyectosDeResponsablesDAO.ReadProyectos(responsableActual.getIdResponsableProyecto()).size(); i1++) {
+                proyectoCicloAux = proyectoCiclo.Read(proyectosDeResponsablesDAO.ReadProyectos(responsableActual.getIdResponsableProyecto()).get(i1));
+                listaProyectos.add(proyectoCicloAux);
+                for (int i2 = 0; i2 < listaExpedientes.size(); i2++) {
+                    expediente = listaExpedientes.get(i2);
+                    if (expediente.GetIDProyecto() == proyectoCicloAux.getIdProyecto()) {
+                        organizacionVinculada.Update(ObtenerOrganizacionEliminada(seleccionOrganizacion));
+                        ModificarProyecto(proyectoCiclo.Read(listaProyectos.get(i1).getIdProyecto()));
+                        expedientes.Update(ModificarExpediente(expediente));
+                        Estudiante estudianteAux = estudianteDAO.Read(expediente.GetMatricula());
+                        estudianteAux.SetEstadoEstudiante(EstadoEstudiante.AsignacionPendiente);
+                        estudianteDAO.Update(estudianteAux);
+                    }
+                }
+            }
+        }
+    }
+
+    public Expediente ModificarExpediente(Expediente expediente){
+        expediente.SetActivo(false);
+        return expediente;
     }
 
     public void ModificarProyecto(Proyecto proyecto){
@@ -210,9 +248,8 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
 
         for( int i = 0; i< seleccionOrganizacion.getResponsables().size(); i++) {
             responsableActual = responsableProyecto.Read(seleccionOrganizacion.getResponsables().get(i));
-            for (int i1 = 0; i < responsableActual.getIdProyectos().size(); i1++) {
-                proyectoId = responsableActual.getIdProyectos().get(i1);
-                proyectoCicloAux = proyectoCiclo.Read(proyectoId);
+            for (int i1 = 0; i1 < proyectosDeResponsablesDAO.ReadProyectos(responsableActual.getIdResponsableProyecto()).size(); i1++) {
+                proyectoCicloAux = proyectoCiclo.Read(proyectosDeResponsablesDAO.ReadProyectos(responsableActual.getIdResponsableProyecto()).get(i1));
                 listaProyectos.add(proyectoCicloAux);
             }
         }
@@ -248,10 +285,10 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
 
         for( int i = 0; i< seleccionOrganizacion.getResponsables().size(); i++){
             responsableActual = responsableProyecto.Read( seleccionOrganizacion.getResponsables().get(i) );
-            for (int i1 = 0 ; i< responsableActual.getIdProyectos().size(); i1++){
+            for (int i1 = 0 ; i1< responsableActual.getIdProyectos().size(); i1++){
                 proyectoId = responsableActual.getIdProyectos().get(i1);
                 proyectoCicloAux = proyectoCiclo.Read(proyectoId);
-                for ( int i2=0; i< listaExpedientes.size(); i2++){
+                for ( int i2=0; i2< listaExpedientes.size(); i2++){
                     expediente = listaExpedientes.get(i2);
                     if(expediente.GetIDProyecto() == proyectoCicloAux.getIdProyecto()){
                         existeEstudiante = true;

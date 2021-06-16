@@ -419,6 +419,13 @@ public class OutputMessages {
             "Esta acción es permanente y no se podrá deshacer."; }
 
     /**
+     * mensaje mostrado cuando se elimina logicamente
+     * una organización
+     * @return una cadena con el mensaje de error
+     */
+    public String EliminacionExitosa() { return "Se ha eliminado la organización exitosamente"; }
+
+    /**
      * mensaje mostrado cuando se introduce una selección nula
      * en la tabla de visualizar reportes.
      * @return una cadena con el mensaje de error
