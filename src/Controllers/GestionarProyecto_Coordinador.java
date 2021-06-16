@@ -112,8 +112,12 @@ public class GestionarProyecto_Coordinador implements Initializable {
 
     @FXML
     void ClicModificarProyecto( MouseEvent event){
-        SelectionContainer.GetInstance().setProyectoElegido( RecuperarProyecto() );
-        screenChanger.MostrarPantallaModificarProyecto( event, errorText );
+        if (tbProyectos.getSelectionModel().getSelectedItem() != null){
+            SelectionContainer.GetInstance().setProyectoElegido( RecuperarProyecto() );
+            screenChanger.MostrarPantallaModificarProyecto( event, errorText );
+        }else{
+            errorText.setText(outputMessages.SeleccionInvalidaProyecto());
+        }
     }
 
     public void EliminarProyecto( MouseEvent mouseEvent){

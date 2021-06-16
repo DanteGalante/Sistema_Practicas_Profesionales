@@ -1,7 +1,9 @@
 package Controllers;
 
+import Database.OrganizacionVinculadaDAO;
 import Database.ProyectoDAO;
 import Entities.Estudiante;
+import Entities.OrganizacionVinculada;
 import Entities.Proyecto;
 import Entities.ResponsableProyecto;
 import Enumerations.EstadoEstudiante;
@@ -9,13 +11,14 @@ import Enumerations.EstadoProyecto;
 import Utilities.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ModificarProyecto_Coordinador implements Initializable {
@@ -23,44 +26,80 @@ public class ModificarProyecto_Coordinador implements Initializable {
     private OutputMessages outputMessages = new OutputMessages();
     private ScreenChanger screenChanger = new ScreenChanger();
     private InputValidator inputValidator = new InputValidator();
+    private OrganizacionVinculadaDAO organizacionVinculadaDAO = new OrganizacionVinculadaDAO();
+    private List<OrganizacionVinculada> listaOrganizaciones = new ArrayList<>();
+    private OrganizacionVinculadaDAO organizacionVinculada = new OrganizacionVinculadaDAO();
 
     @FXML
-    private Label lbNombres;
+    private Text TxNombres;
 
     @FXML
-    private Label lbApellidos;
+    private Text TxApellidos;
 
     @FXML
-    private Label lbNoTrabajador;
+    private Text TxNoTrabajador;
 
     @FXML
-    private Button btnRegresar;
+    private TextField TbNombreProyecto;
 
     @FXML
-    private TextField tfNombre;
+    private TextArea TbDescripcionProyecto;
 
     @FXML
-    private TextField tfDescripcion;
+    private TableView<OrganizacionVinculada> TvOrganizacion;
 
     @FXML
-    private TextField tfEstudiantesRequeridos;
+    private TableColumn< OrganizacionVinculada, String > TcNombreOrg;
 
     @FXML
-    private Button btnCancelar;
+    private TextField TbEstudiantesRequeridos;
 
     @FXML
-    private Button btnModificar;
+    private Text TxError;
 
     @FXML
-    private Text errorText;
+    private Text TxSuccess;
 
     @FXML
-    private Text successText;
+    private Button BtRegistrar;
+
+    @FXML
+    private Button BtRegresar;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DatosProyecto();
-        DatosDeUsuario();
+        DatosUsuario();
+        ValorColumnasProyectoSeleccionados();
+        LlenarTablaResponsables();
+    }
+
+    /**
+     * Configura las columnas de la tabla preferencias proyecto en esta pantalla
+     */
+    private void ValorColumnasProyectoSeleccionados() {
+        TcNombreOrg.setCellValueFactory( new PropertyValueFactory<>("Nombre") );
+    }
+
+    /**
+     * Llena la tabla con las organizaciones vinculadas existentes en la BD
+     */
+    private void LlenarTablaResponsables() {
+        try {
+            TvOrganizacion.getItems().clear();
+            listaOrganizaciones.clear();
+            listaOrganizaciones = organizacionVinculada.ReadAll();
+            if (listaOrganizaciones.size() > 0) {
+                for (OrganizacionVinculada organizacionVinculada : listaOrganizaciones) {
+                    if (organizacionVinculada.getActiveStatus() != false) {
+                        TvOrganizacion.getItems().add(organizacionVinculada);
+                    }
+                }
+            }
+        } catch (Exception exception) {
+
+            TxError.setText(outputMessages.DatabaseConnectionFailed4());
+        }
     }
 
     public void ManejoModificarProyecto() {
@@ -73,26 +112,17 @@ public class ModificarProyecto_Coordinador implements Initializable {
      * @param mouseEvent el evento de mouse que activo la acción.
      */
     public void ClicRegresar ( MouseEvent mouseEvent ){
-        screenChanger.MostrarPantallaGestionarProyecto( mouseEvent, errorText );
+        screenChanger.MostrarPantallaGestionarProyecto( mouseEvent, TxError );
     }
-
-    /**
-     * Espera la acción del clic para modificar la información ingresada.
-     * @param event el evento de mouse que activo la acción.
-     */
-    public void ClicCancelar ( MouseEvent event ){
-        DatosProyecto();
-    }
-
 
     /**
      * Coloca la información del usuario actual en los campos de texto de
      * nombres, apellidos y No.Trabajador
      */
     public void DatosProyecto(){
-        tfNombre.setText( SelectionContainer.GetInstance().getProyectoElegido().getNombre() );
-        tfDescripcion.setText( SelectionContainer.GetInstance().getProyectoElegido().GetDescripcion() );
-        tfEstudiantesRequeridos.setText( "" + ( SelectionContainer.GetInstance().getProyectoElegido().getNumEstudiantesRequeridos() ) );
+        TbNombreProyecto.setText( SelectionContainer.GetInstance().getProyectoElegido().getNombre() );
+        TbDescripcionProyecto.setText( SelectionContainer.GetInstance().getProyectoElegido().GetDescripcion() );
+        TbEstudiantesRequeridos.setText( "" + ( SelectionContainer.GetInstance().getProyectoElegido().getNumEstudiantesRequeridos() ) );
     }
 
     private ResponsableProyecto ObtenerResponsableProyecto() {
@@ -120,7 +150,7 @@ public class ModificarProyecto_Coordinador implements Initializable {
     }
 
     private Proyecto ObtenerProyecto() {
-        return new Proyecto (RecuperarId(),tfNombre.getText(),tfDescripcion.getText(),Integer.parseInt(tfEstudiantesRequeridos.getText()),
+        return new Proyecto (RecuperarId(),TbNombreProyecto.getText(),TbDescripcionProyecto.getText(),Integer.parseInt(TbEstudiantesRequeridos.getText()),
                 RecuperarEstudiantesAsignados(),RecuperarFechaRegistro(),RecuperarEstadoProyecto());
     }
 
@@ -128,15 +158,16 @@ public class ModificarProyecto_Coordinador implements Initializable {
         NombreValido();
         DescripcionValida();
         EsEstudiantesRequeridosValidos();
+        SeleccionValida();
     }
 
     /**
      * Revisa que el nombre introducido sea valido.
      */
     private void NombreValido() {
-        if( !inputValidator.AreNamesValid( tfNombre.getText() ) ) {
-            errorText.setText( outputMessages.InvalidNames() );
-            successText.setText( "" );
+        if( !inputValidator.AreNamesValid( TbNombreProyecto.getText() ) ) {
+            TxError.setText( outputMessages.InvalidNames() );
+            TxSuccess.setText( "" );
         }
     }
 
@@ -144,33 +175,54 @@ public class ModificarProyecto_Coordinador implements Initializable {
      * Revisa que los nombres introducidos sean validos.
      */
     private void DescripcionValida() {
-        if( !inputValidator.DescripcionValida( tfDescripcion.getText() ) ) {
-            errorText.setText( outputMessages.DescripcionInvalida() );
-            successText.setText( "" );
+        if( !inputValidator.DescripcionValida( TbDescripcionProyecto.getText() ) ) {
+            TxError.setText( outputMessages.DescripcionInvalida() );
+            TxSuccess.setText( "" );
         }
     }
 
+    /**
+     * Revisa que la cantidad de estudiantes requeridos sea valido.
+     */
     private void EsEstudiantesRequeridosValidos(){
-        if( !inputValidator.EstudiantesRequeridosValidos( Integer.parseInt( tfEstudiantesRequeridos.getText() ) ) ) {
-            errorText.setText( outputMessages.EstudiantesRequeridosInvalidos() );
-            successText.setText( "" );
+        if( !inputValidator.EstudiantesRequeridosValidos( Integer.parseInt( TbEstudiantesRequeridos.getText() ) ) ) {
+            TxError.setText( outputMessages.EstudiantesRequeridosInvalidos() );
+            TxSuccess.setText( "" );
+        }
+    }
+
+    /**
+     * Revisa que la cantidad de estudiantes requeridos sea valido.
+     */
+    private void SeleccionValida() {
+        if(TvOrganizacion.getSelectionModel().getSelectedItem() != null){
+            OrganizacionVinculada orgVinculadaElegida = (OrganizacionVinculada)TvOrganizacion.getSelectionModel().getSelectedItem();
+            SelectionContainer.GetInstance().setOrganizacionElegida(orgVinculadaElegida);
+            TxSuccess.setText("");
+            TxError.setText("");
+        }else{
+            TxError.setText(outputMessages.SeleccionInvalidaOrganizacion());
         }
     }
 
     private void ModificarProyecto() {
         if( proyecto.Update( ObtenerProyecto() ) ) {
-            errorText.setText( "" );
-            successText.setText( outputMessages.ModificacionProyectoExitoso() );
+            TxError.setText( "" );
+            TxSuccess.setText( outputMessages.ModificacionProyectoExitoso() );
         }
         else {
-            errorText.setText( outputMessages.DatabaseConnectionFailed() );
-            successText.setText( "" );
+            TxError.setText( outputMessages.DatabaseConnectionFailed() );
+            TxSuccess.setText( "" );
         }
     }
 
-    public void DatosDeUsuario(){
-        lbNombres.setText( LoginSession.GetInstance().GetCoordinador().getNombres() );
-        lbApellidos.setText( LoginSession.GetInstance().GetCoordinador().GetApellidos() );
-        lbNoTrabajador.setText( LoginSession.GetInstance().GetCoordinador().GetNumeroPersonal() );
+    /**
+     * Coloca la información del usuario actual en los campos de texto de
+     * nombres, apellidos y No.Trabajador
+     */
+    public void DatosUsuario(){
+        TxNombres.setText( LoginSession.GetInstance().GetCoordinador().getNombres() );
+        TxApellidos.setText( LoginSession.GetInstance().GetCoordinador().GetApellidos() );
+        TxNoTrabajador.setText( LoginSession.GetInstance().GetCoordinador().GetNumeroPersonal() );
     }
 }

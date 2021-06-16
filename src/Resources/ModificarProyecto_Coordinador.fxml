@@ -2,50 +2,110 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ModificarProyecto_Coordinador">
+<SplitPane dividerPositions="0.2174" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ModificarProyecto_Coordinador">
     <items>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="122.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
             <children>
-                <SplitPane dividerPositions="0.5" layoutX="2.0" orientation="VERTICAL" prefHeight="598.0" prefWidth="294.0">
-                    <items>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #2b2e4a;">
-                            <children>
-                                <Label layoutX="14.0" layoutY="14.0" text="Nombres:" textFill="#e84545" />
-                                <Label fx:id="lbNombres" layoutX="14.0" layoutY="31.0" text="Label" textFill="#e84545" />
-                                <Label layoutX="14.0" layoutY="57.0" text="Apellidos:" textFill="#e84545" />
-                                <Label fx:id="lbApellidos" layoutX="14.0" layoutY="74.0" text="Label" textFill="#e84545" />
-                                <Label layoutX="14.0" layoutY="98.0" text="No.Trabajador:" textFill="#e84545" />
-                                <Label fx:id="lbNoTrabajador" layoutX="14.0" layoutY="115.0" text="Label" textFill="#e84545" />
-                            </children></AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="195.0" prefWidth="154.0" style="-fx-background-color: #2b2e4a;">
-                            <children>
-                                <VBox alignment="BOTTOM_CENTER" fillWidth="false" layoutX="-1.0" layoutY="270.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="292.0" style="-fx-background-color: #2b2e4a;">
-                                    <children>
-                                        <Button fx:id="btnRegresar" mnemonicParsing="false" onMouseClicked="#ClicRegresar" prefHeight="25.0" prefWidth="375.0" text="Regresar" textFill="#e84545" />
-                                    </children>
-                                </VBox>
-                                <Text fx:id="errorText" fill="#e84545" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                                <Text fx:id="successText" fill="#09eb09" layoutX="14.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                            </children></AnchorPane>
-                    </items>
-                </SplitPane>
-            </children></AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #2b2e4a;">
-            <children>
-                <Label id="bold" layoutX="283.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Modificar Proyecto" textFill="#e84545">
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2b2e4a" height="223.0" stroke="BLACK" strokeType="INSIDE" width="214.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2b2e4a" height="376.0" layoutY="222.0" stroke="BLACK" strokeType="INSIDE" width="214.0" />
+                <Button fx:id="BtRegresar" layoutY="557.0" mnemonicParsing="false" onMouseClicked="#ClicRegresar" prefHeight="40.0" prefWidth="214.0" text="Regresar" textFill="#e84545">
                     <font>
-                        <Font name="System Bold" size="16.0" />
-                    </font></Label>
-                <Label id="bold" layoutX="203.0" layoutY="145.0" prefHeight="17.0" prefWidth="52.0" style="-fx-font-weight: bold;" text="Nombre:" textFill="#e84545" />
-                <Label id="bold" layoutX="203.0" layoutY="183.0" prefHeight="17.0" prefWidth="79.0" style="-fx-font-weight: bold;" text="Descripción:" textFill="#e84545" />
-                <Label id="bold" layoutX="203.0" layoutY="221.0" prefHeight="17.0" prefWidth="135.0" style="-fx-font-weight: bold;" text="Estudiantes Requeridos:" textFill="#e84545" />
-                <TextField fx:id="tfNombre" layoutX="346.0" layoutY="141.0" prefHeight="25.0" prefWidth="174.0" />
-                <TextField fx:id="tfDescripcion" layoutX="346.0" layoutY="179.0" prefHeight="25.0" prefWidth="174.0" />
-                <Button fx:id="btnCancelar" layoutX="357.0" layoutY="337.0" mnemonicParsing="false" onMouseClicked="#ClicCancelar" prefHeight="25.0" prefWidth="69.0" text="Cancelar" textFill="#e84545" />
-                <Button fx:id="btnModificar" layoutX="441.0" layoutY="337.0" mnemonicParsing="false" onMouseClicked="#ManejoModificarProyecto" prefHeight="25.0" prefWidth="79.0" text="Modificar" textFill="#e84545" />
-                <TextField fx:id="tfEstudiantesRequeridos" layoutX="346.0" layoutY="217.0" prefHeight="25.0" prefWidth="174.0" />
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Text fill="#e84545" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombres:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fx:id="TxNombres" fill="#e84545" layoutX="14.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fill="#e84545" layoutX="14.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellidos:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fx:id="TxApellidos" fill="#e84545" layoutX="14.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fill="#e84545" layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No. Trabajador:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fx:id="TxNoTrabajador" fill="#e84545" layoutX="14.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+            </children></AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2b2e4a" height="598.0" stroke="BLACK" strokeType="INSIDE" width="792.0" />
+                <Text fill="#e84545" layoutX="275.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modificar Proyecto">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Text>
+                <Text fx:id="TxError" fill="#e84545" layoutX="189.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="521.95703125">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Text>
+                <Text fx:id="TxSuccess" fill="#09eb09" layoutX="189.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="521.95703125">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Text>
+                <Text fill="#e84545" layoutX="205.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fill="#e84545" layoutX="189.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fill="#e84545" layoutX="55.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero de estudiantes requeridos:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fill="#e84545" layoutX="167.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Organizaciones:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Button fx:id="BtRegistrar" layoutX="356.0" layoutY="507.0" mnemonicParsing="false" onMouseClicked="#ManejoModificarProyecto" prefHeight="40.0" prefWidth="103.0" text="Registrar" textFill="#e84545">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+                <TextArea fx:id="TbDescripcionProyecto" layoutX="287.0" layoutY="166.0" prefHeight="72.0" prefWidth="325.0" wrapText="true" />
+                <TextField fx:id="TbNombreProyecto" layoutX="287.0" layoutY="117.0" prefHeight="25.0" prefWidth="325.0" />
+                <TextField fx:id="TbEstudiantesRequeridos" layoutX="287.0" layoutY="403.0" />
+                <ScrollPane layoutX="287.0" layoutY="261.0" prefHeight="118.0" prefWidth="325.0">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="117.0" prefWidth="326.0">
+                            <children>
+                                <TableView fx:id="tvOrganizacion" layoutX="1.0" prefHeight="118.0" prefWidth="325.0">
+                                    <columns>
+                                        <TableColumn fx:id="TcNombreOrg" prefWidth="324.0" text="Nombre de la organizacion" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
             </children></AnchorPane>
     </items>
 </SplitPane>
