@@ -314,6 +314,12 @@ public class OutputMessages {
     public String OrganizacionExistente() { return "Ya existe una organización con esa información"; }
 
     /**
+     * Mensaje mostrado cuando ya existe una OrganizacionVinculada repetida en la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String OrganizacionRepetida() { return "Ya existe una organización con esa información"; }
+
+    /**
      * Mensaje mostrado cuando ya existe un ResponsableProyecto en base de datos
      * @return una cadena con el mensaje de error
      */
@@ -788,4 +794,27 @@ public class OutputMessages {
      */
     public String CrearProyectoScreenMissing() { return "No se encontró el archivo FXML de la pantalla CrearProyecto"; }
 
+    /**
+     * Mensaje mostrado cuando se genera un oficio de asignación
+     * @return una cadena con el mensaje de éxito
+     */
+    public String OficioGenerado() {
+        return "Se ha generado el oficio de asignación con éxito";
+    }
+
+    /**
+     * Mensaje mostrado cuando falten campos por llenar
+     * @return una cadena con el mensaje de error
+     */
+    public String FaltanCamposPorLlenar() {
+        return "Faltan campos por llenar";
+    }
+
+    /**
+     * Mensaje mostrado cuando no se ha seleccionado una organización
+     * @return una cadena con el mensaje de error
+     */
+    public String SelectionOrganizacionNull() {
+        return "Seleccione una organizacion";
+    }
 }

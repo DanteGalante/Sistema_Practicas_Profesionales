@@ -146,8 +146,12 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
 
     @FXML
     void ClicModificar( MouseEvent event){
-        SelectionContainer.GetInstance().setEstudianteElegido( RecuperarEstudiante() );
-        screenChanger.MostrarPantallaModificarEstudiante( event, errorText );
+        if ( estudiantesTable.getSelectionModel().getSelectedItem() != null ) {
+            SelectionContainer.GetInstance().setEstudianteElegido( RecuperarEstudiante() );
+            screenChanger.MostrarPantallaModificarEstudiante( event, errorText );
+        } else {
+            errorText.setText( outputMessages.SelectionStudentNull() );
+        }
     }
 
     /**

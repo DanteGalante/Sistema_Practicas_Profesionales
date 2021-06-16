@@ -142,37 +142,28 @@ public class ModificarOrganizacion_Coordinador implements Initializable {
      */
     public void ManejoModificarOrganizacion() {
         ClearMessages();
-        if( VerificarDatosOrganizacion() && VerificarDatosRepresentante() ) {
-            GetOrganizacionYResponsable();
-            if( !OrganizacionNoHaCambiado() && !ResponsableNoHaCambiado() ) {
-                try {
+        try {
+            if( VerificarDatosOrganizacion() && VerificarDatosRepresentante() ) {
+                GetOrganizacionYResponsable();
+                if( !OrganizacionNoHaCambiado() && !ResponsableNoHaCambiado() ) {
                     if( ModificarOrganizacion() && ModificarResponsableProyecto() ) {
                         errorText.setText( "" );
                         successText.setText( outputMessages.OrganizacionYRepresentanteUpdateSuccess() );
                     }
-                } catch( Exception exception ) {
-                    errorText.setText( outputMessages.DatabaseConnectionFailed() );
-                    successText.setText( "" );
-                }
-            } else if (!OrganizacionNoHaCambiado() && ResponsableNoHaCambiado() ) {
-                try{
+                } else if (!OrganizacionNoHaCambiado() && ResponsableNoHaCambiado() ) {
                     ModificarOrganizacion();
                     errorText.setText( "" );
                     successText.setText( outputMessages.OrganizacionUpdateSuccess() );
-                }catch ( Exception exception ) {
-                    errorText.setText( outputMessages.DatabaseConnectionFailed() );
-                    successText.setText("");
-                }
-            } else if ( OrganizacionNoHaCambiado() && !ResponsableNoHaCambiado() ) {
-                try{
+
+                } else if ( OrganizacionNoHaCambiado() && !ResponsableNoHaCambiado() ) {
                     ModificarResponsableProyecto();
                     errorText.setText( "" );
                     successText.setText( outputMessages.RepresentanteUpdateSuccess() );
-                }catch ( Exception exception) {
-                    errorText.setText( outputMessages.DatabaseConnectionFailed() );
-                    successText.setText("");
                 }
             }
+        } catch ( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed() );
+            successText.setText("");
         }
     }
 

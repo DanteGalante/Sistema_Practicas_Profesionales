@@ -121,10 +121,6 @@ public class AsignarProyectoAEstudianteController implements Initializable {
             public void changed(ObservableValue<? extends Estudiante> observableValue, Estudiante estudiante, Estudiante t1) {
                 String matricula = t1.getMatricula();
                 listaProyectosSeleccionados = proyectosSeleccionados.Read(matricula);
-                /*
-                LimpiarTablaPreferenciasProyecto();
-                MostrarPreferenciasProyecto();
-                 */
                 ActualizarTablaPreferenciaProyectos();
             }
         });
@@ -193,6 +189,8 @@ public class AsignarProyectoAEstudianteController implements Initializable {
                 TvPreferenciaProyecto.getItems().add(proyecto);
             }
         }
+
+        listaProyectosSeleccionados.clear();
     }
 
     public void HandleAsignarProyecto ( MouseEvent mouseEvent ) {

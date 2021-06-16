@@ -226,7 +226,7 @@ public class InputValidator {
      * @param maxSize el tamaño máximo permitido de la cadena
      * @return true si la cadena tiene una logitud dentro de los rangos introducidos, false si no
      */
-    private boolean IsStringValidSize( String input, int minSize, int maxSize ) {
+    public boolean IsStringValidSize( String input, int minSize, int maxSize ) {
         return ( input.length() >= minSize && input.length() <= maxSize );
     }
 
@@ -295,7 +295,7 @@ public class InputValidator {
      * @param input la cadena que se desea revisar
      * @return true si contiene characteres no permitidos, false si no
      */
-    private boolean HasInvalidCharacter( String input ) {
+    public boolean HasInvalidCharacter( String input ) {
         boolean hasInvalidCharacter = false;
         char[] testInput = input.toCharArray();
         for( char currentCharacter : testInput ) {

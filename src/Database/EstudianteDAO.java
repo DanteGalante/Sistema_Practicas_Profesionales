@@ -310,6 +310,34 @@ public class EstudianteDAO implements EstudianteDAOInterface{
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1,  matricula );
             statement.executeUpdate();
+
+            deleted = true;
+        } catch( Exception exception ) {
+            exception.printStackTrace();
+        }
+
+        connection.StopConnection();
+        return deleted;
+    }
+
+    /**
+     *Elimina un estudiante de la base de datos utilizando la matrícula introducida.
+     * La eliminación realizada es lógica.
+     * @param matricula la matrícula del Estudiante que se desea eliminar
+     * @return booleano indica éxito o fracaso
+     */
+    @Override
+    public boolean PermaDelete( String matricula ) {
+        boolean deleted = false;
+        MySqlConnection connection = new MySqlConnection();
+        connection.StartConnection();
+
+        try {
+            Estudiante estudiante = Read( matricula );
+            String query = "DELETE FROM Estudiante WHERE Matricula = ?;";
+            PreparedStatement statement = connection.GetConnection().prepareStatement( query );
+            statement.setString( 1,  matricula );
+            statement.executeUpdate();
             usuarios.Delete( Integer.toString( estudiante.GetID() ) );
 
             deleted = true;

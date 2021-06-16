@@ -67,9 +67,13 @@ public class VisualizarReporte_Coordinador implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DatosDeUsuario();
-        MostrarReportes();
-        ValorColumnaOrganizacion();
+        try {
+            DatosDeUsuario();
+            MostrarReportes();
+            ValorColumnaOrganizacion();
+        } catch ( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
     }
 
     public void DatosDeUsuario(){

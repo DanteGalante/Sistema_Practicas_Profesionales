@@ -71,6 +71,9 @@ public class GenerarOficioAsignacionController implements Initializable {
     private Text TxError;
 
     @FXML
+    private Text TxSuccess;
+
+    @FXML
     private TableView< Estudiante > TvEstudiante;
 
     @FXML
@@ -195,6 +198,10 @@ public class GenerarOficioAsignacionController implements Initializable {
                 doc.add( parrafoFinal );
                 doc.close();
 
+                TxSuccess.setText( outputMessages.OficioGenerado() );
+
+            } catch (NullPointerException nullPointerException) {
+                nullPointerException.printStackTrace();
             } catch( Exception e ) {
                 e.printStackTrace();
             }
