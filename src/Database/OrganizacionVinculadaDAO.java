@@ -175,14 +175,15 @@ public class OrganizacionVinculadaDAO implements OrganizacionVinculadaDAOInterfa
 
         try {
             String query = "UPDATE OrganizacionVinculada SET Nombre = ?, Direccion = ?, " +
-                    "Sector = ?, Telefono = ?, CorreoElectronico = ? WHERE IDOrganizacion = ?;";
+                    "Sector = ?, Telefono = ?, CorreoElectronico = ?, Activa = ? WHERE IDOrganizacion = ?;";
             PreparedStatement statement = connection.GetConnection().prepareStatement( query );
             statement.setString( 1, organizacion.getNombre() );
             statement.setString( 2, organizacion.getDireccion() );
             statement.setInt( 3, organizacion.getSector().ordinal() );
             statement.setString(  4, organizacion.getTelefono() );
             statement.setString( 5, organizacion.getCorreo() );
-            statement.setInt( 6, organizacion.getIdOrganizacion() );
+            statement.setBoolean( 6, organizacion.getActiveStatus() );
+            statement.setInt( 7, organizacion.getIdOrganizacion() );
             statement.executeUpdate();
 
             responsables.Update( organizacion.getIdOrganizacion(), organizacion.getResponsables() );

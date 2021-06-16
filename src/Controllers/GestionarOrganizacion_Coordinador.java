@@ -1,10 +1,11 @@
 package Controllers;
 
-import Database.OrganizacionVinculadaDAO;
-import Database.ResponsableProyectoDAO;
-import Database.ResponsablesOrganizacionDAO;
+import Database.*;
+import Entities.Expediente;
 import Entities.OrganizacionVinculada;
+import Entities.Proyecto;
 import Entities.ResponsableProyecto;
+import Enumerations.EstadoProyecto;
 import Utilities.LoginSession;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
@@ -17,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,6 +29,10 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
     private ResponsablesOrganizacionDAO responsablesOrganizacion = new ResponsablesOrganizacionDAO();
     private List< OrganizacionVinculada > listaOrganizaciones = new ArrayList<>();
     private OutputMessages outputMessages = new OutputMessages();
+    private List< Proyecto > listaProyectos = new ArrayList<>();
+    private ProyectoDAO proyectoCiclo = new ProyectoDAO();
+    private ProyectoDAO proyectoAux = new ProyectoDAO();
+    private ExpedienteDAO expedientes = new ExpedienteDAO();
 
     @FXML
     private Label lbNombres;
@@ -97,7 +103,9 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
         tbOrganizaciones.getItems().clear();
         listaOrganizaciones = organizacionVinculada.ReadAll();
         for( OrganizacionVinculada organizacion : listaOrganizaciones ){
-            tbOrganizaciones.getItems().add( organizacion );
+            if( organizacion.getActiveStatus() != false){
+                tbOrganizaciones.getItems().add( organizacion );
+            }
         }
     }
 
@@ -127,14 +135,6 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
     }
 
     /**
-     * Cambia la pantalla de GestionarOrganizacion_Coordinador a la pantalla GestionarProyecto_Coordinador.
-     * @param mouseEvent el evento de mouse que activo la acción.
-     */
-    public void ClicGestionarProyecto ( MouseEvent mouseEvent ){
-        screenChanger.MostrarPantallaGestionarProyecto( mouseEvent, errorText );
-    }
-
-    /**
      * Cambia la pantalla de GestionarOrganizacion_Coordinador a la pantalla RegistrarOrganizacion_Coordinador.
      * @param mouseEvent el evento de mouse que activo la acción.
      */
@@ -146,16 +146,123 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
      * Recupera la selección de la tabla para Elimina una OrganizacionVinculada de la base de datos.
      * @param mouseEvent el evento de mouse que activo la acción.
      */
-    public void ClicEliminarRegistro( MouseEvent mouseEvent){
+    public void ClicEliminarOrganizacion( MouseEvent mouseEvent){
         if( ExisteSeleccion() ) {
             Alert deleteAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.ConfirmacionEliminarOrganizacion() );
             deleteAlert.showAndWait().ifPresent( response -> {
                 if( response == ButtonType.OK ) {
-                    organizacionVinculada.Delete( tbOrganizaciones.getSelectionModel().getSelectedItem().getIdOrganizacion(), tbOrganizaciones.getSelectionModel().getSelectedItem().getResponsables() );
+                    EliminadoOrganizacionLogico();
                     MostrarOrganizaciones();
                 }
             } );
         }
+    }
+
+    public void EliminadoOrganizacionLogico(){
+        OrganizacionVinculada seleccionOrganizacion = OrganizacionSeleccionada();
+        if(!ExistenProyectosRelacionados(seleccionOrganizacion)){
+            try {
+                organizacionVinculada.Update(ObtenerOrganizacionEliminada(seleccionOrganizacion));
+            }catch (Exception exception){
+                errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            }
+        }else{
+            Alert deleteAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.ConfirmacionEliminarProyecto() );
+            deleteAlert.showAndWait().ifPresent( response -> {
+                if( response == ButtonType.OK ) {
+                    EliminadoProyectoLogico(seleccionOrganizacion);
+                    MostrarOrganizaciones();
+                }
+            });
+        }
+    }
+
+    public  void EliminadoProyectoLogico(OrganizacionVinculada seleccionOrganizacion){
+        ResponsableProyecto responsableActual;
+        //int proyectoCiclo;
+        if(!ExistenEstudiantesAsignados(seleccionOrganizacion)){
+            for ( int i = 0; i< RecuperarListaProyectos(seleccionOrganizacion).size() ; i++) {
+                ModificarProyecto(proyectoCiclo.Read(listaProyectos.get(i).getIdProyecto()));
+            }
+        }else{
+            //Falta el eliminar expediente
+        }
+    }
+
+    public void ModificarProyecto(Proyecto proyecto){
+        proyectoAux.Update(RecuperarProyecto(proyecto));
+    }
+
+    public Proyecto RecuperarProyecto(Proyecto proyecto){
+        return new Proyecto(proyecto.getIdProyecto(),proyecto.getNombre(),proyecto.GetDescripcion(),proyecto.getNumEstudiantesRequeridos(),
+                proyecto.GetEstudiantesAsignados(),proyecto.GetFechaRegistro(), EstadoProyecto.Eliminado);
+    }
+
+    public List<Proyecto> RecuperarListaProyectos(OrganizacionVinculada seleccionOrganizacion){
+        ResponsableProyecto responsableActual;
+        Proyecto proyectoCicloAux;
+        int proyectoId;
+        listaProyectos.clear();
+
+        for( int i = 0; i< seleccionOrganizacion.getResponsables().size(); i++) {
+            responsableActual = responsableProyecto.Read(seleccionOrganizacion.getResponsables().get(i));
+            for (int i1 = 0; i < responsableActual.getIdProyectos().size(); i1++) {
+                proyectoId = responsableActual.getIdProyectos().get(i1);
+                proyectoCicloAux = proyectoCiclo.Read(proyectoId);
+                listaProyectos.add(proyectoCicloAux);
+            }
+        }
+        return  listaProyectos;
+    }
+
+    public OrganizacionVinculada OrganizacionSeleccionada(){
+        return organizacionVinculada.Read(tbOrganizaciones.getSelectionModel().getSelectedItem().getIdOrganizacion());
+    }
+
+    public boolean ExistenProyectosRelacionados( OrganizacionVinculada seleccionOrganizacion){
+        boolean proyectosRelacionados = false;
+        ResponsableProyecto responsableActual;
+        for( int i = 0; i < seleccionOrganizacion.getResponsables().size(); i++ ){
+            responsableActual = responsableProyecto.Read(seleccionOrganizacion.getResponsables().get(i));
+            if(responsableActual.getIdProyectos().size() > 0){
+                proyectosRelacionados = true;
+            }
+        }
+        return proyectosRelacionados;
+    }
+
+    public boolean ExistenEstudiantesAsignados(OrganizacionVinculada seleccionOrganizacion){
+        ResponsableProyecto responsableActual;
+        ResponsableProyecto proyectoActual;
+        List<Expediente> listaExpedientes = new ArrayList<>();
+        Proyecto proyectoCicloAux;
+        Expediente expediente;
+        listaExpedientes.clear();
+        listaExpedientes = expedientes.ReadAll();
+        int proyectoId;
+        boolean existeEstudiante = false;
+
+        for( int i = 0; i< seleccionOrganizacion.getResponsables().size(); i++){
+            responsableActual = responsableProyecto.Read( seleccionOrganizacion.getResponsables().get(i) );
+            for (int i1 = 0 ; i< responsableActual.getIdProyectos().size(); i1++){
+                proyectoId = responsableActual.getIdProyectos().get(i1);
+                proyectoCicloAux = proyectoCiclo.Read(proyectoId);
+                for ( int i2=0; i< listaExpedientes.size(); i2++){
+                    expediente = listaExpedientes.get(i2);
+                    if(expediente.GetIDProyecto() == proyectoCicloAux.getIdProyecto()){
+                        existeEstudiante = true;
+                    }
+                }
+            }
+        }
+        return existeEstudiante;
+    }
+
+    public OrganizacionVinculada ObtenerOrganizacionEliminada(OrganizacionVinculada seleccionOrganizacion){
+        return new OrganizacionVinculada ( seleccionOrganizacion.getNombre(),seleccionOrganizacion.getDireccion(),
+                seleccionOrganizacion.getSector(),seleccionOrganizacion.getTelefono(),seleccionOrganizacion.getCorreo(),
+                seleccionOrganizacion.getIdOrganizacion(),seleccionOrganizacion.getResponsables(),false,
+                seleccionOrganizacion.GetKey());
     }
 
     /**
@@ -171,7 +278,10 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
     public boolean ExisteSeleccion(){
         boolean Seleccion = false;
         if( tbOrganizaciones.getSelectionModel().getSelectedItem() != null ) {
+            errorText.setText("");
             Seleccion = true;
+        }else{
+            errorText.setText(outputMessages.SeleccionInvalidaOrganizacion());
         }
         return Seleccion;
     }
