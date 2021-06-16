@@ -100,6 +100,13 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
 
     public void ClicCancelar ( MouseEvent mouseEvent ){
         ClearMessages();
+        LimpiarCampos();
+    }
+
+    /**
+     * Limpia los campos de texto
+     */
+    public void LimpiarCampos () {
         tfNombre.setText("");
         tfDireccion.setText("");
         tfCorreoElectronico.setText("");
@@ -116,19 +123,20 @@ public class RegistrarOrganizacion_Coordinador implements Initializable {
      */
     public void ManejoRegistroOrganizacion() {
         ClearMessages();
-        if( VerificarDatosOrganizacion() && VerificarDatosRepresentante() ) {
-            GetOrganizacionYResponsable();
-            if( !OrganizacionExistente() && !ResponsableExistente() ) {
-                try {
+        try {
+            if( VerificarDatosOrganizacion() && VerificarDatosRepresentante() ) {
+                GetOrganizacionYResponsable();
+                if( !OrganizacionExistente() && !ResponsableExistente() ) {
                     if( RegistrarOrganizacion() && RegistrarResponsableProyecto() && LigarResponsableYOrganizacion() ) {
                         errorText.setText( "" );
+                        LimpiarCampos();
                         successText.setText( outputMessages.OrganizacionYRepresentanteCreateSuccess() );
                     }
-                } catch( Exception exception ) {
-                    errorText.setText( outputMessages.DatabaseConnectionFailed() );
-                    successText.setText( "" );
                 }
             }
+        } catch( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed() );
+            successText.setText( "" );
         }
     }
 

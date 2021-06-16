@@ -101,12 +101,8 @@ public class EliminarArchivosConsulta_Docente implements Initializable {
      * Elimina del sistema los archivos de consulta seleccionados en la pantalla anterior.
      */
     private void EliminarArchivosConsulta() {
-        try {
-            for (ArchivoConsulta archivoEliminar : archivosElegidos) {
-                archivoConsultaDAO.Delete( archivoEliminar.GetId() );
-            }
-        } catch (Exception exception) {
-            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        for (ArchivoConsulta archivoEliminar : archivosElegidos) {
+            archivoConsultaDAO.Delete( archivoEliminar.GetId() );
         }
     }
 
@@ -124,9 +120,13 @@ public class EliminarArchivosConsulta_Docente implements Initializable {
      */
     public void ClicAceptar(MouseEvent mouseEvent) {
         if( archivosElegidos.size() > 0 ){
-            EliminarArchivosConsulta();
-            MostrarMensajeExito();
-            screenChanger.ShowScreenPrincipalDocente(mouseEvent, errorText);
+            try {
+                EliminarArchivosConsulta();
+                MostrarMensajeExito();
+                screenChanger.ShowScreenPrincipalDocente(mouseEvent, errorText);
+            } catch (Exception exception) {
+                errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+            }
         } else {
             errorText.setText( outputMessages.FileNotSelectedToDelete() );
         }

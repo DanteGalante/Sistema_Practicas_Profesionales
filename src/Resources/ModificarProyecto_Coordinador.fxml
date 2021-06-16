@@ -97,7 +97,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="117.0" prefWidth="326.0">
                             <children>
-                                <TableView fx:id="tvOrganizacion" layoutX="1.0" prefHeight="118.0" prefWidth="325.0">
+                                <TableView fx:id="TvOrganizacion" layoutX="1.0" prefHeight="118.0" prefWidth="325.0">
                                     <columns>
                                         <TableColumn fx:id="TcNombreOrg" prefWidth="324.0" text="Nombre de la organizacion" />
                                     </columns>

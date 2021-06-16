@@ -84,9 +84,13 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DatosDeUsuario();
-        MostrarOrganizaciones();
-        ValorColumnaOrganizacion();
+        try {
+            DatosDeUsuario();
+            MostrarOrganizaciones();
+            ValorColumnaOrganizacion();
+        } catch ( Exception e) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
     }
 
     /**
@@ -130,7 +134,7 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
             SelectionContainer.GetInstance().setOrganizacionElegida(orgVinculadaElegida);
             screenChanger.ShowConsultarOrganizacion( mouseEvent, errorText );
         }else{
-            errorText.setText("Seleccione una organizacion");
+            errorText.setText( outputMessages.SelectionOrganizacionNull());
         }
     }
 
@@ -270,9 +274,13 @@ public class GestionarOrganizacion_Coordinador implements Initializable {
      */
     @FXML
     public void ClicModificarOrganizacion( MouseEvent mouseEvent ) {
-        SelectionContainer.GetInstance().setOrganizacionElegida( RecuperarOrganizacion() );
-        SelectionContainer.GetInstance().setResponsableElegido( RecuperarResponsable() );
-        screenChanger.MostrarPantallaModificarOrganizacion( mouseEvent, errorText );
+        if ( tbOrganizaciones.getSelectionModel().getSelectedItem() != null ) {
+            SelectionContainer.GetInstance().setOrganizacionElegida( RecuperarOrganizacion() );
+            SelectionContainer.GetInstance().setResponsableElegido( RecuperarResponsable() );
+            screenChanger.MostrarPantallaModificarOrganizacion( mouseEvent, errorText );
+        } else {
+            errorText.setText( outputMessages.SelectionOrganizacionNull() );
+        }
     }
 
     public boolean ExisteSeleccion(){

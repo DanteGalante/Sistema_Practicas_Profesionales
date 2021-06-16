@@ -9,10 +9,7 @@ package Controllers;
  * CrearProyecto del sistema de prácticas profesionales.
  */
 
-import Database.OrganizacionVinculadaDAO;
-import Database.ProyectoDAO;
-import Database.ProyectosDeResponsablesDAO;
-import Database.ResponsableProyectoDAO;
+import Database.*;
 import Entities.OrganizacionVinculada;
 import Entities.Proyecto;
 import Enumerations.EstadoProyecto;
@@ -110,7 +107,9 @@ public class CrearProyectoController implements Initializable {
             listaOrganizaciones = organizacionVinculadaDAO.ReadAll();
             if(listaOrganizaciones.size() > 0) {
                 for( OrganizacionVinculada organizacionVinculada : listaOrganizaciones){
-                    TvOrganizacion.getItems().add( organizacionVinculada );
+                    if ( organizacionVinculada.getActiveStatus() != false ) {
+                        TvOrganizacion.getItems().add( organizacionVinculada );
+                    }
                 }
             }
         } catch (Exception exception) {
@@ -232,13 +231,15 @@ public class CrearProyectoController implements Initializable {
      */
     private void GenerarRelacionProyectoOrganizacion() {
         ProyectosDeResponsablesDAO proyect_RespDAO = new ProyectosDeResponsablesDAO();
+        ResponsablesOrganizacionDAO responsablesOrganizacionDAO = new ResponsablesOrganizacionDAO();
 
         OrganizacionVinculada organizacionVinculada = TvOrganizacion.getSelectionModel().getSelectedItem();
-        int idResponsable = organizacionVinculada.getResponsables().get(0);
+
+        List<Integer> idsResponsable = responsablesOrganizacionDAO.ReadResponsables( organizacionVinculada.getIdOrganizacion() );
         List<Integer> listaProyectos = new ArrayList<Integer>();
         listaProyectos.add( RecuperarIDNuevoProyecto( GetProyecto() ) );
 
-        proyect_RespDAO.Create(idResponsable, listaProyectos);
+        proyect_RespDAO.Create(idsResponsable.get(0), listaProyectos);
     }
 
     /**

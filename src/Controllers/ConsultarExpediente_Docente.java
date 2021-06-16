@@ -81,6 +81,8 @@ public class ConsultarExpediente_Docente implements Initializable {
             }catch (Exception exception) {
                 errorText.setText( outputMessages.DatabaseConnectionFailed3() );
             }
+        } else {
+            errorText.setText( outputMessages.NoExpedient() );
         }
     }
 

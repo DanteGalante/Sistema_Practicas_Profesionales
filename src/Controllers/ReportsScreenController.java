@@ -71,6 +71,9 @@ public class ReportsScreenController implements Initializable {
     private Text errorText;
 
     @FXML
+    private Text successText;
+
+    @FXML
     private TableView< Reporte > studentReportsTable;
 
     @FXML
@@ -156,15 +159,18 @@ public class ReportsScreenController implements Initializable {
      */
     @FXML
     public void TurnInReport( MouseEvent mouseEvent ) {
-        ClearErrorText();
+        ClearText();
         File report = GetFile( mouseEvent );
         try {
             if( report != null && ReportNameDoesNotExist( GetReport( report ) ) ) {
                 reportes.Create( GetReport( report ) );
+                successText.setText( outputMessages.EntregaReporteExitoso() );
+                errorText.setText( "" );
                 ShowReports();
             }
         } catch( Exception exception ) {
             errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            successText.setText( "" );
             exception.printStackTrace();
         }
     }
@@ -238,5 +244,8 @@ public class ReportsScreenController implements Initializable {
         }
     }
 
-    private void ClearErrorText() { errorText.setText( "" ); }
+    private void ClearText() {
+        errorText.setText( "" );
+        successText.setText( "" );
+    }
 }

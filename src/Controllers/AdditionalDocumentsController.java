@@ -69,6 +69,9 @@ public class AdditionalDocumentsController implements Initializable {
     private Text errorText;
 
     @FXML
+    private Text successText;
+
+    @FXML
     private TableView< Documento > studentDocumentsTable;
 
     @FXML
@@ -125,7 +128,13 @@ public class AdditionalDocumentsController implements Initializable {
     /**
      * COnfigura el seleccionador de archivos con un título personalizado.
      */
-    private void ConfigureFileChoosers() { fileChooser.setTitle( "Buscar Documento..." ); }
+    private void ConfigureFileChoosers() {
+        fileChooser.setTitle( "Buscar Documento..." );
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "PDF Files", "*.pdf" ) );
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "Word Files", "*.docx" ) );
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "PowerPoint Files", "*.pptx" ) );
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "Excel Files", "*.xlsx" ) );
+    }
 
     /**
      * Muestra todos los documentos que se ubican dentro del expediente del estudiante
@@ -188,16 +197,20 @@ public class AdditionalDocumentsController implements Initializable {
      */
     @FXML
     public void DeleteDocument( MouseEvent mouseEvent ) {
-        ClearErrorText();
+        ClearText();
         if( IsDocumentSelected() ) {
             Alert deleteAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.DeleteDocumentConfirmation() );
             deleteAlert.showAndWait().ifPresent( response -> {
                 if( response == ButtonType.OK ) {
                     try {
                         documentos.Delete( studentDocumentsTable.getSelectionModel().getSelectedItem().getIdDocumento() );
+                        expedientes.Update( GetNewDeleteDocumentExpediente( GetUserExpediente() ) );
                         ShowDocuments();
+                        successText.setText( outputMessages.EliminacionDocumentoAdicionalExitoso() );
+                        errorText.setText( "" );
                     } catch( Exception exception ) {
                         errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+                        successText.setText( "" );
                     }
                 }
             } );
@@ -210,14 +223,17 @@ public class AdditionalDocumentsController implements Initializable {
      */
     @FXML
     public void DownloadDocument( MouseEvent mouseEvent ) {
-        ClearErrorText();
+        ClearText();
         if( IsDocumentSelected() ) {
             File directoryFile = GetDirectory( mouseEvent );
             try {
                 CopyFile( documentos.Read( studentDocumentsTable.getSelectionModel().getSelectedItem().getIdDocumento() ).GetDescripcion(),
                         directoryFile );
+                successText.setText( outputMessages.DescargaDocumentoAdicionalExitoso() );
+                errorText.setText( "" );
             } catch( Exception exception ) {
                 errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+                successText.setText( "" );
             }
         }
     }
@@ -236,15 +252,19 @@ public class AdditionalDocumentsController implements Initializable {
      */
     @FXML
     public void UploadDocument( MouseEvent mouseEvent ) {
-        ClearErrorText();
+        ClearText();
         File document = GetFile( mouseEvent );
         try {
             if( document != null && DocumentNameDoesNotExist( GetDocument( document ) ) ) {
                 documentos.Create( GetDocument( document ) );
+                expedientes.Update( GetNewUploadDocumentExpediente( GetUserExpediente() ) );
+                successText.setText( outputMessages.SubirDocumentoAdicionalExitoso() );
+                errorText.setText( "" );
                 ShowDocuments();
             }
         } catch( Exception exception ) {
             errorText.setText( outputMessages.DatabaseConnectionFailed2() );
+            successText.setText( "" );
         }
     }
 
@@ -367,5 +387,20 @@ public class AdditionalDocumentsController implements Initializable {
         projectText.setText( proyectos.Read( GetUserExpediente().GetIDProyecto() ).getNombre() );
     }
 
-    private void ClearErrorText() { errorText.setText( "" ); }
+    private void ClearText() {
+        errorText.setText( "" );
+        successText.setText( "" );
+    }
+
+    private Expediente GetNewUploadDocumentExpediente( Expediente currentExpediente ) {
+        return new Expediente( currentExpediente.GetClave(), currentExpediente.GetIDProyecto(), currentExpediente.GetMatricula(),
+                               currentExpediente.GetFechaAsignacion(), currentExpediente.GetHorasAcumuladas(),
+                               currentExpediente.GetNumeroArchivos() + 1 , currentExpediente.GetActivo() );
+    }
+
+    private Expediente GetNewDeleteDocumentExpediente( Expediente currentExpediente ) {
+        return new Expediente( currentExpediente.GetClave(), currentExpediente.GetIDProyecto(), currentExpediente.GetMatricula(),
+                currentExpediente.GetFechaAsignacion(), currentExpediente.GetHorasAcumuladas(),
+                currentExpediente.GetNumeroArchivos() - 1 , currentExpediente.GetActivo() );
+    }
 }

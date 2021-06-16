@@ -140,7 +140,7 @@ public class DescargarArchivo_Coordinador implements Initializable {
     }
 
     /**
-     * Vuelve a la pantalla principal del docente
+     * Vuelve a la pantalla ConsultarExpediente_Coordinador
      * @param mouseEvent evento del mouse que inicia el metodo
      */
     public void ClicRegresar( MouseEvent mouseEvent ) {

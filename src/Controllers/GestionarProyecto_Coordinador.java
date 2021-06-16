@@ -1,7 +1,12 @@
 package Controllers;
 
+import Database.EstudianteDAO;
+import Database.ExpedienteDAO;
 import Database.ProyectoDAO;
+import Entities.Estudiante;
+import Entities.Expediente;
 import Entities.Proyecto;
+import Enumerations.EstadoEstudiante;
 import Enumerations.EstadoProyecto;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
@@ -18,6 +23,7 @@ import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GestionarProyecto_Coordinador implements Initializable {
@@ -61,11 +67,14 @@ public class GestionarProyecto_Coordinador implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        DatosDeUsuario();
-        ValorColumnasProyecto();
-        MostrarProyectosDisponibles();
-
+        try {
+            DatosDeUsuario();
+            ValorColumnasProyecto();
+            MostrarProyectosDisponibles();
+        } catch ( Exception exception ) {
+            exception.printStackTrace();
+            errorText.setText(outputMessages.DatabaseConnectionFailed4());
+        }
     }
 
     /**
@@ -85,8 +94,9 @@ public class GestionarProyecto_Coordinador implements Initializable {
     public void MostrarProyectosDisponibles(){
         listaProyectos = proyecto.ReadAll();
         for( Proyecto proyecto : listaProyectos){
-            proyecto.getNombre();
-            tbProyectos.getItems().add( proyecto );
+            if ( proyecto.GetEstado() != EstadoProyecto.Eliminado ) {
+                tbProyectos.getItems().add( proyecto );
+            }
         }
     }
 
@@ -121,31 +131,85 @@ public class GestionarProyecto_Coordinador implements Initializable {
     }
 
     public void EliminarProyecto( MouseEvent mouseEvent){
-        if (tbProyectos.getSelectionModel().getSelectedItem() != null) {
+        try {
+            if (tbProyectos.getSelectionModel().getSelectedItem() != null) {
 
-            Proyecto seleccionProyecto = (Proyecto) tbProyectos.getSelectionModel().getSelectedItem();
-            int idProyecto = seleccionProyecto.getIdProyecto();
-            int estudiantesRequeridos = seleccionProyecto.getNumEstudiantesRequeridos();
-            if (seleccionProyecto.GetEstudiantesAsignados() >= 0){
-                JOptionPane.showMessageDialog(null,"El proyecto está asignado a estudiante(s), por lo que no se puede eliminar");
+                Proyecto seleccionProyecto = (Proyecto) tbProyectos.getSelectionModel().getSelectedItem();
+                int idProyecto = seleccionProyecto.getIdProyecto();
+                int estudiantesRequeridos = seleccionProyecto.getNumEstudiantesRequeridos();
+                if (seleccionProyecto.GetEstudiantesAsignados() > 0){
+                    ExpedienteDAO expedienteDAO = new ExpedienteDAO();
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    Optional<ButtonType> respuesta = alert.showAndWait();
 
-                /*
-                if (dialogButton == JOptionPane.YES_OPTION) {
-                    EliminarExpediente(idProyecto);
-                    proyecto.Delete(idProyecto);
+                    if ( respuesta.get() == ButtonType.OK ) {
+                        seleccionProyecto.SetEstado( EstadoProyecto.Eliminado );
+                        proyecto.Update(seleccionProyecto);
+                        List<Expediente> expedientes = RecuperarExpedientePorProyecto( seleccionProyecto.getIdProyecto() );
+                        BorradoLogicoExpedientes(expedientes);
+                        ActualizarTablaProyectos();
+                        successText.setText(outputMessages.ProjectDelete());
+                    }
+
+
+                } else {
+                    seleccionProyecto.SetEstado(EstadoProyecto.Eliminado);
+                    proyecto.Update(seleccionProyecto);
                     ActualizarTablaProyectos();
-                    errorText.setText(outputMessages.ProjectDelete());
+                    successText.setText(outputMessages.ProjectDelete());
                 }
-                 */
-
             } else {
-                seleccionProyecto.SetEstado(EstadoProyecto.Eliminado);
-                ActualizarTablaProyectos();
-                errorText.setText(outputMessages.ProjectDelete());
+                errorText.setText(outputMessages.SelectionProjectNull());
             }
-        } else {
-            errorText.setText(outputMessages.SelectionProjectNull());
+        } catch ( Exception exception ) {
+
         }
+    }
+
+    /**
+     * Borrado lógico de los expedientes de un proyecto que se esta borrando
+     * @param expedientes lista de expedientes de un proyecto
+     */
+    private void BorradoLogicoExpedientes(List<Expediente> expedientes) {
+        ExpedienteDAO expedienteDAO = new ExpedienteDAO();
+        for (Expediente expedienteAborrar : expedientes ) {
+            expedienteAborrar.SetActivo(false);
+            expedienteDAO.Update(expedienteAborrar);
+            CambioEstadoEstudianteAsignado( expedienteAborrar.GetMatricula() );
+        }
+    }
+
+    /**
+     * Cambio de estado de los estudiantes que fueron asignado a un proyecto que es eliminado.
+     * El estado al que pasan es "Asignación pendiente"
+     * @param getMatricula matricula del estudiante asignado a un proyecto que va a ser borrado
+     */
+    private void CambioEstadoEstudianteAsignado(String getMatricula) {
+        EstudianteDAO estudianteDAO = new EstudianteDAO();
+
+        Estudiante estudianteRecuperado = estudianteDAO.Read(getMatricula);
+
+        estudianteRecuperado.SetEstadoEstudiante( EstadoEstudiante.AsignacionPendiente );
+
+        estudianteDAO.Update( estudianteRecuperado );
+    }
+
+    /**
+     * Recupera los expedientes de un proyecto especificado
+     * @param idProyecto id del proyecto que se le busca su expediente
+     * @return lista de expedientes recuperados
+     */
+    private List<Expediente> RecuperarExpedientePorProyecto(int idProyecto) {
+        List<Expediente> expedientesRecuperados = new ArrayList<>();
+        ExpedienteDAO expedienteDAO = new ExpedienteDAO();
+
+        for ( Expediente expediente : expedienteDAO.ReadAll() ){
+            if ( expediente.GetIDProyecto() == idProyecto ) {
+                expedientesRecuperados.add(expediente);
+            }
+        }
+
+        return expedientesRecuperados;
     }
 
     public void ActualizarTablaProyectos(){

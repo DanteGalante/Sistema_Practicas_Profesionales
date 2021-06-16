@@ -130,26 +130,23 @@ public class ValidarInscripcion implements Initializable {
      */
     public void ClicAceptar(){
         if( VerificarValidezSeleccion() ){
-            for( Estudiante estudiante : tbvEstudiantes.getItems() ){
-                if( estudiante.getValidado().isSelected() ){
-                    estudiante.SetEstadoEstudiante(EstadoEstudiante.RegistroAprobado);
-                    try {
+            try {
+                for( Estudiante estudiante : tbvEstudiantes.getItems() ){
+                    if( estudiante.getValidado().isSelected() ){
+                        estudiante.SetEstadoEstudiante(EstadoEstudiante.RegistroAprobado);
                         estudianteDAO.Update(estudiante);
-                    } catch ( Exception exception ) {
-                        errorText.setText( outputMessages.DatabaseConnectionFailed3() );
-                    }
-                }else if( estudiante.getDepurado().isSelected() ){
-                    try {
-                        estudianteDAO.Delete(estudiante.getMatricula());
-                    } catch ( Exception exception ) {
-                        errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+                    }else if( estudiante.getDepurado().isSelected() ){
+                        estudianteDAO.PermaDelete(estudiante.getMatricula());
                     }
                 }
-            }
-            confirmationText.setText( "Se ha realizado la operación con éxito" );
 
-            RecuperarEstudiantes();
-            LlenarTablaEstudiantes();
+                confirmationText.setText( "Se ha realizado la operación con éxito" );
+
+                RecuperarEstudiantes();
+                LlenarTablaEstudiantes();
+            } catch ( Exception exception ){
+                errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+            }
         }
     }
 
