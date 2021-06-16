@@ -1,5 +1,6 @@
 package Controllers;
 
+import Database.EstudianteDAO;
 import Entities.Estudiante;
 import Entities.Expediente;
 import Enumerations.EstadoEstudiante;
@@ -9,6 +10,7 @@ import Utilities.ScreenChanger;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.fxml.FXML;
@@ -38,6 +40,7 @@ public class Reportes_Coordinador implements Initializable {
     private List< Estudiante > listaEstudiantes = new ArrayList< Estudiante>();
     private List< Expediente > listaExpedientes = new ArrayList<>();
     private DirectoryChooser directoryChooser = new DirectoryChooser();
+    private EstudianteDAO estudianteDAO = new EstudianteDAO();
 
     @FXML
     private Label lbNombres;
@@ -78,6 +81,7 @@ public class Reportes_Coordinador implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        listaEstudiantes = estudianteDAO.ReadAll();
         DatosUsuario();
     }
 
@@ -153,18 +157,25 @@ public class Reportes_Coordinador implements Initializable {
             var bold = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
             var style = new Font(Font.FontFamily.HELVETICA, 14);
             var paragraph = new Paragraph("Reporte Inscripciones \n",bold);
-            var table = new PdfPTable(1);
+            var table = new PdfPTable(3);
             var paragraphIntro = new Paragraph("Mediante la presente, se le comunica el avance academico de la " +
                     "experiencia educativa de prácticas profesionales durante el més de Junio. \n" +
                     "Se informa que actualmente contamos con " + EstudiantesInscritos() +  " estudiantes " +
                     " inscritos y " + EstudiantesBaja() + " estudiantes de baja. \n" +
                     "A continuación se le muestra una tabla de con las matriculas de los estudiantes inscritos", style);
 
-            Stream.of("Matricula").forEach(table::addCell);
 
-            Arrays.stream(MatriculaEstudianteInscrito().stream().toArray()).forEach(val ->{
-                table.addCell(val.toString());
-            });
+            table.addCell(new PdfPCell(new Paragraph("Nombres")));
+            table.addCell(new PdfPCell(new Paragraph("Apellidos")));
+            table.addCell(new PdfPCell(new Paragraph("Matricula")));
+
+            for( Estudiante estudiante : AllStudents() ){
+                table.addCell( new PdfPCell( new Paragraph( estudiante.getNombres() ) ) );
+                table.addCell( new PdfPCell( new Paragraph( estudiante.GetApellidos() ) ) );
+                table.addCell( new PdfPCell( new Paragraph( estudiante.getMatricula()) ) );
+            }
+
+
 
             doc.add(paragraph);
             paragraphIntro.add(table);
@@ -237,8 +248,24 @@ public class Reportes_Coordinador implements Initializable {
     public List MatriculaEstudianteInscrito(){
         List<String> listaAuxiliar = new ArrayList<>();
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado){
+            if(estudiante.getEstado() == EstadoEstudiante.Evaluado ||
+                    estudiante.getEstado() == EstadoEstudiante.RegistroAprobado ||
+                    estudiante.getEstado() == EstadoEstudiante.AsignacionPendiente ||
+                    estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado){
                 listaAuxiliar.add( estudiante.getMatricula() );
+            }
+        }
+        return listaAuxiliar;
+    }
+
+    public List<Estudiante> AllStudents(){
+        List<Estudiante> listaAuxiliar = new ArrayList<>();
+        for (Estudiante estudiante : listaEstudiantes){
+            if(estudiante.getEstado() == EstadoEstudiante.Evaluado ||
+                    estudiante.getEstado() == EstadoEstudiante.RegistroAprobado ||
+                    estudiante.getEstado() == EstadoEstudiante.AsignacionPendiente ||
+                    estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado){
+                listaAuxiliar.add( estudiante );
             }
         }
         return listaAuxiliar;
