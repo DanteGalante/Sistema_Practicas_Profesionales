@@ -129,6 +129,7 @@ public class ValidarInscripcion implements Initializable {
      * inscripciones de los estudiantes
      */
     public void ClicAceptar(){
+        LimpiarMensajes();
         if( VerificarValidezSeleccion() ){
             try {
                 for( Estudiante estudiante : tbvEstudiantes.getItems() ){
@@ -148,6 +149,14 @@ public class ValidarInscripcion implements Initializable {
                 errorText.setText( outputMessages.DatabaseConnectionFailed3() );
             }
         }
+    }
+
+    /**
+     * Limpia los mensajes de la pantalla
+     */
+    private void LimpiarMensajes() {
+        errorText.setText("");
+        confirmationText.setText("");
     }
 
     /**
@@ -187,6 +196,7 @@ public class ValidarInscripcion implements Initializable {
      *  Deselecciona todos los checkbox de la tabla de estudiantes
      */
     public void ClicCancelar(){
+        LimpiarMensajes();
         for( Estudiante estudiante : tbvEstudiantes.getItems() ){
             estudiante.setValidado(false);
             estudiante.setDepurado(false);
