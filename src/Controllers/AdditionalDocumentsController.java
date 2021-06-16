@@ -130,10 +130,7 @@ public class AdditionalDocumentsController implements Initializable {
      */
     private void ConfigureFileChoosers() {
         fileChooser.setTitle( "Buscar Documento..." );
-        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "PDF Files", "*.pdf" ) );
-        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "Word Files", "*.docx" ) );
-        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "PowerPoint Files", "*.pptx" ) );
-        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "Excel Files", "*.xlsx" ) );
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter( "Word Files", "*.docx", "*.pdf", "*.pptx", "*.xlsx" ) );
     }
 
     /**
