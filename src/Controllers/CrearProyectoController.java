@@ -107,7 +107,9 @@ public class CrearProyectoController implements Initializable {
             listaOrganizaciones = organizacionVinculadaDAO.ReadAll();
             if(listaOrganizaciones.size() > 0) {
                 for( OrganizacionVinculada organizacionVinculada : listaOrganizaciones){
-                    TvOrganizacion.getItems().add( organizacionVinculada );
+                    if ( organizacionVinculada.getActiveStatus() != false ) {
+                        TvOrganizacion.getItems().add( organizacionVinculada );
+                    }
                 }
             }
         } catch (Exception exception) {

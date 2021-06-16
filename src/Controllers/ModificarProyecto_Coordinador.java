@@ -71,7 +71,7 @@ public class ModificarProyecto_Coordinador implements Initializable {
         DatosProyecto();
         DatosUsuario();
         ValorColumnasProyectoSeleccionados();
-        LlenarTablaResponsables();
+        LlenarTablaOrganizacionVinculada();
     }
 
     /**
@@ -84,7 +84,7 @@ public class ModificarProyecto_Coordinador implements Initializable {
     /**
      * Llena la tabla con las organizaciones vinculadas existentes en la BD
      */
-    private void LlenarTablaResponsables() {
+    private void LlenarTablaOrganizacionVinculada() {
         try {
             TvOrganizacion.getItems().clear();
             listaOrganizaciones.clear();
