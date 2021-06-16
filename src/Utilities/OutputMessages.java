@@ -389,12 +389,19 @@ public class OutputMessages {
     public String GenerarReporteConfirmation() { return "¿Estas seguro/a que deseas Generar el reporte?"; }
 
     /**
+     * Mensaje mostrado cuando se elimina un estudiante de
+     * manera exitosa de la base de datos
+     * @return una cadena con el mensaje de exito
+     */
+    public String DeleteStudentSuccessful() { return "Se ha eliminado el estudiante de manera exitosa."; }
+    /**
      * Mensaje mostrado cuando se intenta eliminar un estudiante en
      * la pantalla GestionarEstudiantes_Coordinador
      * @return una cadena con el mensaje de confirmacion
      */
     public String DeleteStudentConfirmation() { return "¿Estas seguro/a que deseas eliminar el estudiante? " +
                                                        "Esta acción es permanente y no se podrá deshacer."; }
+
     /**
      * Mensaje mostrado cuando se intenta eliminar un estudiante en
      * la pantalla GestionarEstudiantes_Coordinador
