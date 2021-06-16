@@ -145,6 +145,7 @@ public class CrearProyectoController implements Initializable {
                     try {
                         if( TvOrganizacion.getSelectionModel().getSelectedItem() != null ){
                             RegistrarProyecto();
+                            LimpiarCampos();
                         } else {
                             TxError.setText("No se ha seleccionado una organización");
                         }
@@ -161,6 +162,15 @@ public class CrearProyectoController implements Initializable {
             TxError.setText(outputMessages.CamposVacios());
             TxSuccess.setText("");
         }
+    }
+
+    /**
+     * Limpia los campos de texto para futuros registros
+     */
+    private void LimpiarCampos() {
+        TbNombreProyecto.setText("");
+        TbDescripcionProyecto.setText("");
+        TbEstudiantesRequeridos.setText("");
     }
 
     private boolean isNumeric() {
@@ -222,15 +232,41 @@ public class CrearProyectoController implements Initializable {
      * el mensaje correspondiente n caso de éxito o fracaso.
      */
     private void RegistrarProyecto() {
-        if( proyectoDAO.Create( GetProyecto() ) ) {
-            TxError.setText( "" );
-            GenerarRelacionProyectoOrganizacion();
-            TxSuccess.setText( outputMessages.RegistrationProjectSuccessfull() );
+        if ( !ProyectoRepetido( GetProyecto() )) {
+            if( proyectoDAO.Create( GetProyecto() ) ) {
+                TxError.setText( "" );
+                GenerarRelacionProyectoOrganizacion();
+                TxSuccess.setText( outputMessages.RegistrationProjectSuccessfull() );
+            }
+            else {
+                TxError.setText( outputMessages.CreateProjectFailed() );
+                TxSuccess.setText( "" );
+            }
+        } else {
+            TxError.setText( outputMessages.ProyectoRepetido() );
         }
-        else {
-            TxError.setText( outputMessages.DatabaseConnectionFailed() );
-            TxSuccess.setText( "" );
+    }
+
+    /**
+     * Verifica que un registro de proyecto no este repetiido
+     * @param proyecto proyecto con el que se va a buscar similitud
+     * @return True si el proyecto no esta repetido, false si esta repetido
+     */
+    private boolean ProyectoRepetido(Proyecto proyecto) {
+        boolean proyectoRepetido = false;
+
+        List<Proyecto> proyectos = proyectoDAO.ReadAll();
+        int i = 0;
+        Proyecto proyectoIterado = new Proyecto();
+        while ( i < proyectos.size() && proyectoRepetido == false ) {
+            proyectoIterado = proyectos.get(i);
+            if ( ( proyectoIterado.getNombre().trim().equals( proyecto.getNombre().trim() ) ) ) {
+                proyectoRepetido = true;
+            }
+            i++;
         }
+
+        return proyectoRepetido;
     }
 
     /**
