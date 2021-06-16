@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 public class ConsultarProyectoController implements Initializable{
     private ScreenChanger screenChanger = new ScreenChanger();
     private Proyecto proyectoElegido = SelectionContainer.GetInstance().getProyectoElegido();
+    private OutputMessages outputMessages = new OutputMessages();
 
     @FXML
     private Text TxNombres;
@@ -76,7 +77,11 @@ public class ConsultarProyectoController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DatosUsuario();
-        DatosProyecto();
+        try {
+            DatosProyecto();
+        } catch ( Exception e ) {
+            TxError.setText( outputMessages.DatabaseConnectionFailed4() );
+        }
     }
 
     /**

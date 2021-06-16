@@ -95,10 +95,13 @@ public class GenerarOficioAsignacionController implements Initializable {
      */
     @Override
     public void initialize( URL url, ResourceBundle resourceBundle ) {
-
         DatosUsuario();
         ValorColumnasEstudiante();
-        MostrarEstudiantes();
+        try {
+            MostrarEstudiantes();
+        } catch ( Exception exception ) {
+            TxError.setText( outputMessages.DatabaseConnectionFailed4() );
+        }
     }
 
     /**
@@ -204,6 +207,7 @@ public class GenerarOficioAsignacionController implements Initializable {
                 nullPointerException.printStackTrace();
             } catch( Exception e ) {
                 e.printStackTrace();
+                TxError.setText( outputMessages.DatabaseConnectionFailed4() );
             }
         } else{
             TxError.setText( outputMessages.SelectionStudentNull() );

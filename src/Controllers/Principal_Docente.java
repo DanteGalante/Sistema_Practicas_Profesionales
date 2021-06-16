@@ -10,7 +10,10 @@ package Controllers;
 
 import Database.ArchivoConsultaDAO;
 import Database.EstudianteDAO;
+import Database.ExpedienteDAO;
+import Database.ProyectoDAO;
 import Entities.*;
+import Enumerations.EstadoEstudiante;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import Utilities.SelectionContainer;
@@ -141,21 +144,105 @@ public class Principal_Docente implements Initializable {
         String nrc = LoginSession.GetInstance().GetDocente().GetNrc();
 
         try{
-            grupo = estudianteDAO.ReadAllWithProjects();
-            List<Estudiante> auxiliar = new ArrayList<>();
-
-            for( Estudiante estudiante : grupo ){
-                if( nrc.equals( estudiante.getNrc() ) ){
-                    auxiliar.add( estudiante );
-                }
-            }
-            grupo.clear();
-            for ( Estudiante estudiante : auxiliar ) {
-                grupo.add( estudiante );
-            }
+            grupo = ObtenerEstudiantesGrupo(LoginSession.GetInstance().GetDocente().GetNrc());
         }catch ( Exception exception ){
+            exception.printStackTrace();
             errorText.setText( outputMessages.DatabaseConnectionFailed3() );
         }
+    }
+
+    /**
+     * Obtiene los estudiantes de un grupo, especificado por el NRC del docente
+     * @param nrc nrc del docente
+     * @return Coleccion de estudiantes de un grupo. La coleccion estara vacia si no hay estudiantes
+     * para el grupo del docente
+     */
+    private List<Estudiante> ObtenerEstudiantesGrupo( String nrc ) {
+        List<Estudiante> auxiliar = ObtenerEstudiantesValidos();
+        List<Estudiante> estudiantes = new ArrayList<>();
+
+        for (Estudiante estudiante : auxiliar ) {
+            if( estudiante.getNrc().equals( nrc ) ) {
+                estudiantes.add( estudiante );
+            }
+        }
+
+        return estudiantes;
+    }
+
+    /**
+     * Obtiene todos los estudiantes con estatus RegistroAprobado, AsignacionPendiente
+     * y ProyectoAsignado
+     * @return Lista con estudiantes validos. La lista estara vacia si no hay estudiantes
+     * con estatus validos
+     */
+    private List<Estudiante> ObtenerEstudiantesValidos() {
+        List<Estudiante> auxiliar = estudianteDAO.ReadAll();
+        List<Estudiante> estudiantes = new ArrayList<>();
+
+        for( Estudiante estudiante : auxiliar ) {
+            if( estudiante.getEstado().ordinal() != EstadoEstudiante.RegistroPendiente.ordinal()
+            && estudiante.getEstado().ordinal() != EstadoEstudiante.Eliminado.ordinal()
+            && estudiante.getEstado().ordinal() != EstadoEstudiante.Evaluado.ordinal() ) {
+
+                String nombreProyecto = ObtenerNombreProyecto( estudiante );
+                estudiante.setProyecto( nombreProyecto );
+                estudiantes.add( estudiante );
+            }
+        }
+
+        return estudiantes;
+    }
+
+    /**
+     * Obtiene el nombre del proyecto de un estudiante, si cuenta con uno asignado
+     * @param estudiante estudiante con el que se realiza la busqueda
+     * @return Nombre del estudiante, si no encuentra nada devuelve null
+     */
+    private String ObtenerNombreProyecto( Estudiante estudiante ) {
+        String nombreProyecto = null;
+        List<Expediente> expedientes = ObtenerExpedientesValidos();
+
+        int i = 0;
+        Expediente expediente = new Expediente();
+        while ( i < expedientes.size() && nombreProyecto == null){
+            expediente = expedientes.get(i);
+            if( expediente.GetMatricula().equals( estudiante.getMatricula() ) ) {
+                nombreProyecto = RecuperarNombreProyecto( expediente.GetIDProyecto() );
+            }
+            i++;
+        }
+
+        return nombreProyecto;
+    }
+
+    /**
+     * Recupera el nombre de un proyecto, dado su id
+     * @param idProyecto id del proyecto en cuestion
+     * @return nombre del proyecto en cuestion
+     */
+    private String RecuperarNombreProyecto(int idProyecto) {
+        ProyectoDAO proyectoDAO = new ProyectoDAO();
+        Proyecto proyecto = proyectoDAO.Read(idProyecto);
+        return proyecto.getNombre();
+    }
+
+    /**
+     * Obtiene los expedientes activos almacenados en la base de datos
+     * @return Colección de Expedientes activos, devuelve una coleccion vacia si no encuentra nada
+     */
+    private List<Expediente> ObtenerExpedientesValidos() {
+        ExpedienteDAO expedienteDAO = new ExpedienteDAO();
+        List<Expediente> auxiliar = expedienteDAO.ReadAll();
+        List<Expediente> expedientes = new ArrayList<>();
+
+        for( Expediente expediente : auxiliar ){
+            if( expediente.GetActivo() ) {
+                expedientes.add( expediente );
+            }
+        }
+
+        return expedientes;
     }
 
     /**

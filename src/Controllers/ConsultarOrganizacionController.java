@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 public class ConsultarOrganizacionController implements Initializable {
     private ScreenChanger screenChanger = new ScreenChanger();
     private OrganizacionVinculada organizacionVinculadaElegida = SelectionContainer.GetInstance().getOrganizacionElegida();
+    private OutputMessages outputMessages = new OutputMessages();
 
     @FXML
     private Text TxNombres;
@@ -67,9 +68,13 @@ public class ConsultarOrganizacionController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         DatosUsuario();
-        DatosOrganizacion();
+        try {
+            DatosOrganizacion();
+        } catch ( Exception exception ) {
+            TxError.setText( outputMessages.DatabaseConnectionFailed4() );
+        }
+
     }
 
     /**
