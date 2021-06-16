@@ -9,10 +9,12 @@ package Controllers;
  * CrearProyecto del sistema de prácticas profesionales.
  */
 
+import Database.OrganizacionVinculadaDAO;
 import Database.ProyectoDAO;
+import Database.ProyectosDeResponsablesDAO;
 import Database.ResponsableProyectoDAO;
+import Entities.OrganizacionVinculada;
 import Entities.Proyecto;
-import Entities.ResponsableProyecto;
 import Enumerations.EstadoProyecto;
 import Utilities.InputValidator;
 import Utilities.LoginSession;
@@ -38,10 +40,11 @@ public class CrearProyectoController implements Initializable {
     private ScreenChanger screenChanger = new ScreenChanger();
     private InputValidator inputValidator = new InputValidator();
     private OutputMessages outputMessages = new OutputMessages();
-    private Proyecto proyecto = new Proyecto();
+    private Proyecto proyectoNuevo = new Proyecto();
     private ProyectoDAO proyectoDAO = new ProyectoDAO();
-    private ResponsableProyectoDAO responsableProyecto = new ResponsableProyectoDAO();
-    private List<ResponsableProyecto> listaResponsables = new ArrayList<>();
+    private ResponsableProyectoDAO responsableProyectoDAO = new ResponsableProyectoDAO();
+    private OrganizacionVinculadaDAO organizacionVinculadaDAO = new OrganizacionVinculadaDAO();
+    private List<OrganizacionVinculada> listaOrganizaciones = new ArrayList<>();
 
     @FXML
     private Text TxNombres;
@@ -59,10 +62,10 @@ public class CrearProyectoController implements Initializable {
     private TextArea TbDescripcionProyecto;
 
     @FXML
-    private TableView TvOrganizacion;
+    private TableView< OrganizacionVinculada > TvOrganizacion;
 
     @FXML
-    private TableColumn TcNombreOrg;
+    private TableColumn< OrganizacionVinculada, String > TcNombreOrg;
 
     @FXML
     private TextField TbEstudiantesRequeridos;
@@ -87,7 +90,6 @@ public class CrearProyectoController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle ) {
-
         DatosUsuario();
         ValorColumnasProyectoSeleccionados();
         LlenarTablaResponsables();
@@ -97,14 +99,23 @@ public class CrearProyectoController implements Initializable {
      * Configura las columnas de la tabla preferencias proyecto en esta pantalla
      */
     private void ValorColumnasProyectoSeleccionados() {
-        TcNombreOrg.setCellValueFactory( new PropertyValueFactory<>("Nombres"));
+        TcNombreOrg.setCellValueFactory( new PropertyValueFactory<>("Nombre") );
     }
 
+    /**
+     * Llena la tabla con las organizaciones vinculadas existentes en la BD
+     */
     private void LlenarTablaResponsables(){
-        listaResponsables = responsableProyecto.ReadAll();
-        for( ResponsableProyecto responsableProyecto : listaResponsables ){
-                responsableProyecto.getNombres();
-                TvOrganizacion.getItems().add( responsableProyecto );
+        try {
+            listaOrganizaciones = organizacionVinculadaDAO.ReadAll();
+            if(listaOrganizaciones.size() > 0) {
+                for( OrganizacionVinculada organizacionVinculada : listaOrganizaciones){
+                    TvOrganizacion.getItems().add( organizacionVinculada );
+                }
+            }
+        } catch (Exception exception) {
+
+            TxError.setText( outputMessages.DatabaseConnectionFailed4() );
         }
     }
 
@@ -125,10 +136,14 @@ public class CrearProyectoController implements Initializable {
     public void HandleRegistrar( MouseEvent mouseEvent ) {
         TxError.setText("");
         TxSuccess.setText("");
-        if (!TbNombreProyecto.getText().trim().isEmpty() && !TbDescripcionProyecto.getText().trim().isEmpty() && !TbEstudiantesRequeridos.getText().trim().isEmpty() ) {
-            if(isNumeric()){
-                if(VerificarDatos()){
-                    RegistrarProyecto();
+        if ( !TbNombreProyecto.getText().trim().isEmpty() && !TbDescripcionProyecto.getText().trim().isEmpty() && !TbEstudiantesRequeridos.getText().trim().isEmpty() ) {
+            if( isNumeric() ) {
+                if( VerificarDatos() ) {
+                    if( TvOrganizacion.getSelectionModel().getSelectedItem() != null ){
+                        RegistrarProyecto();
+                    } else {
+                        TxError.setText("No se ha seleccionado una organización");
+                    }
                 }
             }else{
                 TxError.setText("No ha ingresado un numero");
@@ -202,12 +217,56 @@ public class CrearProyectoController implements Initializable {
     private void RegistrarProyecto() {
         if( proyectoDAO.Create( GetProyecto() ) ) {
             TxError.setText( "" );
+            GenerarRelacionProyectoOrganizacion();
             TxSuccess.setText( outputMessages.RegistrationProjectSuccessfull() );
         }
         else {
             TxError.setText( outputMessages.DatabaseConnectionFailed() );
             TxSuccess.setText( "" );
         }
+    }
+
+    /**
+     * Genera las relaciones necesarias en la base de datos, para saber a que organización
+     * se relaciona un proyecto
+     */
+    private void GenerarRelacionProyectoOrganizacion() {
+        ProyectosDeResponsablesDAO proyect_RespDAO = new ProyectosDeResponsablesDAO();
+
+        OrganizacionVinculada organizacionVinculada = TvOrganizacion.getSelectionModel().getSelectedItem();
+        int idResponsable = organizacionVinculada.getResponsables().get(0);
+        List<Integer> listaProyectos = new ArrayList<Integer>();
+        listaProyectos.add( RecuperarIDNuevoProyecto( GetProyecto() ) );
+
+        proyect_RespDAO.Create(idResponsable, listaProyectos);
+    }
+
+    /**
+     * Busca un proyecto en la BD
+     * @param proyectoABuscar Entidad proyecto que se desea buscar
+     * @return
+     */
+    private int RecuperarIDNuevoProyecto(Proyecto proyectoABuscar) {
+        int idNuevoProyecto = 0;
+
+        int i = 0;
+        List<Proyecto> todosProyectosBD = proyectoDAO.ReadAll();
+        boolean flag = false;
+        while ( flag == false || i < todosProyectosBD.size() ) {
+            if( todosProyectosBD.get(i).getNombre().equals( proyectoABuscar.getNombre() )
+             && todosProyectosBD.get(i).GetDescripcion().equals( proyectoABuscar.GetDescripcion() )
+             && todosProyectosBD.get(i).getNumEstudiantesRequeridos() == proyectoABuscar.getNumEstudiantesRequeridos()
+             && todosProyectosBD.get(i).GetEstudiantesAsignados() == proyectoABuscar.GetEstudiantesAsignados()
+             && todosProyectosBD.get(i).GetFechaRegistro().equals( proyectoABuscar.GetFechaRegistro() )
+             && todosProyectosBD.get(i).GetEstado().ordinal() == proyectoABuscar.GetEstado().ordinal()
+            ){
+                idNuevoProyecto = todosProyectosBD.get(i).getIdProyecto();
+                flag = true;
+            }
+            i++;
+        }
+
+        return idNuevoProyecto;
     }
 
 
@@ -220,8 +279,9 @@ public class CrearProyectoController implements Initializable {
         String numeroEstudiantesRequeridos = TbEstudiantesRequeridos.getText();
         int estudiantesRequeridos = Integer.parseInt(numeroEstudiantesRequeridos);
         LocalDate currentDate = LocalDate.now();
-        return new Proyecto( 0, TbNombreProyecto.getText(), TbDescripcionProyecto.getText(), estudiantesRequeridos, 0,
-                currentDate.toString(), EstadoProyecto.Disponible);
+        Proyecto proyecto = new Proyecto( 0, TbNombreProyecto.getText(), TbDescripcionProyecto.getText(), estudiantesRequeridos, 0,
+                            currentDate.toString(), EstadoProyecto.Disponible);
+        return proyecto;
     }
 
 

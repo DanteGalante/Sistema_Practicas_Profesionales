@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginScreenController">
    <children>
       <Pane prefHeight="435.0" prefWidth="310.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2b2e4a" height="435.0" stroke="#2b2e4a" strokeType="INSIDE" width="310.0" />
             <TextField fx:id="usernameField" alignment="CENTER" layoutX="62.0" layoutY="234.0" prefHeight="25.0" prefWidth="176.0" promptText="Número Personal / Matrícula" />
-            <Button fx:id="loginButton" layoutX="109.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#HandleLogin" text="Inciar Sesión" textFill="#e84545" />
+            <Button fx:id="loginButton" layoutX="109.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#HandleLogin" text="Iniciar Sesión" textFill="#e84545" />
             <Text fill="#e84545" layoutX="20.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistema de Prácticas Profesionales">
                <font>
                   <Font name="System Bold" size="16.0" />
