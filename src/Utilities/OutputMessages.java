@@ -817,4 +817,13 @@ public class OutputMessages {
     public String SelectionOrganizacionNull() {
         return "Seleccione una organizacion";
     }
+
+    /**
+     * Mensaje mostrado cuando no se ha podido eliminar un proyecto por culpa de la conexión a la
+     * base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String DeleteProjectFailedBD() {
+        return "No se puede eliminar el proyecto ya que no hay conexión con base de datos";
+    }
 }

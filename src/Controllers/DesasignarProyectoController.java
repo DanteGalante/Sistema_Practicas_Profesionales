@@ -66,10 +66,14 @@ public class DesasignarProyectoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         DatosUsuario();
         ValorColumnasEstudiante();
-        MostrarEstudiantes();
+        try {
+            MostrarEstudiantes();
+        } catch ( Exception exception ) {
+            TxError.setText( outputMessages.DatabaseConnectionFailed4() );
+        }
+
     }
 
     public void DatosUsuario(){
@@ -106,15 +110,19 @@ public class DesasignarProyectoController implements Initializable {
     public void HandleDesasignarProyecto ( MouseEvent mouseEvent ) {
         TxError.setText("");
         TxSuccess.setText("");
-        if (TvEstudiante.getSelectionModel().getSelectedItem() != null) {
-            Estudiante estudiante = (Estudiante) TvEstudiante.getSelectionModel().getSelectedItem();
-            if (estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado) {
-                String matricula = estudiante.getMatricula();
-                BuscarExpediente(matricula);
-                ActualizarTabla();
-            } else {
-                TxError.setText(outputMessages.SelectionStudentNull());
+        try {
+            if (TvEstudiante.getSelectionModel().getSelectedItem() != null) {
+                Estudiante estudiante = (Estudiante) TvEstudiante.getSelectionModel().getSelectedItem();
+                if (estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado) {
+                    String matricula = estudiante.getMatricula();
+                    BuscarExpediente(matricula);
+                    ActualizarTabla();
+                } else {
+                    TxError.setText(outputMessages.SelectionStudentNull());
+                }
             }
+        } catch ( Exception exception ) {
+            TxError.setText( outputMessages.DatabaseConnectionFailed4() );
         }
     }
 

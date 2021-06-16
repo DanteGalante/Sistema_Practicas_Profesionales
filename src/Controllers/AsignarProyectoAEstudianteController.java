@@ -91,13 +91,16 @@ public class AsignarProyectoAEstudianteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         DatosUsuario();
         ValorColumnasEstudiante();
         ValorColumnasProyecto();
         ValorColumnasProyectoSeleccionados();
-        MostrarEstudiantes();
-        MostrarProyectos();
+        try {
+            MostrarEstudiantes();
+            MostrarProyectos();
+        } catch ( Exception exception ) {
+            TxError.setText(outputMessages.DatabaseConnectionFailed4());
+        }
     }
 
     /**
@@ -256,29 +259,11 @@ public class AsignarProyectoAEstudianteController implements Initializable {
     }
 
     private void ActualizarTablaEstudiantes(){
-        /*
-        listaEstudiantes = estudiantes.ReadAll();
-        for( Estudiante estudiante : listaEstudiantes ){
-            if( estudiante.GetEstado() == EstadoEstudiante.ProyectoAsignado ) {
-                TvEstudiante.getItems().clear();
-            }
-        }
-        MostrarEstudiantes();
-         */
         TvEstudiante.getItems().clear();
         MostrarEstudiantes();
     }
 
     private void ActualizarTablaProyectos(){
-        /*
-        listaProyecto = proyectos.ReadAll();
-        for( Proyecto proyecto : listaProyecto ){
-            if(  proyecto.GetEstado() == EstadoProyecto.Asignado ) {
-                TvProyecto.getItems().clear();
-            }
-        }
-        MostrarProyectos();
-         */
         TvProyecto.getItems().clear();
         MostrarProyectos();
     }

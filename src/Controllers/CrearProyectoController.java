@@ -89,7 +89,11 @@ public class CrearProyectoController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle ) {
         DatosUsuario();
         ValorColumnasProyectoSeleccionados();
-        LlenarTablaResponsables();
+        try {
+            LlenarTablaResponsables();
+        } catch ( Exception exception ) {
+            TxError.setText( outputMessages.DatabaseConnectionFailed4() );
+        }
     }
 
     /**
@@ -138,10 +142,14 @@ public class CrearProyectoController implements Initializable {
         if ( !TbNombreProyecto.getText().trim().isEmpty() && !TbDescripcionProyecto.getText().trim().isEmpty() && !TbEstudiantesRequeridos.getText().trim().isEmpty() ) {
             if( isNumeric() ) {
                 if( VerificarDatos() ) {
-                    if( TvOrganizacion.getSelectionModel().getSelectedItem() != null ){
-                        RegistrarProyecto();
-                    } else {
-                        TxError.setText("No se ha seleccionado una organización");
+                    try {
+                        if( TvOrganizacion.getSelectionModel().getSelectedItem() != null ){
+                            RegistrarProyecto();
+                        } else {
+                            TxError.setText("No se ha seleccionado una organización");
+                        }
+                    } catch ( Exception exception ) {
+                        TxError.setText( outputMessages.CreateProjectFailed() );
                     }
                 }
             }else{
