@@ -119,9 +119,11 @@ public class AsignarProyectoAEstudianteController implements Initializable {
         TvEstudiante.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Estudiante>() {
             @Override
             public void changed(ObservableValue<? extends Estudiante> observableValue, Estudiante estudiante, Estudiante t1) {
-                String matricula = t1.getMatricula();
-                listaProyectosSeleccionados = proyectosSeleccionados.Read(matricula);
-                ActualizarTablaPreferenciaProyectos();
+                if (t1 != null) {
+                    String matricula = t1.getMatricula();
+                    listaProyectosSeleccionados = proyectosSeleccionados.Read(matricula);
+                    ActualizarTablaPreferenciaProyectos();
+                }
             }
         });
 
