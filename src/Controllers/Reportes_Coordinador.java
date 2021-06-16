@@ -13,13 +13,16 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class Reportes_Coordinador implements Initializable {
     private OutputMessages outputMessages = new OutputMessages();
     private List< Estudiante > listaEstudiantes = new ArrayList< Estudiante>();
     private List< Expediente > listaExpedientes = new ArrayList<>();
+    private DirectoryChooser directoryChooser = new DirectoryChooser();
 
     @FXML
     private Label lbNombres;
@@ -135,15 +139,15 @@ public class Reportes_Coordinador implements Initializable {
         Alert confirmAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.GenerarReporteConfirmation());
         confirmAlert.showAndWait().ifPresent( response -> {
             if( response == ButtonType.OK ) {
-                GenerarReporte();
+                GenerarReporte(mouseEvent);
             }
         });
     }
 
-    public void GenerarReporte() {
+    public void GenerarReporte(MouseEvent mouseEvent) {
         try {
             var doc = new Document();
-            PdfWriter.getInstance(doc, new FileOutputStream("ReporteSistema.pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream( GetTargetFile( mouseEvent, "ReporteSistema.pdf" ) ) );
             doc.open();
 
             var bold = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
@@ -167,9 +171,36 @@ public class Reportes_Coordinador implements Initializable {
             doc.add(paragraphIntro);
             doc.close();
 
+        }catch(NullPointerException nullPointerException){
+            nullPointerException.printStackTrace();
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private File GetTargetFile(MouseEvent mouseEvent, String fileName ) {
+        File outputFile = new File( FixFilePath( GetDirectory( mouseEvent ).getAbsolutePath() + "\\" + fileName ) );
+        return outputFile;
+    }
+
+    private File GetDirectory( MouseEvent mouseEvent ) {
+        return directoryChooser.showDialog( ( (Node)mouseEvent.getSource() ).getScene().getWindow() );
+    }
+
+    /**
+     * Agrega characteres necesarios para poder almacenar un archivo en un path
+     * en específico. (Windows)
+     * @param targetString la cadena inicial
+     * @return una cadena modificada
+     */
+    private String FixFilePath( String targetString ) {
+        for( int i = 0; i < targetString.length(); i++ ) {
+            if( targetString.charAt( i ) == 92 ) {
+                targetString = targetString.substring( 0, i ) + "\\" + targetString.substring( i );
+                i++;
+            }
+        }
+        return targetString;
     }
 
     public Integer EstudiantesInscritos(){
@@ -179,7 +210,10 @@ public class Reportes_Coordinador implements Initializable {
             listaAuxiliar.add( expediente.GetMatricula() );
         }
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado){
+            if(estudiante.getEstado() == EstadoEstudiante.Evaluado ||
+                    estudiante.getEstado() == EstadoEstudiante.RegistroAprobado ||
+                    estudiante.getEstado() == EstadoEstudiante.AsignacionPendiente ||
+                    estudiante.getEstado() == EstadoEstudiante.ProyectoAsignado){
                 cont ++;
             }
         }
@@ -193,7 +227,7 @@ public class Reportes_Coordinador implements Initializable {
             listaAuxiliar.add( expediente.GetMatricula() );
         }
         for (Estudiante estudiante : listaEstudiantes){
-            if(estudiante.getEstado() == EstadoEstudiante.Eliminado ){
+            if(estudiante.getEstado() == EstadoEstudiante.Eliminado || estudiante.getEstado() == EstadoEstudiante.RegistroPendiente ){
                 cont ++;
             }
         }
