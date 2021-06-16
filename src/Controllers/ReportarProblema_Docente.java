@@ -52,8 +52,13 @@ public class ReportarProblema_Docente implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SetUsuario();
-        RecuperarGrupo();
-        MostrarEstudiantes();
+        try {
+            RecuperarGrupo();
+            MostrarEstudiantes();
+        } catch ( Exception exception ) {
+            errorText.setText( outputMessages.DatabaseConnectionFailed3() );
+        }
+
     }
 
     /**
@@ -108,12 +113,16 @@ public class ReportarProblema_Docente implements Initializable {
      * @return True Si los campos tienen valores, False si hay algun campo vacio
      */
     private boolean NoHayCamposVacios() {
-        boolean noHayCamposVacios = tfTitulo.getLength() > 0 && taContenido.getLength() > 0;
+        boolean noHayCamposVacios = false;
 
-        if( noHayCamposVacios == false ){
-            errorText.setText( "Faltan campos por llenar" );
+        if( tfTitulo.getText().trim().length() > 0 ){
+            if( taContenido.getText().trim().length() > 0 ) {
+                noHayCamposVacios = true;
+            } else {
+                errorText.setText( "Faltan campos por llenar. El contenido esta vacio" );
+            }
         } else {
-           //TODO tfTitulo.getText().trim().
+            errorText.setText( "Faltan campos por llenar. Favor de introducir el titulo" );
         }
 
         return noHayCamposVacios;
