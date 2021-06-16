@@ -164,7 +164,7 @@ public class DescargarDocumento_Docente implements Initializable {
      * @param mouseEvent evento del mouse que inicia el método
      */
     public void ClicDescargarDocumento(MouseEvent mouseEvent) {
-        errorText.setText("");
+        LimpiarMensajesPantalla();
         if( HayDocumentoSeleccionado() ){
             File file = directoryChooser.showDialog( ( (Node)mouseEvent.getSource() ).getScene().getWindow() );
             try {
@@ -178,6 +178,15 @@ public class DescargarDocumento_Docente implements Initializable {
 
         }
     }
+
+    /**
+     * Limpia los mensajes de la pantalla
+     */
+    private void LimpiarMensajesPantalla() {
+        errorText.setText("");
+        successText.setText("");
+    }
+
     /**
      * Copia un documento recuperado de la base de datos a la máquina local del
      * usuario.

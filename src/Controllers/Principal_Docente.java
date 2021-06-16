@@ -295,10 +295,10 @@ public class Principal_Docente implements Initializable {
                 if( FileNameDoesNotExist( nuevoArchivo ) ){
                     try {
                         archivoConsultaDAO.Create( nuevoArchivo );
+                        successText.setText( outputMessages.UploadSuccesful() );
                     } catch ( Exception exception) {
                         errorText.setText( outputMessages.DatabaseConnectionFailed3() );
                     }
-                    successText.setText( outputMessages.UploadSuccesful() );
                 }
 
                 RecuperarArchivosConsulta();

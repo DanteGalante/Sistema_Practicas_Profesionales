@@ -2,11 +2,11 @@ package Controllers;
 
 import Database.OrganizacionVinculadaDAO;
 import Database.ProyectoDAO;
-import Entities.Estudiante;
+import Database.ProyectosDeResponsablesDAO;
+import Database.ResponsablesOrganizacionDAO;
 import Entities.OrganizacionVinculada;
 import Entities.Proyecto;
 import Entities.ResponsableProyecto;
-import Enumerations.EstadoEstudiante;
 import Enumerations.EstadoProyecto;
 import Utilities.*;
 import javafx.fxml.FXML;
@@ -97,14 +97,19 @@ public class ModificarProyecto_Coordinador implements Initializable {
                 }
             }
         } catch (Exception exception) {
-
             TxError.setText(outputMessages.DatabaseConnectionFailed4());
+            exception.printStackTrace();
         }
     }
 
     public void ManejoModificarProyecto() {
-        ValidarDatos();
-        ModificarProyecto();
+        try {
+            if ( ValidarDatos() ) {
+                ModificarProyecto();
+            }
+        } catch ( Exception exception) {
+            TxError.setText( outputMessages.DatabaseConnectionFailed4() );
+        }
     }
 
     /**
@@ -154,66 +159,133 @@ public class ModificarProyecto_Coordinador implements Initializable {
                 RecuperarEstudiantesAsignados(),RecuperarFechaRegistro(),RecuperarEstadoProyecto());
     }
 
-    private void ValidarDatos() {
-        NombreValido();
-        DescripcionValida();
-        EsEstudiantesRequeridosValidos();
-        SeleccionValida();
+    private boolean ValidarDatos() {
+        return NombreValido()
+        && DescripcionValida()
+        && EsEstudiantesRequeridosValidos()
+        && SeleccionValida()
+        && VerificarOrgRepetida();
+    }
+
+    private boolean VerificarOrgRepetida() {
+        ProyectosDeResponsablesDAO proyectosResponsables = new ProyectosDeResponsablesDAO();
+        ResponsablesOrganizacionDAO responsablesOrganizacion = new ResponsablesOrganizacionDAO();
+        boolean orgRepetido = false;
+
+        OrganizacionVinculada orgAcomparar = organizacionVinculadaDAO.Read(
+                responsablesOrganizacion.ReadOrganizacion(
+                        proyectosResponsables.ReadResponsable(
+                                SelectionContainer.GetInstance().getProyectoElegido().getIdProyecto() ) ) );
+
+        if(
+            orgAcomparar.getIdOrganizacion() ==
+                    TvOrganizacion.getSelectionModel().getSelectedItem().getIdOrganizacion()
+        ){
+            orgRepetido = true;
+            TxError.setText( outputMessages.OrganizacionRepetida() );
+        }
+
+        return orgRepetido;
     }
 
     /**
      * Revisa que el nombre introducido sea valido.
+     * @return
      */
-    private void NombreValido() {
-        if( !inputValidator.AreNamesValid( TbNombreProyecto.getText() ) ) {
+    private boolean NombreValido() {
+        boolean nombreValido = false;
+
+        if( inputValidator.AreNamesValid( TbNombreProyecto.getText() ) ) {
+            nombreValido = true;
+        } else {
             TxError.setText( outputMessages.InvalidNames() );
             TxSuccess.setText( "" );
         }
+        return nombreValido;
     }
 
     /**
      * Revisa que los nombres introducidos sean validos.
      */
-    private void DescripcionValida() {
-        if( !inputValidator.DescripcionValida( TbDescripcionProyecto.getText() ) ) {
+    private boolean DescripcionValida() {
+        boolean descrpValida = false;
+
+        if( inputValidator.DescripcionValida( TbDescripcionProyecto.getText() ) ) {
+            descrpValida = true;
+        } else {
             TxError.setText( outputMessages.DescripcionInvalida() );
             TxSuccess.setText( "" );
         }
+
+        return  descrpValida;
     }
 
     /**
      * Revisa que la cantidad de estudiantes requeridos sea valido.
      */
-    private void EsEstudiantesRequeridosValidos(){
-        if( !inputValidator.EstudiantesRequeridosValidos( Integer.parseInt( TbEstudiantesRequeridos.getText() ) ) ) {
+    private boolean EsEstudiantesRequeridosValidos(){
+        boolean estudiantesRequeridosValidos = false;
+
+        if( inputValidator.EstudiantesRequeridosValidos( Integer.parseInt( TbEstudiantesRequeridos.getText() ) ) ) {
+            estudiantesRequeridosValidos = true;
+        } else {
             TxError.setText( outputMessages.EstudiantesRequeridosInvalidos() );
             TxSuccess.setText( "" );
         }
+
+        return estudiantesRequeridosValidos;
     }
 
     /**
      * Revisa que la cantidad de estudiantes requeridos sea valido.
      */
-    private void SeleccionValida() {
+    private boolean SeleccionValida() {
+        boolean seleccionValida = false;
+
         if(TvOrganizacion.getSelectionModel().getSelectedItem() != null){
             OrganizacionVinculada orgVinculadaElegida = (OrganizacionVinculada)TvOrganizacion.getSelectionModel().getSelectedItem();
             SelectionContainer.GetInstance().setOrganizacionElegida(orgVinculadaElegida);
             TxSuccess.setText("");
             TxError.setText("");
+            seleccionValida = true;
         }else{
             TxError.setText(outputMessages.SeleccionInvalidaOrganizacion());
         }
+
+        return seleccionValida;
     }
 
     private void ModificarProyecto() {
         if( proyecto.Update( ObtenerProyecto() ) ) {
             TxError.setText( "" );
+            CrearNuevaRelacionProyectoResponsable();
             TxSuccess.setText( outputMessages.ModificacionProyectoExitoso() );
         }
         else {
             TxError.setText( outputMessages.DatabaseConnectionFailed() );
             TxSuccess.setText( "" );
         }
+    }
+    /**
+     * Genera las relaciones necesarias en la base de datos, para saber a que organización
+     * se relaciona un proyecto
+     */
+    private void CrearNuevaRelacionProyectoResponsable() {
+        ProyectosDeResponsablesDAO proyectosDeResponsablesDAO = new ProyectosDeResponsablesDAO();
+        BorrarViejaRelacionProyectoResponsable();
+
+        List<Integer> listaAux = new ArrayList<>();
+        listaAux.add( SelectionContainer.GetInstance().getProyectoElegido().getIdProyecto() );
+        int idOrganizacion = TvOrganizacion.getSelectionModel().getSelectedItem().getIdOrganizacion();
+        proyectosDeResponsablesDAO.Create( idOrganizacion , listaAux);
+    }
+
+    /**
+     * Se borra la vieja relación 
+     */
+    private void BorrarViejaRelacionProyectoResponsable() {
+       ProyectosDeResponsablesDAO proyectosDeResponsablesDAO = new ProyectosDeResponsablesDAO();
+       proyectosDeResponsablesDAO.Delete( SelectionContainer.GetInstance().getProyectoElegido().getIdProyecto() );
     }
 
     /**

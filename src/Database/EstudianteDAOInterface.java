@@ -81,4 +81,6 @@ public interface EstudianteDAOInterface {
      * @return booleano indicando el éxito o fracaso
      */
     boolean Delete( String matricula );
+
+    boolean PermaDelete(String matricula);
 }

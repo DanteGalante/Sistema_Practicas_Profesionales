@@ -112,6 +112,8 @@ public class ReportarProblema_Docente implements Initializable {
 
         if( noHayCamposVacios == false ){
             errorText.setText( "Faltan campos por llenar" );
+        } else {
+           //TODO tfTitulo.getText().trim().
         }
 
         return noHayCamposVacios;
@@ -138,6 +140,7 @@ public class ReportarProblema_Docente implements Initializable {
      * el informe tenga informacion valida y el reporte no este repetido en la BD
      */
     public void ClicEnviar() {
+        LimpiarMensajes();
         if( HayEstudianteSeleccionado() && NoHayCamposVacios()){
             InformeProblema nuevoInforme = new InformeProblema(
                     0, //ID InformeProblema
@@ -153,6 +156,16 @@ public class ReportarProblema_Docente implements Initializable {
                 successText.setText( outputMessages.SavingProblemFormSuccessful() );
                 LimpiarPantalla();
             }
+        } else {
+            errorText.setText( outputMessages.FaltanCamposPorLlenar() );
         }
+    }
+
+    /**
+     * Limpia los mensajes de pantalla
+     */
+    private void LimpiarMensajes() {
+        errorText.setText("");
+        successText.setText("");
     }
 }
