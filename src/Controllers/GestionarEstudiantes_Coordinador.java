@@ -143,12 +143,15 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
                 if( response == ButtonType.OK ) {
                     try {
                         estudiantes.Delete( estudiantesTable.getSelectionModel().getSelectedItem().getMatricula() );
-                        UpdateProyectoCupo( proyectos.Read( GetUserExpediente( estudiantesTable.getSelectionModel().getSelectedItem() ).GetIDProyecto() ) );
-                        UpdateEstadoExpedienteToDesactivado( estudiantesTable.getSelectionModel().getSelectedItem() );
+                        if( GetUserExpediente( estudiantesTable.getSelectionModel().getSelectedItem() ) != null ) {
+                            UpdateProyectoCupo( proyectos.Read( GetUserExpediente( estudiantesTable.getSelectionModel().getSelectedItem() ).GetIDProyecto() ) );
+                            UpdateEstadoExpedienteToDesactivado( estudiantesTable.getSelectionModel().getSelectedItem() );
+                        }
                         successText.setText( outputMessages.DeleteStudentSuccessful() );
                         errorText.setText( "" );
                         ShowStudents();
                     } catch( Exception exception ) {
+                        exception.printStackTrace();
                         successText.setText( "" );
                         errorText.setText( outputMessages.DatabaseConnectionFailed2() );
                     }

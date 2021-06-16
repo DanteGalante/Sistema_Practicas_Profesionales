@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GestionarEstudiantes_Coordinador">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GestionarEstudiantes_Coordinador">
    <children>
       <SplitPane dividerPositions="0.21743486973947895" prefHeight="600.0" prefWidth="1000.0">
         <items>
@@ -66,8 +72,8 @@
                                       </font></Button>
                                 </children>
                              </VBox>
-                             <Text fx:id="errorText" fill="#e84545" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                              <Text fx:id="successText" fill="#09eb09" layoutX="24.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                             <Text fx:id="errorText" fill="#e84545" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="184.0" />
+                              <Text fx:id="successText" fill="#09eb09" layoutX="15.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="184.0" />
                           </children></AnchorPane>
                     </items>
                  </SplitPane>
