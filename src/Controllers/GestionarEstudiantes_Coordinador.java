@@ -9,8 +9,13 @@
 package Controllers;
 
 import Database.EstudianteDAO;
+import Database.ExpedienteDAO;
+import Database.ProyectoDAO;
 import Entities.Estudiante;
+import Entities.Expediente;
+import Entities.Proyecto;
 import Enumerations.EstadoEstudiante;
+import Enumerations.EstadoProyecto;
 import Utilities.OutputMessages;
 import Utilities.ScreenChanger;
 import Utilities.SelectionContainer;
@@ -22,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import Utilities.LoginSession;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -30,6 +36,8 @@ import java.util.ResourceBundle;
  */
 public class GestionarEstudiantes_Coordinador implements Initializable {
     private EstudianteDAO estudiantes = new EstudianteDAO();
+    private ExpedienteDAO expedientes = new ExpedienteDAO();
+    private ProyectoDAO proyectos = new ProyectoDAO();
     private OutputMessages outputMessages = new OutputMessages();
     private ScreenChanger screenChanger = new ScreenChanger();
 
@@ -128,15 +136,20 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
      */
     @FXML
     void EliminarEstudiante() {
-        ClearErrorText();
+        ClearText();
         if( IsStudentSelected() ) {
             Alert deleteAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.DeleteDocumentConfirmation() );
             deleteAlert.showAndWait().ifPresent( response -> {
                 if( response == ButtonType.OK ) {
                     try {
                         estudiantes.Delete( estudiantesTable.getSelectionModel().getSelectedItem().getMatricula() );
+                        UpdateProyectoCupo( proyectos.Read( GetUserExpediente( estudiantesTable.getSelectionModel().getSelectedItem() ).GetIDProyecto() ) );
+                        UpdateEstadoExpedienteToDesactivado( estudiantesTable.getSelectionModel().getSelectedItem() );
+                        successText.setText( outputMessages.DeleteStudentSuccessful() );
+                        errorText.setText( "" );
                         ShowStudents();
                     } catch( Exception exception ) {
+                        successText.setText( "" );
                         errorText.setText( outputMessages.DatabaseConnectionFailed2() );
                     }
                 }
@@ -208,7 +221,10 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
         return isSelected;
     }
 
-    private void ClearErrorText() { errorText.setText( "" ); }
+    private void ClearText() {
+        errorText.setText( "" );
+        successText.setText( "" );
+    }
 
     public Estudiante RecuperarEstudiante(){
         return estudiantesTable.getSelectionModel().getSelectedItem();
@@ -257,5 +273,50 @@ public class GestionarEstudiantes_Coordinador implements Initializable {
      */
     public void ClicValidarInscripcion(MouseEvent mouseEvent) {
         screenChanger.ShowScreenValidarInscripcion( mouseEvent, errorText );
+    }
+
+    /**
+     * Busca el expediente del estudiante actual en la
+     * base de datos
+     * @return el expediente del estudiante actual
+     */
+    private Expediente GetUserExpediente( Estudiante estudiante ) {
+        List< Expediente > expedientesUsuarios = expedientes.ReadAll();
+        Expediente userExpediente = null;
+        for( Expediente expediente : expedientesUsuarios ) {
+            if( expediente.GetMatricula().equals( estudiante.getMatricula() ) &&
+                    expediente.GetActivo() ) {
+                userExpediente = expediente;
+            }
+        }
+        return userExpediente;
+    }
+
+    private void UpdateEstadoExpedienteToDesactivado( Estudiante estudiante ) {
+        expedientes.Update( GetExpedienteDesactivado( GetUserExpediente( estudiante ) ) );
+    }
+
+    private Expediente GetExpedienteDesactivado( Expediente currentExpediente ) {
+        return new Expediente( currentExpediente.GetClave(), currentExpediente.GetIDProyecto(), currentExpediente.GetMatricula(),
+                currentExpediente.GetFechaAsignacion(), currentExpediente.GetHorasAcumuladas(),
+                currentExpediente.GetNumeroArchivos(), false );
+    }
+
+    private void UpdateProyectoCupo( Proyecto proyecto ) {
+        proyectos.Update( GetProyectoCupoModificado( proyecto ) );
+    }
+
+    private Proyecto GetProyectoCupoModificado( Proyecto proyecto ) {
+        int newCupo = 0;
+        EstadoProyecto newEstado;
+        if( proyecto.GetEstudiantesAsignados() == proyecto.getNumEstudiantesRequeridos() ) {
+            newCupo = proyecto.GetEstudiantesAsignados() - 1;
+            newEstado = EstadoProyecto.Disponible;
+        } else {
+            newCupo = proyecto.GetEstudiantesAsignados() - 1;
+            newEstado = proyecto.GetEstado();
+        }
+        return new Proyecto( proyecto.getIdProyecto(), proyecto.getNombre(), proyecto.GetDescripcion(),
+                             proyecto.getNumEstudiantesRequeridos(), newCupo, proyecto.GetFechaRegistro(), newEstado );
     }
 }

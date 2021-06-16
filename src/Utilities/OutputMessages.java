@@ -210,6 +210,34 @@ public class OutputMessages {
     public String ModificacionResponsableExitoso() { return "Modificación de Organizacion Exitoso"; }
 
     /**
+     * Mensaje mostrado cuando se descarga un archivo adicional del estudiante
+     * a la maquina local
+     * @return una cadena con el mensaje de exito
+     */
+    public String DescargaDocumentoAdicionalExitoso() { return "Se ha desargado el archivo de manera exitosa"; }
+
+    /**
+     * Mensaje mostrado cuando se entrega una reporte del estudiante a
+     * la base de datos de manera exitosa
+     * @return una cadena con el mensaje de exito
+     */
+    public String EntregaReporteExitoso() { return "Se ha entregado el reporte de manera exitosa"; }
+
+    /**
+     * Mensaje mostrado cuando se sube un archivo adicional del estudiante a
+     * la base de datos
+     * @return una cadena con el mensaje de exito
+     */
+    public String SubirDocumentoAdicionalExitoso() { return "Se ha almacenado el archivo de manera exitosa"; }
+
+    /**
+     * Mensaje mostrado cuando se elimina un archivo adicional
+     * del estudiante de la base de datos
+     * @return una cadena con el mensaje de error
+     */
+    public String EliminacionDocumentoAdicionalExitoso() { return "Se ha eliminado el archivo de manera exitosa"; }
+
+    /**
      * Mensaje mostrado en caso de no encontrar el archivo FXML de la pantalla
      * ModificarProyecto_Coordinador
      * @return una cadena con el mensaje de error
@@ -361,12 +389,19 @@ public class OutputMessages {
     public String GenerarReporteConfirmation() { return "¿Estas seguro/a que deseas Generar el reporte?"; }
 
     /**
+     * Mensaje mostrado cuando se elimina un estudiante de
+     * manera exitosa de la base de datos
+     * @return una cadena con el mensaje de exito
+     */
+    public String DeleteStudentSuccessful() { return "Se ha eliminado el estudiante de manera exitosa."; }
+    /**
      * Mensaje mostrado cuando se intenta eliminar un estudiante en
      * la pantalla GestionarEstudiantes_Coordinador
      * @return una cadena con el mensaje de confirmacion
      */
     public String DeleteStudentConfirmation() { return "¿Estas seguro/a que deseas eliminar el estudiante? " +
                                                        "Esta acción es permanente y no se podrá deshacer."; }
+
     /**
      * Mensaje mostrado cuando se intenta eliminar un estudiante en
      * la pantalla GestionarEstudiantes_Coordinador
