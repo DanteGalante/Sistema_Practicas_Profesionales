@@ -125,7 +125,7 @@ public class ConsultarExpedienteController implements Initializable {
      * Permite cambiar la pantalla a la pantalla Principal de coordinador
      */
     public void MostrarPantallaPrincipalCoordinador( MouseEvent mouseEvent ) {
-        screenChanger.MostrarPantallaPrincipalCoordinador( mouseEvent, TxError );
+        screenChanger.MostrarPantallaGestionarEstudianesCoordinador( mouseEvent, TxError );
     }
 
     public void MostrarPantallaDescargarArchivo_Coordinador(MouseEvent mouseEvent) {
