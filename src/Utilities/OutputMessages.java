@@ -433,6 +433,18 @@ public class OutputMessages {
     public String EliminarEstudianteConfirmation() { return "¿Estas seguro que deseas eliminar el estudiante?"; }
 
     /**
+     * Mensaje mostrado cuando se intenta crear un proyecto
+     * @return una cadena con el mensaje de confirmacion
+     */
+    public String CrearProyectoConfirmacion() { return "¿Estas seguro que deseas crear el proyecto?"; }
+
+    /**
+     * Mensaje mostrado cuando se intenta asignar un proeycto a un estudiante
+     * @return una cadena con el mensaje de confirmacion
+     */
+    public String AsingarConfirmacion() { return "¿Estas seguro que desea asignar este proyecto?"; }
+
+    /**
      * mensaje mostrado cuando se introduce una selección nula
      * en la tabla de visualizar reportes.
      * @return una cadena con el mensaje de error

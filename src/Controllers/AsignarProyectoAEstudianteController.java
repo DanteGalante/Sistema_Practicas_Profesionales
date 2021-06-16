@@ -16,9 +16,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -200,29 +198,35 @@ public class AsignarProyectoAEstudianteController implements Initializable {
     }
 
     public void HandleAsignarProyecto ( MouseEvent mouseEvent ) {
-        TxError.setText("");
-        TxSuccess.setText("");
-        if(TvEstudiante.getSelectionModel().getSelectedItem() != null){
-            if(TvProyecto.getSelectionModel().getSelectedItem() != null){
-                Estudiante estudiante = (Estudiante) TvEstudiante.getSelectionModel().getSelectedItem();
-                Proyecto proyecto = (Proyecto) TvProyecto.getSelectionModel().getSelectedItem();
-                if(estudiante.getEstado() == EstadoEstudiante.AsignacionPendiente && proyecto.GetEstado() ==  EstadoProyecto.Disponible){
-                    String matricula = estudiante.getMatricula();
-                    int idProyecto = proyecto.getIdProyecto();
-                    RegisterNewExpediente(matricula, idProyecto);
-                    ActualizarTablaEstudiantes();
-                    ActualizarTablaProyectos();
-                }else{
-                    TxError.setText(outputMessages.ExpedienteAlreadyExist());
-                }
+        Alert AsignarAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.AsingarConfirmacion() );
+        AsignarAlert.showAndWait().ifPresent( response -> {
+                    if (response == ButtonType.OK) {
+                        TxError.setText("");
+                        TxSuccess.setText("");
+                        if(TvEstudiante.getSelectionModel().getSelectedItem() != null){
+                            if(TvProyecto.getSelectionModel().getSelectedItem() != null){
+                                Estudiante estudiante = (Estudiante) TvEstudiante.getSelectionModel().getSelectedItem();
+                                Proyecto proyecto = (Proyecto) TvProyecto.getSelectionModel().getSelectedItem();
+                                if(estudiante.getEstado() == EstadoEstudiante.AsignacionPendiente && proyecto.GetEstado() ==  EstadoProyecto.Disponible){
+                                    String matricula = estudiante.getMatricula();
+                                    int idProyecto = proyecto.getIdProyecto();
+                                    RegisterNewExpediente(matricula, idProyecto);
+                                    ActualizarTablaEstudiantes();
+                                    ActualizarTablaProyectos();
+                                }else{
+                                    TxError.setText(outputMessages.ExpedienteAlreadyExist());
+                                }
 
-            }else{
-                TxError.setText(outputMessages.SelectionProjectNull());
-            }
-        }else{
-            TxError.setText(outputMessages.SelectionStudentNull());
-        }
+                            }else{
+                                TxError.setText(outputMessages.SelectionProjectNull());
+                            }
+                        }else{
+                            TxError.setText(outputMessages.SelectionStudentNull());
+                        }
+                    }
+                } );
     }
+
     private void RegisterNewExpediente(String matricula, int idProyecto) {
         if( expediente.Create( GetExpediente( matricula,  idProyecto) ) ) {
             TxError.setText( "" );

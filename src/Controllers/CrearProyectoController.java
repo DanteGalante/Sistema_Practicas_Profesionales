@@ -137,31 +137,36 @@ public class CrearProyectoController implements Initializable {
      * de los campos de texto y los combobox de la pantalla "Crear proyecto"
      */
     public void HandleRegistrar( MouseEvent mouseEvent ) {
-        TxError.setText("");
-        TxSuccess.setText("");
-        if ( !TbNombreProyecto.getText().trim().isEmpty() && !TbDescripcionProyecto.getText().trim().isEmpty() && !TbEstudiantesRequeridos.getText().trim().isEmpty() ) {
-            if( isNumeric() ) {
-                if( VerificarDatos() ) {
-                    try {
-                        if( TvOrganizacion.getSelectionModel().getSelectedItem() != null ){
-                            RegistrarProyecto();
-                            LimpiarCampos();
-                        } else {
-                            TxError.setText("No se ha seleccionado una organización");
-                        }
-                    } catch ( Exception exception ) {
-                        TxError.setText( outputMessages.CreateProjectFailed() );
-                    }
-                }
-            }else{
-                TxError.setText("No ha ingresado un numero");
-                TxSuccess.setText("");
-            }
+        Alert CrearAlert = new Alert( Alert.AlertType.CONFIRMATION, outputMessages.CrearProyectoConfirmacion() );
+        CrearAlert.showAndWait().ifPresent( response -> {
+                    if ( response == ButtonType.OK ) {
+                        TxError.setText("");
+                        TxSuccess.setText("");
+                        if ( !TbNombreProyecto.getText().trim().isEmpty() && !TbDescripcionProyecto.getText().trim().isEmpty() && !TbEstudiantesRequeridos.getText().trim().isEmpty() ) {
+                            if( isNumeric() ) {
+                                if( VerificarDatos() ) {
+                                    try {
+                                        if( TvOrganizacion.getSelectionModel().getSelectedItem() != null ){
+                                            RegistrarProyecto();
+                                            LimpiarCampos();
+                                        } else {
+                                            TxError.setText("No se ha seleccionado una organización");
+                                        }
+                                    } catch ( Exception exception ) {
+                                        TxError.setText( outputMessages.CreateProjectFailed() );
+                                    }
+                                }
+                            }else{
+                                TxError.setText("No ha ingresado un numero");
+                                TxSuccess.setText("");
+                            }
 
-        } else {
-            TxError.setText(outputMessages.CamposVacios());
-            TxSuccess.setText("");
-        }
+                        } else {
+                            TxError.setText(outputMessages.CamposVacios());
+                            TxSuccess.setText("");
+                        }
+                    }
+                } );
     }
 
     /**
