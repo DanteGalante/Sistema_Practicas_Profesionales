@@ -217,6 +217,13 @@ public class OutputMessages {
     public String DescargaDocumentoAdicionalExitoso() { return "Se ha desargado el archivo de manera exitosa"; }
 
     /**
+     * Mensaje mostrado cuando se entrega una reporte del estudiante a
+     * la base de datos de manera exitosa
+     * @return una cadena con el mensaje de exito
+     */
+    public String EntregaReporteExitoso() { return "Se ha entregado el reporte de manera exitosa"; }
+
+    /**
      * Mensaje mostrado cuando se sube un archivo adicional del estudiante a
      * la base de datos
      * @return una cadena con el mensaje de exito
