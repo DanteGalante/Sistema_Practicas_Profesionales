@@ -136,10 +136,14 @@ public class CrearProyectoController implements Initializable {
     public void HandleRegistrar( MouseEvent mouseEvent ) {
         TxError.setText("");
         TxSuccess.setText("");
-        if (!TbNombreProyecto.getText().trim().isEmpty() && !TbDescripcionProyecto.getText().trim().isEmpty() && !TbEstudiantesRequeridos.getText().trim().isEmpty() ) {
-            if(isNumeric()){
-                if(VerificarDatos()){
-                    RegistrarProyecto();
+        if ( !TbNombreProyecto.getText().trim().isEmpty() && !TbDescripcionProyecto.getText().trim().isEmpty() && !TbEstudiantesRequeridos.getText().trim().isEmpty() ) {
+            if( isNumeric() ) {
+                if( VerificarDatos() ) {
+                    if( TvOrganizacion.getSelectionModel().getSelectedItem() != null ){
+                        RegistrarProyecto();
+                    } else {
+                        TxError.setText("No se ha seleccionado una organización");
+                    }
                 }
             }else{
                 TxError.setText("No ha ingresado un numero");
@@ -259,6 +263,7 @@ public class CrearProyectoController implements Initializable {
                 idNuevoProyecto = todosProyectosBD.get(i).getIdProyecto();
                 flag = true;
             }
+            i++;
         }
 
         return idNuevoProyecto;
